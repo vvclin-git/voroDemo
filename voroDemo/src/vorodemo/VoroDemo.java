@@ -100,10 +100,10 @@ public class VoroDemo extends PApplet {
 				if (!arcs.isEmpty()) {					
 					for (Parabola arc : arcs) {
 						arc.update();//
-//						System.out.print(arc.leftBpt.type + "," + arc.rightBpt.type + " : ");
-//						System.out.print(arc.leftX + "," + arc.rightX + " | ");
+						System.out.print(arc.leftBpt.x() + "," + arc.rightBpt.x() + " : ");
+						System.out.print(arc.leftX + "," + arc.rightX + " | ");
 					}
-//					System.out.println();
+					System.out.println();
 				}
 			} 
 		} 

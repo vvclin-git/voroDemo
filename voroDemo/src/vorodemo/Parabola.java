@@ -95,8 +95,6 @@ public class Parabola {
 		db = this.b() - other.b();
 		dc = this.c() - other.c();
 		h = (float) (Math.pow(db, 2) - 4 * da * dc);		
-		System.out.println("(" + this.site.x() + ", " + this.site.y() + ") " + this.a() + ", " + this.b() + ", " + this.c() + 
-				"| (" + other.site.x() + ", " + other.site.y() + ") " + other.a() + ", "  + other.b() + ", " + other.c() + ", " + dictx.y() + "," + h);
 		if (h >= 0) {
 			x = (float) ((-db - (float) Math.sqrt(h)) / da * 0.5);
 			return new BreakPoint(x, other.y(x), "left", this, other, c);
