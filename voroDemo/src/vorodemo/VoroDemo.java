@@ -8,16 +8,16 @@ import processing.core.PApplet;
 public class VoroDemo extends PApplet {
 	//PApplet canvas;
 	ArrayList<Parabola> parabolae = new ArrayList<Parabola>();
-	ArrayList<Arc> arcs = new ArrayList<Arc>();
+	ArrayList<Parabola> arcs = new ArrayList<Parabola>();
 	ArrayList<Site> sitesAbove = new ArrayList<Site>();
 	ArrayList<Site> sitesBelow = new ArrayList<Site>();
 	Directrix dictx = new Directrix(100, this);
 	
 	private void siteEvent(Site site) {
 		BreakPoint leftBpt, rightBpt;
-		Arc arcTmpRef = null;
+		Parabola arcTmpRef = null;
 		if (!arcs.isEmpty()) {
-			for (Arc arc : arcs) { // Linear range search
+			for (Parabola arc : arcs) { // Linear range search
 				if (arc.inArc(site)) {
 					arcTmpRef = arc;
 					break;
@@ -26,7 +26,7 @@ public class VoroDemo extends PApplet {
 			if (arcTmpRef != null) {
 				Parabola newPara = new Parabola(dictx, site, this);
 				leftBpt = arcTmpRef.leftInterPt(newPara);
-				rightBpt = arcTmpRef.rightInterPt(newPara);
+				rightBpt = arcTmpRef.rightInterPt(newPara);				
 				// add left sub arcTmpRef (part of original arcTmpRef)
 				arcs.add(new Arc (dictx, arcTmpRef.site, arcTmpRef.leftBpt, leftBpt, this));
 //				System.out.print(arcTmpRef.leftBpt.x() + ", " + leftBpt.x() + " | ");
@@ -43,7 +43,8 @@ public class VoroDemo extends PApplet {
 		}
 		else {
 			Parabola newPara = new Parabola(dictx, site, this);			
-			arcs.add(new Arc (dictx, site, new BreakPoint(0, newPara.y(0), "leftBound", null, newPara, this), new BreakPoint(width, newPara.y(width), "rightBound", newPara, null, this), this));
+//			arcs.add(new Arc (dictx, site, new BreakPoint(0, newPara.y(0), "leftBound", null, newPara, this), new BreakPoint(width, newPara.y(width), "rightBound", newPara, null, this), this));
+			arcs.add(newPara);
 		}
 	}
 	public void mouseClicked() {  
@@ -97,12 +98,12 @@ public class VoroDemo extends PApplet {
 					siteTmpRef = null;
 				}
 				if (!arcs.isEmpty()) {					
-					for (Arc arc : arcs) {
+					for (Parabola arc : arcs) {
 						arc.update();//
-//						System.out.print(arc.leftBpt.x() + "," + arc.rightBpt.x() + " : ");
+//						System.out.print(arc.leftBpt.type + "," + arc.rightBpt.type + " : ");
 //						System.out.print(arc.leftX + "," + arc.rightX + " | ");
 					}
-					System.out.println();
+//					System.out.println();
 				}
 			} 
 		} 
@@ -131,7 +132,7 @@ public class VoroDemo extends PApplet {
 		}
 		if (!arcs.isEmpty()) {
 //			arcs.get(0).draw();
-			for (Arc arc : arcs) {
+			for (Parabola arc : arcs) {
 				if (!arc.hidden()) {
 					arc.draw();
 				}
