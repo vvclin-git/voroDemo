@@ -11,6 +11,7 @@ public class VoroDemo extends PApplet {
 	ArrayList<Parabola> arcs = new ArrayList<Parabola>();
 	ArrayList<Site> sitesAbove = new ArrayList<Site>();
 	ArrayList<Site> sitesBelow = new ArrayList<Site>();
+	ArrayList<Edge> edges = new ArrayList<Edge>();
 	Directrix dictx = new Directrix(100, this);
 	
 	private void siteEvent(Site site) {
@@ -26,7 +27,12 @@ public class VoroDemo extends PApplet {
 			if (arcTmpRef != null) {
 				Parabola newPara = new Parabola(dictx, site, this);
 				leftBpt = arcTmpRef.leftInterPt(newPara);
-				rightBpt = arcTmpRef.rightInterPt(newPara);				
+				rightBpt = arcTmpRef.rightInterPt(newPara);
+				// create new edge
+				if (leftBpt.getType() != "leftBound" & rightBpt.getType() != "rightBound") {
+					edges.add(new Edge(leftBpt, rightBpt, this));
+				}
+				
 				// add left sub arcTmpRef (part of original arcTmpRef)
 				arcs.add(new Arc (dictx, arcTmpRef.site, arcTmpRef.leftBpt, leftBpt, this));
 //				System.out.print(arcTmpRef.leftBpt.x() + ", " + leftBpt.x() + " | ");
@@ -136,6 +142,12 @@ public class VoroDemo extends PApplet {
 				if (!arc.hidden()) {
 					arc.draw();
 				}
+			}
+		}
+		if (!edges.isEmpty()) {
+//			arcs.get(0).draw();
+			for (Edge edge : edges) {				
+					edge.draw();				
 			}
 		}
 

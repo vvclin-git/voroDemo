@@ -32,5 +32,8 @@ public class BreakPoint extends Point{
 	    	this.y = paraLeft.y(this.x);
 	    }
 	  }
+	String getType() {
+		return type;
+	}
 
 }
