@@ -12,6 +12,7 @@ public class VoroDemo extends PApplet {
 	ArrayList<Site> sitesAbove = new ArrayList<Site>();
 	ArrayList<Site> sitesBelow = new ArrayList<Site>();
 	ArrayList<Edge> edges = new ArrayList<Edge>();
+	ArrayList<Circle> circles = new ArrayList<Circle>();
 	Directrix dictx = new Directrix(100, this);
 	
 	private void siteEvent(Site site) {
@@ -54,7 +55,7 @@ public class VoroDemo extends PApplet {
 		}
 	}
 	public void mouseClicked() {  
-		Site site = new Site(mouseX, mouseY, this);
+		Site site = new Site(mouseX, mouseY, this);		
 		if (site.y() > dictx.y()) {
 			sitesBelow.add(site);
 			//Collections.sort(sitesBelow);
@@ -148,6 +149,12 @@ public class VoroDemo extends PApplet {
 //			arcs.get(0).draw();
 			for (Edge edge : edges) {				
 					edge.draw();				
+			}
+		}
+		if (!circles.isEmpty()) {
+//			arcs.get(0).draw();
+			for (Circle circle : circles) {				
+					circle.draw();				
 			}
 		}
 
