@@ -1,4 +1,5 @@
 package vorodemo;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -91,6 +92,13 @@ public class VoroDemo extends PApplet {
 					if (site.y() < dictx.y()) {
 						sitesAbove.add(site.copy());
 						siteTmpRef = site;
+						System.out.println(sitesAbove.size());
+						if (sitesAbove.size() >= 3) {
+							for (int i = 0; i <= sitesAbove.size() - 3; i++) {
+								circles.add(new Circle(sitesAbove.get(i), sitesAbove.get(i + 1), sitesAbove.get(i + 2), this));
+							}
+							Collections.sort(circles);
+						}
 						//for debugging
 //						for (Site site1 : sitesBelow) {
 //							System.out.print(site1.y() + ", ");
@@ -107,10 +115,10 @@ public class VoroDemo extends PApplet {
 				if (!arcs.isEmpty()) {					
 					for (Parabola arc : arcs) {
 						arc.update();//
-						System.out.print(arc.leftBpt.x() + "," + arc.rightBpt.x() + " : ");
-						System.out.print(arc.leftX + "," + arc.rightX + " | ");
+//						System.out.print(arc.leftBpt.x() + "," + arc.rightBpt.x() + " : ");
+//						System.out.print(arc.leftX + "," + arc.rightX + " | ");
 					}
-					System.out.println();
+//					System.out.println();
 				}
 			} 
 		} 
@@ -155,6 +163,11 @@ public class VoroDemo extends PApplet {
 //			arcs.get(0).draw();
 			for (Circle circle : circles) {				
 					circle.draw();				
+			}
+		}
+		if (!circles.isEmpty()) {
+			for (Circle circle : circles) {
+				circle.draw();
 			}
 		}
 
