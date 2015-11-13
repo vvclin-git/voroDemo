@@ -23,7 +23,18 @@ public class Parabola {
 		this.leftBpt = new BreakPoint(0, this.y(0), "leftBound", null, this, c);
 		this.rightBpt = new BreakPoint(c.width, this.y(c.width), "rightBound", this, null, c);
 	}
-	void draw() {    
+	Parabola (Directrix dictx, Site site, Parabola that, PApplet c) {    
+		this.focusX = site.x();
+		this.focusY = site.y();		
+		this.rightX = c.width;
+		this.dictx = dictx;
+		this.c = c;
+		this.site = site;
+		this.leftBpt = this.leftInterPt(that);
+		this.rightBpt = this.rightInterPt(that);
+	}
+	void draw() {
+		//update();
 		float dX = (rightX - leftX) / step;
 		float x0 = leftX;
 		float y0;
@@ -65,8 +76,8 @@ public class Parabola {
 		return (site.x() > this.leftBpt.x() & site.x() < this.rightBpt.x());
 	}
 	void update() {
-		this.leftBpt.update();
-		this.rightBpt.update();
+//		this.leftBpt.update();
+//		this.rightBpt.update();
 		rightX = rightBpt.x();
 		leftX = leftBpt.x();		
 		p = (float) (Math.abs(focusY - dictx.y()) * 0.5);
@@ -76,17 +87,17 @@ public class Parabola {
 		}
 		if (y(leftX) < 0) { // deal with corner case (y < 0)			
 			leftX = (float) (focusX - Math.sqrt(Math.pow(dictx.y(), 2)-Math.pow(focusY, 2) + 0.1f * 2 * (focusY - dictx.y())));
-//			if (leftX >= rightX) { //the arc is outside of the canvas
-//				hide = true;
-//				return;
-//			}
+			if (leftX >= rightX) { //the arc is outside of the canvas
+				hide = true;
+				return;
+			}
 		}
 		if (y(rightX) < 0) {			
 			rightX = (float) (focusX + Math.sqrt(Math.pow(dictx.y(), 2)-Math.pow(focusY, 2) + 0.1f * 2 * (focusY - dictx.y())));
-//			if (rightX <= leftX) { //the arc is outside of the canvas
-//				hide = true;
-//				return;
-//			}
+			if (rightX <= leftX) { //the arc is outside of the canvas
+				hide = true;
+				return;
+			}
 		}		
 	}
 	BreakPoint leftInterPt(Parabola other) {
