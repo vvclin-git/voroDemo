@@ -17,7 +17,7 @@ public abstract class Point implements Comparable<Point>{
 	}
 	abstract Object copy();
 	void draw() {
-		p.ellipse(x, y, r, r);
+		p.ellipse(x, y, r, r);		
 	}
 	public int compareTo(Point other) {
 		if (this.x < other.x) {
