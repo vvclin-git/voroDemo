@@ -32,5 +32,9 @@ public abstract class Point implements Comparable<Point>{
 	public String toString() {
 		return "{" + x + ", " + y + "}";
 	}
-	
+	public double distSqrTo(Point that) {
+		float dx = this.x() - that.x();
+		float dy = this.y() - that.y();
+		return Math.pow(dx, 2) + Math.pow(dy, 2);
+	}
 }

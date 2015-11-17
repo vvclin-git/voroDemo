@@ -61,6 +61,7 @@ public class Circle implements Comparable<Circle>{
 	float y() {
 		return y;
 	}
+	
 	void draw() {
 		c.stroke(255);
 		c.noFill();
