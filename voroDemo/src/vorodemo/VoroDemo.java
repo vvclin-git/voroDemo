@@ -149,11 +149,11 @@ public class VoroDemo extends PApplet {
 	}
 	public void settings() {		
 		size(600, 600);
-		//float[][] testSites = {{376.0f, 122.0f},{269.0f, 126.0f},{151.0f, 162.0f},{98.0f, 212.0f}};
+		float[][] testSites = {{376.0f, 122.0f},{269.0f, 126.0f},{151.0f, 162.0f},{98.0f, 212.0f}};
 //		float[][] testSites = {{376.0f, 122.0f},{269.0f, 122.0f},{151.0f, 122.0f},{98.0f, 122.0f}}; 
-//		for (float[] coord : testSites) {
-//			sitesBelow.add(new Site(coord[0], coord[1], this));
-//		}
+		for (float[] coord : testSites) {
+			sitesBelow.add(new Site(coord[0], coord[1], this));
+		}
 	}
 	
 	public void drawBeachLine() {
