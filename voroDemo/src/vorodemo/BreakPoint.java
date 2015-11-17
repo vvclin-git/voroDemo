@@ -14,6 +14,12 @@ public class BreakPoint extends Point{
 	BreakPoint copy() {
 		return new BreakPoint(this.x, this.y, this.type, this.paraLeft, this.paraRight, this.p);
 	}
+	public Parabola getLeftPara() {
+		return paraLeft;
+	}
+	public Parabola getRightPara() {
+		return paraRight;
+	}
 	void update() {
 	    if (type == "left") {
 	      this.x = paraLeft.leftInterPt(paraRight).x();

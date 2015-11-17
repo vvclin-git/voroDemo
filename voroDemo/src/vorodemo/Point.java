@@ -20,10 +20,10 @@ public abstract class Point implements Comparable<Point>{
 		p.ellipse(x, y, r, r);
 	}
 	public int compareTo(Point other) {
-		if (this.y < other.y) {
+		if (this.x < other.x) {
 			return -1;
 		}    
-		if (this.y > other.y) {
+		if (this.x > other.x) {
 			return 1;
 		}
 		return 0;
