@@ -10,36 +10,54 @@ import processing.core.PApplet;
 public class VoroDemo extends PApplet {
 	//PApplet canvas;
 	ArrayList<Parabola> parabolae = new ArrayList<Parabola>();
-	ArrayList<Parabola> arcs = new ArrayList<Parabola>();
+	//ArrayList<Arc> arcs = new ArrayList<Arc>();
+	ArrayList<BreakPoint> breakPoints = new ArrayList<BreakPoint>();
 	ArrayList<Site> sitesAbove = new ArrayList<Site>();
 	ArrayList<Site> sitesBelow = new ArrayList<Site>();
 	ArrayList<Edge> edges = new ArrayList<Edge>();
 	ArrayList<Circle> circles = new ArrayList<Circle>();
-	TreeMap<Point, BreakPoint> beachLine = new TreeMap<Point, BreakPoint>();
-	Directrix dictx = new Directrix(100, this);
+	TreeMap<Point, Point> beachLine = new TreeMap<Point, Point>();
+	TreeMap<Point, Parabola> arcs = new TreeMap<Point, Parabola>();
+	//TreeMap<Float, Site> sitesTree = new TreeMap<Float, Site>();
+	Directrix dictx = new Directrix(100, this);	
 	
 	private void siteEvent(Site site) {
-		BreakPoint leftBpt, rightBpt;
-		BreakPoint floorBpt;
-		Parabola newPara;
 		if (beachLine.isEmpty()) {
-			newPara = new Parabola(dictx, site, this);
-			
+			Parabola newPara = new Parabola(dictx, site, 600, this);
+			beachLine.put(newPara.leftBpt, newPara.leftBpt);
+			beachLine.put(newPara.rightBpt, newPara.rightBpt);
+			breakPoints.add(newPara.leftBpt);
+			breakPoints.add(newPara.rightBpt);
+			arcs.put(newPara.leftBpt, newPara);
 		}
 		else {
-			floorBpt = (BreakPoint) beachLine.floorKey(site);			
-			newPara = new Parabola(dictx, site, floorBpt.getRightPara(), this);
-			floorBpt.paraRight.rightBpt = newPara.getLeftBpt();
+			// determine which arc to insert a site
+			BreakPoint bptLeft = (BreakPoint) beachLine.floorEntry(site).getValue();
+			BreakPoint bptRight = (BreakPoint) beachLine.ceilingEntry(site).getValue();
+			Parabola newPara = new Parabola(dictx, site, bptLeft.paraRight, this);
+			// create new break points
+			BreakPoint newBptLeft = newPara.leftBpt;
+			BreakPoint newBptRight = newPara.rightBpt;
+			beachLine.put(newBptLeft, newBptLeft);
+			beachLine.put(newBptRight, newBptRight);
+			breakPoints.add(newBptLeft);
+			breakPoints.add(newBptRight);
+			// add new arcs
+			arcs.remove(bptLeft);
+			arcs.put(bptLeft, new Parabola (dictx, bptLeft.paraRight.site, bptLeft, newBptLeft, this));
+			arcs.put(newBptLeft, newPara);
+			arcs.put(newBptRight, new Parabola (dictx, bptLeft.paraRight.site, newBptRight, bptRight, this));			
 		}
-		parabolae.add(newPara);
-		leftBpt = newPara.getLeftBpt();
-		rightBpt = newPara.getRightBpt();
-		beachLine.put(leftBpt, leftBpt);
-		beachLine.put(rightBpt, rightBpt);
+	}
+	private void updateBpts() {
+		for (BreakPoint bpt : breakPoints) {
+			bpt.update();
+		}
 	}
 	public void mouseClicked() {  
 		Site site = new Site(mouseX, mouseY, this);		
 		if (site.y() > dictx.y()) {
+			System.out.print(site + ", ");
 			sitesBelow.add(site);
 			//Collections.sort(sitesBelow);
 		}
@@ -69,15 +87,9 @@ public class VoroDemo extends PApplet {
 //				sitesAbove.remove(siteTmp);
 			} 
 			else if (keyCode == DOWN) {
-				dictx.move(1);
-				if (!beachLine.isEmpty()) {
-					for (BreakPoint bpt : beachLine.values()) {
-						Parabola para = bpt.getRightPara();
-						if (para != null) {
-							para.update();
-						}							
-					}
-				}
+				dictx.move(1);				
+				updateBpts();				
+				//updateArc();
 				for (Site site : sitesBelow) {
 					if (site.y() < dictx.y()) {
 						sitesAbove.add(site.copy());
@@ -99,7 +111,19 @@ public class VoroDemo extends PApplet {
 				}
 				if (siteTmpRef != null) {
 					siteEvent(siteTmpRef.copy());
-					System.out.println(beachLine.toString());
+					System.out.println();
+					for (Parabola arc : arcs.values()) {						
+						System.out.print(arc.leftBpt.type + ", " + arc.rightBpt.type + "|");
+					}
+					System.out.println();
+					for (Parabola arc : arcs.values()) {
+						System.out.print("(" + arc.leftBpt.x() + ", "  + arc.leftBpt.y() + "), " + "(" + arc.rightBpt.x() + ", " +arc.rightBpt.y() + ")" + "|");						
+					}
+					System.out.println();
+//					for (Parabola arc : arcs.values()) {
+//						System.out.print(arc.leftBpt.y() + ", " + arc.rightBpt.y() + "|");
+//					}
+//					System.out.println();
 					sitesBelow.remove(siteTmpRef);					
 					siteTmpRef = null;
 				}
@@ -113,15 +137,18 @@ public class VoroDemo extends PApplet {
 	}
 	public void settings() {		
 		size(600, 600);
+		//float[][] testSites = {{376.0f, 122.0f},{269.0f, 126.0f},{151.0f, 162.0f},{98.0f, 212.0f}};
+//		float[][] testSites = {{376.0f, 122.0f},{269.0f, 122.0f},{151.0f, 122.0f},{98.0f, 122.0f}}; 
+//		for (float[] coord : testSites) {
+//			sitesBelow.add(new Site(coord[0], coord[1], this));
+//		}
 	}
+	
 	public void drawBeachLine() {
-//		ArrayList<BreakPoint> bpts = new ArrayList<BreakPoint>();
-		for (BreakPoint bpt : beachLine.values()) {
-			Parabola para = bpt.getRightPara();			
-			if (para != null) {
-				para.draw();
-			}
+		for (Parabola arc : arcs.values()) {
+			arc.draw();
 		}
+
 	}
 
 	public void draw() {
@@ -137,18 +164,21 @@ public class VoroDemo extends PApplet {
 				site.draw();
 			}
 		}
-		
+		for (BreakPoint bpt : breakPoints) {
+			bpt.draw();
+		}
 		drawBeachLine();
 		
-		if (!circles.isEmpty()) {
-			for (Circle circle : circles) {
-				circle.draw();
-			}
-		}
+//		if (!circles.isEmpty()) {
+//			for (Circle circle : circles) {
+//				circle.draw();
+//			}
+//		}
 
 		
 	}
 	public static void main(String args[]) {
+		
 	    PApplet.main(new String[] { vorodemo.VoroDemo.class.getName() });
 	}
 }

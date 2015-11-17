@@ -24,12 +24,12 @@ public class BreakPoint extends Point{
 	      this.y = paraRight.y(this.x);	      
 	    }
 	    else if (type == "leftBound") {
-	    	this.x = 0;
-	    	this.y = paraRight.y(this.x);
+//	    	this.x = 0;
+//	    	this.y = paraRight.y(this.x);
 	    }
 	    else if (type == "rightBound") {
-	    	this.x = p.width;
-	    	this.y = paraLeft.y(this.x);
+//	    	this.x = p.width;
+//	    	this.y = paraLeft.y(this.x);
 	    }
 	  }
 	String getType() {
