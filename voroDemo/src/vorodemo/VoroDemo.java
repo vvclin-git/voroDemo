@@ -19,7 +19,7 @@ public class VoroDemo extends PApplet {
 	TreeMap<Point, Point> beachLine = new TreeMap<Point, Point>();
 	TreeMap<Point, Parabola> arcs = new TreeMap<Point, Parabola>();
 	//TreeMap<Float, Site> sitesTree = new TreeMap<Float, Site>();
-	Directrix dictx = new Directrix(100, this);
+	Directrix dictx = new Directrix(100, this);	
 	
 	private void siteEvent(Site site) {
 		if (beachLine.isEmpty()) {
@@ -57,6 +57,7 @@ public class VoroDemo extends PApplet {
 	public void mouseClicked() {  
 		Site site = new Site(mouseX, mouseY, this);		
 		if (site.y() > dictx.y()) {
+			System.out.print(site + ", ");
 			sitesBelow.add(site);
 			//Collections.sort(sitesBelow);
 		}
@@ -110,6 +111,7 @@ public class VoroDemo extends PApplet {
 				}
 				if (siteTmpRef != null) {
 					siteEvent(siteTmpRef.copy());
+					System.out.println();
 					for (Parabola arc : arcs.values()) {						
 						System.out.print(arc.leftBpt.type + ", " + arc.rightBpt.type + "|");
 					}
@@ -135,6 +137,11 @@ public class VoroDemo extends PApplet {
 	}
 	public void settings() {		
 		size(600, 600);
+		//float[][] testSites = {{376.0f, 122.0f},{269.0f, 126.0f},{151.0f, 162.0f},{98.0f, 212.0f}};
+//		float[][] testSites = {{376.0f, 122.0f},{269.0f, 122.0f},{151.0f, 122.0f},{98.0f, 122.0f}}; 
+//		for (float[] coord : testSites) {
+//			sitesBelow.add(new Site(coord[0], coord[1], this));
+//		}
 	}
 	
 	public void drawBeachLine() {
@@ -162,15 +169,16 @@ public class VoroDemo extends PApplet {
 		}
 		drawBeachLine();
 		
-		if (!circles.isEmpty()) {
-			for (Circle circle : circles) {
-				circle.draw();
-			}
-		}
+//		if (!circles.isEmpty()) {
+//			for (Circle circle : circles) {
+//				circle.draw();
+//			}
+//		}
 
 		
 	}
 	public static void main(String args[]) {
+		
 	    PApplet.main(new String[] { vorodemo.VoroDemo.class.getName() });
 	}
 }

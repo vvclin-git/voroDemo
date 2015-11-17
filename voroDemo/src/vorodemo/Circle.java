@@ -1,16 +1,21 @@
 package vorodemo;
 import processing.core.PApplet;
+import java.util.ArrayList;
 public class Circle implements Comparable<Circle>{
 	Point p1, p2, p3;
 	float x, y, r;		
 	float lowY;
 	PApplet c;
+	ArrayList<Point> sites = new ArrayList<Point>(); 
 	public Circle (Point p1, Point p2, Point p3, PApplet c) {
 		float ma, mb;		
 		float dxa, dxb;
 		float x1, x2, x3;
 		float y1, y2, y3;
 		this.c = c;
+		sites.add(p1);
+		sites.add(p2);
+		sites.add(p3);
 		x1 = p1.x();
 		x2 = p2.x();
 		x3 = p3.x();
@@ -61,6 +66,9 @@ public class Circle implements Comparable<Circle>{
 		c.noFill();
 		c.ellipse(x, y, r * 2, r * 2);
 		
+	}
+	public boolean containSite(Point site) {
+		return sites.contains(site);
 	}
 	public static void main(String args[]) {
 		Site p1 = new Site(10, 15, null);

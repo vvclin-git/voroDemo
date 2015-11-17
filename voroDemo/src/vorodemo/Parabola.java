@@ -19,8 +19,10 @@ public class Parabola {
 		this.c = c;				
 		this.dictx = dictx;		
 		this.site = site;
-		this.leftBpt = new BreakPoint(0, this.y(0), "leftBound", null, this, c);
-		this.rightBpt = new BreakPoint(canvasWidth, this.y(canvasWidth), "rightBound", this, null, c);		
+//		this.leftBpt = new BreakPoint(Float.NEGATIVE_INFINITY, this.y(0), "leftBound", null, this, c);
+//		this.rightBpt = new BreakPoint(Float.POSITIVE_INFINITY, this.y(canvasWidth), "rightBound", this, null, c);
+		this.leftBpt = new BreakPoint(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY, "leftBound", null, this, c);
+		this.rightBpt = new BreakPoint(Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY, "rightBound", this, null, c);		
 	}
 	Parabola (Directrix dictx, Site site, Parabola that, PApplet c) {    
 		this.focusX = site.x();
@@ -41,15 +43,35 @@ public class Parabola {
 		this.rightBpt = rightBpt;		
 	}
 	void draw() {
-//		rightX = rightBpt.x();
-//		leftX = leftBpt.x();
-		float dX = (rightBpt.x() - leftBpt.x()) / step;
-		float x0 = leftBpt.x();
+//		float dX = (rightBpt.x() - leftBpt.x()) / step;
+//		float x0 = leftBpt.x();
+//		float y0;
+//		float x1, y1;		
+//		p = (float) (Math.abs(focusY - dictx.y()) * 0.5);
+//		k = dictx.y() - p;
+//		for (int i = 0; i < (rightBpt.x() - leftBpt.x()) / dX; i += 1) {
+//			x1 = x0 + dX;
+//			y0 = y(x0);
+//			y1 = y(x1);			
+//			c.line(x0, y0, x1, y1);			
+//			x0 = x1;
+//		}
+		// ======
+		rightX = rightBpt.x();
+		leftX = leftBpt.x();
+		if (rightX > c.width) {
+			rightX = c.width;
+		}
+		if (leftX < 0) {
+			leftX = 0;
+		}
+		float dX = (rightX - leftX) / step;
+		float x0 = leftX;
 		float y0;
 		float x1, y1;		
 		p = (float) (Math.abs(focusY - dictx.y()) * 0.5);
 		k = dictx.y() - p;
-		for (int i = 0; i < (rightBpt.x() - leftBpt.x()) / dX; i += 1) {
+		for (int i = 0; i < (rightX - leftX) / dX; i += 1) {
 			x1 = x0 + dX;
 			y0 = y(x0);
 			y1 = y(x1);			
