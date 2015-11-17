@@ -16,37 +16,49 @@ public class VoroDemo extends PApplet {
 	ArrayList<Site> sitesBelow = new ArrayList<Site>();
 	ArrayList<Edge> edges = new ArrayList<Edge>();
 	ArrayList<Circle> circles = new ArrayList<Circle>();
-	TreeMap<Point, Point> beachLine = new TreeMap<Point, Point>();
-	TreeMap<Point, Parabola> arcs = new TreeMap<Point, Parabola>();
+//	TreeMap<Point, Point> beachLine = new TreeMap<Point, Point>();
+	TreeMap<BptNode, BptNode> beachLine = new TreeMap<BptNode, BptNode>();
+	TreeMap<BptNode, Parabola> arcs = new TreeMap<BptNode, Parabola>();
 	//TreeMap<Float, Site> sitesTree = new TreeMap<Float, Site>();
 	Directrix dictx = new Directrix(100, this);	
 	
 	private void siteEvent(Site site) {
 		if (beachLine.isEmpty()) {
 			Parabola newPara = new Parabola(dictx, site, 600, this);
-			beachLine.put(newPara.leftBpt, newPara.leftBpt);
-			beachLine.put(newPara.rightBpt, newPara.rightBpt);
+			BptNode leftNode = new BptNode("leftBound", null, site, dictx);
+			BptNode rightNode = new BptNode("rightBound", site, null, dictx);
+			beachLine.put(leftNode, leftNode);
+			beachLine.put(rightNode, rightNode);
+			// for drawing beach line
 			breakPoints.add(newPara.leftBpt);
 			breakPoints.add(newPara.rightBpt);
-			arcs.put(newPara.leftBpt, newPara);
+			arcs.put(leftNode, newPara);
 		}
 		else {
 			// determine which arc to insert a site
-			BreakPoint bptLeft = (BreakPoint) beachLine.floorEntry(site).getValue();
-			BreakPoint bptRight = (BreakPoint) beachLine.ceilingEntry(site).getValue();
-			Parabola newPara = new Parabola(dictx, site, bptLeft.paraRight, this);
+			BptNode queryNode = new BptNode("query", site);
+			BptNode oldLeftNode = beachLine.floorEntry(queryNode).getValue();
+			BptNode oldRightNode = beachLine.ceilingEntry(queryNode).getValue();
+			// for drawing beach line
+			Parabola oldPara = arcs.get(oldLeftNode);
+			BreakPoint oldLeftBpt = oldPara.leftBpt;
+			BreakPoint oldRightBpt = oldPara.rightBpt;
+			Parabola newPara = new Parabola(dictx, site, oldPara, this);
 			// create new break points
-			BreakPoint newBptLeft = newPara.leftBpt;
-			BreakPoint newBptRight = newPara.rightBpt;
-			beachLine.put(newBptLeft, newBptLeft);
-			beachLine.put(newBptRight, newBptRight);
-			breakPoints.add(newBptLeft);
-			breakPoints.add(newBptRight);
-			// add new arcs
-			arcs.remove(bptLeft);
-			arcs.put(bptLeft, new Parabola (dictx, bptLeft.paraRight.site, bptLeft, newBptLeft, this));
-			arcs.put(newBptLeft, newPara);
-			arcs.put(newBptRight, new Parabola (dictx, bptLeft.paraRight.site, newBptRight, bptRight, this));			
+			BptNode newLeftNode = new BptNode("left", oldLeftNode.rightSite, site, dictx);
+			BptNode newRightNode = new BptNode("right", site, oldRightNode.leftSite, dictx);
+			beachLine.put(newLeftNode, newLeftNode);
+			beachLine.put(newRightNode, newRightNode);
+			// for drawing beach line
+			BreakPoint newLeftBpt = newPara.leftBpt;
+			BreakPoint newRightBpt = newPara.rightBpt;			
+			breakPoints.add(newLeftBpt);
+			breakPoints.add(newRightBpt);
+			// add new arcs (for drawing beach line)
+			arcs.remove(oldLeftNode);
+			arcs.put(oldLeftNode, new Parabola (dictx, oldLeftNode.rightSite, oldLeftBpt, newLeftBpt, this));
+			arcs.put(newLeftNode, newPara);
+			arcs.put(newRightNode, new Parabola (dictx, oldLeftNode.rightSite, newRightBpt, oldRightBpt, this));			
 		}
 	}
 	private void updateBpts() {
