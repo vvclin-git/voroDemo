@@ -72,5 +72,19 @@ public class BptNode implements Comparable<BptNode>{
 		}
 		return 0;
 	}	
-
+	public Site getSharedSite(BptNode that) {
+		if (this.leftSite == that.leftSite) {
+			return this.leftSite;
+		}
+		if (this.leftSite == that.rightSite) {
+			return this.leftSite;
+		}
+		if (this.rightSite == that.leftSite) {
+			return this.rightSite;
+		}
+		if (this.rightSite == that.rightSite) {
+			return this.rightSite;
+		}
+		return null;
+	}
 }

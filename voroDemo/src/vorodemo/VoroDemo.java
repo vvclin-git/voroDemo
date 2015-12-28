@@ -14,6 +14,7 @@ public class VoroDemo extends PApplet {
 	ArrayList<BreakPoint> breakPoints = new ArrayList<BreakPoint>();
 	ArrayList<Site> sitesAbove = new ArrayList<Site>();
 	ArrayList<Site> sitesBelow = new ArrayList<Site>();
+	ArrayList<Site> sitesTemp = new ArrayList<Site>();
 	ArrayList<Edge> edges = new ArrayList<Edge>();
 	ArrayList<Circle> circles = new ArrayList<Circle>();
 //	TreeMap<Point, Point> beachLine = new TreeMap<Point, Point>();
@@ -58,8 +59,19 @@ public class VoroDemo extends PApplet {
 			arcs.remove(oldLeftNode);
 			arcs.put(oldLeftNode, new Parabola (dictx, oldLeftNode.rightSite, oldLeftBpt, newLeftBpt, this));
 			arcs.put(newLeftNode, newPara);
-			arcs.put(newRightNode, new Parabola (dictx, oldLeftNode.rightSite, newRightBpt, oldRightBpt, this));			
+			arcs.put(newRightNode, new Parabola (dictx, oldLeftNode.rightSite, newRightBpt, oldRightBpt, this));
+			// add new circle (ignore left and right virtual nodes) 
+			if (oldLeftNode.type != "leftBound") {
+				circles.add(new Circle(oldLeftNode, newLeftNode, this));				
+			}
+			if (oldRightNode.type != "rightBound") {				
+				circles.add(new Circle(newRightNode, oldRightNode, this));
+			}
 		}
+	}
+	private void circleEvent(Circle circle) {
+//		BptNode queryNode = new BptNode("query", circle.getCenter());
+//		beachLine.
 	}
 	private void updateBpts() {
 		for (BreakPoint bpt : breakPoints) {
@@ -103,14 +115,15 @@ public class VoroDemo extends PApplet {
 				updateBpts();				
 				//updateArc();
 				for (Site site : sitesBelow) {
-					if (site.y() < dictx.y()) {
+					if (site.y() < dictx.y()) { // site event
 						sitesAbove.add(site.copy());
-						siteTmpRef = site;
-						//System.out.println(sitesAbove.size());
+						Collections.sort(sitesAbove);
+						siteEvent(site.copy());
+						sitesTemp.add(site); // for removal						
 						if (sitesAbove.size() >= 3) {
-							for (int i = 0; i <= sitesAbove.size() - 3; i++) {
-								circles.add(new Circle(sitesAbove.get(i), sitesAbove.get(i + 1), sitesAbove.get(i + 2), this));
-							}
+//							for (int i = 0; i <= sitesAbove.size() - 3; i++) {
+//								circles.add(new Circle(sitesAbove.get(i), sitesAbove.get(i + 1), sitesAbove.get(i + 2), this));
+//							}
 							Collections.sort(circles);
 						}
 						//for debugging
@@ -121,25 +134,27 @@ public class VoroDemo extends PApplet {
 //						System.out.println("test");
 					}
 				}
-				if (siteTmpRef != null) {
-					siteEvent(siteTmpRef.copy());
-					System.out.println();
-					for (Parabola arc : arcs.values()) {						
-						System.out.print(arc.leftBpt.type + ", " + arc.rightBpt.type + "|");
-					}
-					System.out.println();
-					for (Parabola arc : arcs.values()) {
-						System.out.print("(" + arc.leftBpt.x() + ", "  + arc.leftBpt.y() + "), " + "(" + arc.rightBpt.x() + ", " +arc.rightBpt.y() + ")" + "|");						
-					}
-					System.out.println();
-//					for (Parabola arc : arcs.values()) {
-//						System.out.print(arc.leftBpt.y() + ", " + arc.rightBpt.y() + "|");
-//					}
-//					System.out.println();
-					sitesBelow.remove(siteTmpRef);					
-					siteTmpRef = null;
+				for (Site site : sitesTemp) {
+					sitesBelow.remove(site);
 				}
-				
+				for (Circle circle : circles) {
+					if (circle.getLowY() >= dictx.y()) {
+						
+					}
+				}
+//				System.out.println();
+//				for (Parabola arc : arcs.values()) {						
+//					System.out.print(arc.leftBpt.type + ", " + arc.rightBpt.type + "|");
+//				}
+//				System.out.println();
+//				for (Parabola arc : arcs.values()) {
+//					System.out.print("(" + arc.leftBpt.x() + ", "  + arc.leftBpt.y() + "), " + "(" + arc.rightBpt.x() + ", " +arc.rightBpt.y() + ")" + "|");						
+//				}
+//				System.out.println();
+//				for (Parabola arc : arcs.values()) {
+//					System.out.print(arc.leftBpt.y() + ", " + arc.rightBpt.y() + "|");
+//				}
+//				System.out.println();
 			} 
 		} 
 	}
@@ -149,11 +164,11 @@ public class VoroDemo extends PApplet {
 	}
 	public void settings() {		
 		size(600, 600);
-		float[][] testSites = {{376.0f, 122.0f},{269.0f, 126.0f},{151.0f, 162.0f},{98.0f, 212.0f}};
+		//float[][] testSites = {{376.0f, 122.0f},{269.0f, 126.0f},{151.0f, 162.0f},{98.0f, 212.0f}};
 //		float[][] testSites = {{376.0f, 122.0f},{269.0f, 122.0f},{151.0f, 122.0f},{98.0f, 122.0f}}; 
-		for (float[] coord : testSites) {
-			sitesBelow.add(new Site(coord[0], coord[1], this));
-		}
+//		for (float[] coord : testSites) {
+//			sitesBelow.add(new Site(coord[0], coord[1], this));
+//		}
 	}
 	
 	public void drawBeachLine() {
@@ -181,11 +196,11 @@ public class VoroDemo extends PApplet {
 		}
 		drawBeachLine();
 		
-//		if (!circles.isEmpty()) {
-//			for (Circle circle : circles) {
-//				circle.draw();
-//			}
-//		}
+		if (!circles.isEmpty()) {
+			for (Circle circle : circles) {
+				circle.draw();
+			}
+		}
 
 		
 	}

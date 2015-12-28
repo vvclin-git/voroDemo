@@ -7,7 +7,21 @@ public class Circle implements Comparable<Circle>{
 	float lowY;
 	PApplet c;
 	ArrayList<Point> sites = new ArrayList<Point>(); 
-	public Circle (Point p1, Point p2, Point p3, PApplet c) {
+	//public Circle (Point p1, Point p2, Point p3, PApplet c) {
+	public Circle (BptNode bpt1, BptNode bpt2, PApplet c) {
+		p2 = bpt1.getSharedSite(bpt2);
+		if (bpt1.leftSite.equals(p2)) {
+			p1 = bpt1.rightSite;
+		}
+		else {
+			p1 = bpt1.leftSite;
+		}
+		if (bpt2.leftSite.equals(p2)) {
+			p3 = bpt2.rightSite;
+		}
+		else {
+			p3 = bpt2.leftSite;
+		}
 		float ma, mb;		
 		float dxa, dxb;
 		float x1, x2, x3;
@@ -61,7 +75,9 @@ public class Circle implements Comparable<Circle>{
 	float y() {
 		return y;
 	}
-	
+	public Site getCenter() {
+		return new Site(x, y, c);
+	}
 	void draw() {
 		c.stroke(255);
 		c.noFill();
@@ -72,11 +88,11 @@ public class Circle implements Comparable<Circle>{
 		return sites.contains(site);
 	}
 	public static void main(String args[]) {
-		Site p1 = new Site(10, 15, null);
-		Site p2 = new Site(10, 23, null);
-		Site p3 = new Site(43, 56, null);
-		Circle c = new Circle(p1, p2, p3, null);
-		System.out.print(c.x() + ", " + c.y() + ", " + c.r);
+//		Site p1 = new Site(10, 15, null);
+//		Site p2 = new Site(10, 23, null);
+//		Site p3 = new Site(43, 56, null);
+//		Circle c = new Circle(p1, p2, p3, null);
+//		System.out.print(c.x() + ", " + c.y() + ", " + c.r);
 	}
 	@Override
 	public int compareTo(Circle that) {
