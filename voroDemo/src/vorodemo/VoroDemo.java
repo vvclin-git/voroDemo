@@ -8,78 +8,10 @@ import processing.core.PApplet;
 
 
 public class VoroDemo extends PApplet {
-	//PApplet canvas;
-	ArrayList<Parabola> parabolae = new ArrayList<Parabola>();
-	//ArrayList<Arc> arcs = new ArrayList<Arc>();
-	ArrayList<BreakPoint> breakPoints = new ArrayList<BreakPoint>();
-	ArrayList<Site> sitesAbove = new ArrayList<Site>();
-	ArrayList<Site> sitesBelow = new ArrayList<Site>();
-	ArrayList<Site> sitesTemp = new ArrayList<Site>();
-	ArrayList<Edge> edges = new ArrayList<Edge>();
-	ArrayList<Circle> circles = new ArrayList<Circle>();
-//	TreeMap<Point, Point> beachLine = new TreeMap<Point, Point>();
-	TreeMap<BptNode, BptNode> beachLine = new TreeMap<BptNode, BptNode>();
-	TreeMap<BptNode, Parabola> arcs = new TreeMap<BptNode, Parabola>();
-	//TreeMap<Float, Site> sitesTree = new TreeMap<Float, Site>();
-	Directrix dictx = new Directrix(100, this);	
-	
-	private void siteEvent(Site site) {
-		if (beachLine.isEmpty()) {
-			Parabola newPara = new Parabola(dictx, site, 600, this);
-			BptNode leftNode = new BptNode("leftBound", null, site, dictx);
-			BptNode rightNode = new BptNode("rightBound", site, null, dictx);
-			beachLine.put(leftNode, leftNode);
-			beachLine.put(rightNode, rightNode);
-			// for drawing beach line
-			breakPoints.add(newPara.leftBpt);
-			breakPoints.add(newPara.rightBpt);
-			arcs.put(leftNode, newPara);
-		}
-		else {
-			// determine which arc to insert a site
-			BptNode queryNode = new BptNode("query", site);
-			BptNode oldLeftNode = beachLine.floorEntry(queryNode).getValue();
-			BptNode oldRightNode = beachLine.ceilingEntry(queryNode).getValue();
-			// for drawing beach line
-			Parabola oldPara = arcs.get(oldLeftNode);
-			BreakPoint oldLeftBpt = oldPara.leftBpt;
-			BreakPoint oldRightBpt = oldPara.rightBpt;
-			Parabola newPara = new Parabola(dictx, site, oldPara, this);
-			// create new break points
-			BptNode newLeftNode = new BptNode("left", oldLeftNode.rightSite, site, dictx);
-			BptNode newRightNode = new BptNode("right", site, oldRightNode.leftSite, dictx);
-			beachLine.put(newLeftNode, newLeftNode);
-			beachLine.put(newRightNode, newRightNode);
-			// for drawing beach line
-			BreakPoint newLeftBpt = newPara.leftBpt;
-			BreakPoint newRightBpt = newPara.rightBpt;			
-			breakPoints.add(newLeftBpt);
-			breakPoints.add(newRightBpt);
-			// add new arcs (for drawing beach line)
-			arcs.remove(oldLeftNode);
-			arcs.put(oldLeftNode, new Parabola (dictx, oldLeftNode.rightSite, oldLeftBpt, newLeftBpt, this));
-			arcs.put(newLeftNode, newPara);
-			arcs.put(newRightNode, new Parabola (dictx, oldLeftNode.rightSite, newRightBpt, oldRightBpt, this));
-			// add new circle (ignore left and right virtual nodes) 
-			if (oldLeftNode.type != "leftBound") {
-				circles.add(new Circle(oldLeftNode, newLeftNode, this));				
-			}
-			if (oldRightNode.type != "rightBound") {				
-				circles.add(new Circle(newRightNode, oldRightNode, this));
-			}
-		}
-	}
-	private void circleEvent(Circle circle) {
-//		BptNode queryNode = new BptNode("query", circle.getCenter());
-//		beachLine.
-	}
-	private void updateBpts() {
-		for (BreakPoint bpt : breakPoints) {
-			bpt.update();
-		}
-	}
+	PApplet canvas;
+	Voronoi voronoi = new Voronoi(100, this);
 	public void mouseClicked() {  
-		Site site = new Site(mouseX, mouseY, this);		
+		voronoi.addSite(new Site(mouseX, mouseY, this));	
 		if (site.y() > dictx.y()) {
 			System.out.print(site + ", ");
 			sitesBelow.add(site);
