@@ -15,14 +15,14 @@ public class Voronoi extends PApplet{
 	TreeMap<BptNode, Parabola> arcs = new TreeMap<BptNode, Parabola>();	
 	Directrix dictx;
 	PApplet p;
-	public Voronoi(float dictY, PApplet p) {
-		dictx = new Directrix(dictY, this);
+	public Voronoi(float dictY, PApplet p) {		
 		this.p = p;
+		dictx = new Directrix(dictY, p);
 	}
 	public void addSite(Site site) {
 		sites.add(site);
 		//add site event
-		
+		events.add(new SiteEvent(this, site));
 	}
 	public void draw() {
 		dictx.draw();
@@ -31,6 +31,9 @@ public class Voronoi extends PApplet{
 		}
 		for (Parabola arc : arcs.values()) {
 			arc.draw();
+		}
+		for (Site site : sites) {
+			site.draw();
 		}
 	}
 	public void update() {

@@ -8,7 +8,7 @@ public class SiteEvent extends Event {
 		this.site = site;		
 	}	
 	public void eventHandler() {
-		if (voronoi.beachLine.isEmpty()) {
+		if (voronoi.beachLine.isEmpty()) {			
 			Parabola newPara = new Parabola(voronoi.dictx, site, 600, voronoi.p);
 			BptNode leftNode = new BptNode("leftBound", null, site, voronoi.dictx);
 			BptNode rightNode = new BptNode("rightBound", site, null, voronoi.dictx);
@@ -28,7 +28,9 @@ public class SiteEvent extends Event {
 			Parabola oldPara = voronoi.arcs.get(oldLeftNode);
 			BreakPoint oldLeftBpt = oldPara.leftBpt;
 			BreakPoint oldRightBpt = oldPara.rightBpt;
+			System.out.println("old para " + oldPara.a() + ", " + oldPara.b() + ", " + oldPara.c());			
 			Parabola newPara = new Parabola(voronoi.dictx, site, oldPara, voronoi.p);
+			System.out.println("new para " + newPara.a() + ", " + newPara.b() + ", " + newPara.c());
 			// create new break points
 			BptNode newLeftNode = new BptNode("left", oldLeftNode.rightSite, site, voronoi.dictx);
 			BptNode newRightNode = new BptNode("right", site, oldRightNode.leftSite, voronoi.dictx);
@@ -53,5 +55,7 @@ public class SiteEvent extends Event {
 			}
 		}
 	}
-
+	public String toString() {
+		return this.site.toString();
+	}
 }
