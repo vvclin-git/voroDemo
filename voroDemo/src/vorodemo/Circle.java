@@ -1,14 +1,18 @@
 package vorodemo;
 import processing.core.PApplet;
 import java.util.ArrayList;
+import java.util.Arrays;
 public class Circle implements Comparable<Circle>{
-	Point p1, p2, p3;
+	Site p1, p2, p3;
 	float x, y, r;		
 	float lowY;
+	BptNode bpt1, bpt2;
 	PApplet c;
 	ArrayList<Point> sites = new ArrayList<Point>(); 
 	//public Circle (Point p1, Point p2, Point p3, PApplet c) {
 	public Circle (BptNode bpt1, BptNode bpt2, PApplet c) {
+		this.bpt1 = bpt1;
+		this.bpt2 = bpt2;
 		p2 = bpt1.getSharedSite(bpt2);
 		if (bpt1.leftSite.equals(p2)) {
 			p1 = bpt1.rightSite;
@@ -29,7 +33,7 @@ public class Circle implements Comparable<Circle>{
 		this.c = c;
 		sites.add(p1);
 		sites.add(p2);
-		sites.add(p3);
+		sites.add(p3);		
 		x1 = p1.x();
 		x2 = p2.x();
 		x3 = p3.x();
@@ -64,7 +68,7 @@ public class Circle implements Comparable<Circle>{
 				(2 * (mb - ma));		
 		y = (-1 / ma) * (x - (x1 + x2) / 2) + (y1 + y2) /2;
 		r = (float) Math.sqrt(Math.pow((double) (p1.x() - x), 2) + Math.pow((double) (p1.y() - y), 2));
-		lowY = y - r;
+		lowY = y + r;
 	}
 	float getLowY() {
 		return lowY;
@@ -86,6 +90,31 @@ public class Circle implements Comparable<Circle>{
 	}
 	public boolean containSite(Point site) {
 		return sites.contains(site);
+	}
+	public BptNode getBpt1() {
+		return bpt1;
+	}
+	public BptNode getBpt2() {
+		return bpt2;
+	}
+	public Site getLeftSite() {
+		if (p1.x() < p3.x()) {
+			return p1;
+		}
+		else {
+			return p3;
+		}		
+	}
+	public Site getMedSite() {
+		return p2;
+	}
+	public Site getRightSite() {
+		if (p1.x() > p3.x()) {
+			return p1;
+		}
+		else {
+			return p3;
+		}	
 	}
 	public static void main(String args[]) {
 //		Site p1 = new Site(10, 15, null);

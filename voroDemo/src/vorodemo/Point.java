@@ -38,9 +38,12 @@ public abstract class Point implements Comparable<Point>{
 		return Math.pow(dx, 2) + Math.pow(dy, 2);
 	}
 	public boolean equalTo(Point that) {
-		if (this.x == that.x & this.y == that.y) {
-			return true;
+		if (that != null) {
+			if (this.x == that.x & this.y == that.y) {
+				return true;
+			}
 		}
 		return false;
 	}
+	
 }

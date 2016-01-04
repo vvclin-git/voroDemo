@@ -35,6 +35,9 @@ public class Voronoi extends PApplet{
 		for (Site site : sites) {
 			site.draw();
 		}
+		for (Circle circle : circles) {
+			circle.draw();
+		}
 	}
 	public void update() {
 		for (BreakPoint bpt : breakPoints) {

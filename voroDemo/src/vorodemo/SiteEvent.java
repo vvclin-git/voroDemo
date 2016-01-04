@@ -10,6 +10,7 @@ public class SiteEvent extends Event {
 	public void eventHandler() {
 		if (voronoi.beachLine.isEmpty()) {			
 			Parabola newPara = new Parabola(voronoi.dictx, site, 600, voronoi.p);
+			site.setPara(newPara);
 			BptNode leftNode = new BptNode("leftBound", null, site, voronoi.dictx);
 			BptNode rightNode = new BptNode("rightBound", site, null, voronoi.dictx);
 			voronoi.beachLine.put(leftNode, leftNode);
@@ -30,6 +31,7 @@ public class SiteEvent extends Event {
 			BreakPoint oldRightBpt = oldPara.rightBpt;
 			System.out.println("old para " + oldPara.a() + ", " + oldPara.b() + ", " + oldPara.c());			
 			Parabola newPara = new Parabola(voronoi.dictx, site, oldPara, voronoi.p);
+			site.setPara(newPara);
 			System.out.println("new para " + newPara.a() + ", " + newPara.b() + ", " + newPara.c());
 			// create new break points
 			BptNode newLeftNode = new BptNode("left", oldLeftNode.rightSite, site, voronoi.dictx);
@@ -45,14 +47,20 @@ public class SiteEvent extends Event {
 			voronoi.arcs.remove(oldLeftNode);
 			voronoi.arcs.put(oldLeftNode, new Parabola (voronoi.dictx, oldLeftNode.rightSite, oldLeftBpt, newLeftBpt, voronoi.p));
 			voronoi.arcs.put(newLeftNode, newPara);
-			voronoi.arcs.put(newRightNode, new Parabola (voronoi.dictx, oldLeftNode.rightSite, newRightBpt, oldRightBpt, voronoi.p));
+			voronoi.arcs.put(newRightNode, new Parabola (voronoi.dictx, oldLeftNode.rightSite, newRightBpt, oldRightBpt, voronoi.p));			
 			// add new circle (ignore left and right virtual nodes) 
 			if (oldLeftNode.type != "leftBound") {
-				voronoi.circles.add(new Circle(oldLeftNode, newLeftNode, voronoi.p));				
+				Circle newCircle = new Circle(oldLeftNode, newLeftNode, voronoi.p);
+				voronoi.circles.add(newCircle);
+				voronoi.events.add(new CircleEvent(voronoi, newCircle));
 			}
-			if (oldRightNode.type != "rightBound") {				
-				voronoi.circles.add(new Circle(newRightNode, oldRightNode, voronoi.p));
+			if (oldRightNode.type != "rightBound") {
+				Circle newCircle = new Circle(newRightNode, oldRightNode, voronoi.p);
+				voronoi.circles.add(newCircle);
+				voronoi.events.add(new CircleEvent(voronoi, newCircle));
 			}
+			// for the potential removal of existed circle event (see if the new site is already inside of a circle)
+			
 		}
 	}
 	public String toString() {

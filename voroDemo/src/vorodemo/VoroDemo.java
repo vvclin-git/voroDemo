@@ -40,11 +40,13 @@ public class VoroDemo extends PApplet {
 			else if (keyCode == DOWN) {				
 				voronoi.dictx.move(1);
 				voronoi.update();
+				//System.out.println(voronoi.circles.size());
 				// event
 				if (!voronoi.events.isEmpty()) {
-					while (voronoi.events.peek().y() < voronoi.dictx.y()) {
-						voronoi.events.poll().eventHandler();						
-						System.out.println(voronoi.arcs.size());
+					while (voronoi.events.peek().y() < voronoi.dictx.y()) { // "<=" is a must have in the future
+						voronoi.events.poll().eventHandler();
+						// for debugging
+						//System.out.println(voronoi.arcs.size());
 						if (voronoi.events.isEmpty()) break;
 					}
 				}

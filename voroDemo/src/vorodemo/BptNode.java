@@ -63,15 +63,37 @@ public class BptNode implements Comparable<BptNode>{
 	}
 	public int compareTo(BptNode that) {		
 		update();		
-		that.update();		
+		that.update();
 		if (this.x < that.x) {
+			//System.out.println(this.x + ", " + that.x + " larger");
 			return -1;
 		}
 		if (this.x > that.x) {
+			//System.out.println(this.x + ", " + that.x + " smaller");
 			return 1;
 		}
+		// for debugging
+//		System.out.println(this.x + ", " + that.x + " equal");
+		//return 0;
+//		else if (this.type != "query") {
+//			if (this.equalsTo(that)) {
+//				return 0;
+//			}
+//		}		
 		return 0;
-	}	
+	}
+	public boolean equalsTo(BptNode that) {
+		if (this.type == "leftBound") {
+			return (this.rightSite.equalTo(that.rightSite));
+		}
+		if (this.type == "rightBound") {
+			return (this.leftSite.equalTo(that.leftSite));
+		}
+		else {
+			return (this.leftSite.equalTo(that.leftSite) & this.rightSite.equalTo(that.rightSite));
+		}
+		
+	}
 	public Site getSharedSite(BptNode that) {
 		if (this.leftSite == that.leftSite) {
 			return this.leftSite;
