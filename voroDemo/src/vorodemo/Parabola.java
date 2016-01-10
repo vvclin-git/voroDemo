@@ -7,6 +7,7 @@ public class Parabola {
 	float rightX;  
 	float p, k;
 	int step = 120;
+	Parabola thatPara;
 	BreakPoint rightBpt;
 	BreakPoint leftBpt;
 	Site site;
@@ -19,19 +20,18 @@ public class Parabola {
 		this.c = c;				
 		this.dictx = dictx;		
 		this.site = site;
-//		this.leftBpt = new BreakPoint(Float.NEGATIVE_INFINITY, this.y(0), "leftBound", null, this, c);
-//		this.rightBpt = new BreakPoint(Float.POSITIVE_INFINITY, this.y(canvasWidth), "rightBound", this, null, c);
 		this.leftBpt = new BreakPoint(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY, "leftBound", null, this, c);
 		this.rightBpt = new BreakPoint(Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY, "rightBound", this, null, c);		
 	}
-	Parabola (Directrix dictx, Site site, Parabola that, PApplet c) {    
+	Parabola (Directrix dictx, Site site, Parabola that, PApplet c) { // for site event    
 		this.focusX = site.x();
 		this.focusY = site.y();		
 		this.dictx = dictx;
 		this.c = c;
 		this.site = site;
-		this.leftBpt = this.leftInterPt(that);
-		this.rightBpt = this.rightInterPt(that);		
+		this.thatPara = that;
+		this.leftBpt = new BreakPoint(site.x(), that.y(site.x()), "left", that, this, c);
+		this.rightBpt = new BreakPoint(site.x(), that.y(site.x()), "right", this, that, c);
 	}
 	Parabola (Directrix dictx, Site site, BreakPoint leftBpt, BreakPoint rightBpt, PApplet c) {    
 		this.focusX = site.x();
@@ -43,41 +43,39 @@ public class Parabola {
 		this.rightBpt = rightBpt;		
 	}
 	void draw() {
-//		float dX = (rightBpt.x() - leftBpt.x()) / step;
-//		float x0 = leftBpt.x();
-//		float y0;
-//		float x1, y1;		
-//		p = (float) (Math.abs(focusY - dictx.y()) * 0.5);
-//		k = dictx.y() - p;
-//		for (int i = 0; i < (rightBpt.x() - leftBpt.x()) / dX; i += 1) {
-//			x1 = x0 + dX;
-//			y0 = y(x0);
-//			y1 = y(x1);			
-//			c.line(x0, y0, x1, y1);			
-//			x0 = x1;
-//		}
-		// ======
-		rightX = rightBpt.x();
-		leftX = leftBpt.x();
-		if (rightX > c.width) {
-			rightX = c.width;
+		// for site event
+		if (dictx.y() == site.y()) {
+			if (thatPara != null) {
+				c.line(site.x(), site.y(), site.x(), thatPara.y(site.x()));				
+			}
+			else {
+				c.line(site.x(), site.y(), site.x(), 0);				
+			}			
 		}
-		if (leftX < 0) {
-			leftX = 0;
+		// for normal situation
+		else {
+			rightX = rightBpt.x();
+			leftX = leftBpt.x();
+			if (rightX > c.width) {
+				rightX = c.width;
+			}
+			if (leftX < 0) {
+				leftX = 0;
+			}
+			float dX = (rightX - leftX) / step;
+			float x0 = leftX;
+			float y0;
+			float x1, y1;		
+			p = (float) (Math.abs(focusY - dictx.y()) * 0.5);
+			k = dictx.y() - p;
+			for (int i = 0; i < (rightX - leftX) / dX; i += 1) {
+				x1 = x0 + dX;
+				y0 = y(x0);
+				y1 = y(x1);			
+				c.line(x0, y0, x1, y1);			
+				x0 = x1;
+			}
 		}
-		float dX = (rightX - leftX) / step;
-		float x0 = leftX;
-		float y0;
-		float x1, y1;		
-		p = (float) (Math.abs(focusY - dictx.y()) * 0.5);
-		k = dictx.y() - p;
-		for (int i = 0; i < (rightX - leftX) / dX; i += 1) {
-			x1 = x0 + dX;
-			y0 = y(x0);
-			y1 = y(x1);			
-			c.line(x0, y0, x1, y1);			
-			x0 = x1;
-		}      
 	}
 	float y(float x) {
 		return (float) ((Math.pow(x, 2) - 2 * focusX * x + (Math.pow(focusX, 2) + Math.pow(focusY, 2)) - Math.pow(dictx.y(), 2)) / (focusY - dictx.y()) * 0.5);
@@ -85,52 +83,37 @@ public class Parabola {
 	public float a() {
 		return (float) (0.5 / (focusY - dictx.y()));
 	}
-	float b() {
+	public float b() {
 		return -focusX / (focusY - dictx.y());
 	}
-	float c() {
+	public float c() {
 		return (float) (0.5 / (focusY - dictx.y()) * ((Math.pow(focusX, 2) + Math.pow(focusY, 2)) - Math.pow(dictx.y(), 2)));
 	}
-	void setLeft(float leftX) {
+	public void setLeft(float leftX) {
 		this.leftX = leftX;
 		return;
 	}
-	void setRight(float rightX) {
+	public void setRight(float rightX) {
 		this.rightX = rightX;
 		return;
 	}
-	boolean hidden() {
+	public void setLeftBpt(BreakPoint leftBpt) {
+		this.leftBpt = leftBpt;
+		return;
+	}
+	public void setRightBpt(BreakPoint rightBpt) {
+		this.rightBpt = rightBpt;
+		return;
+	}
+	public boolean hidden() {
 		return hide;
 	}
-	boolean inArc (Site site) {
+	public boolean inArc (Site site) {
 		return (site.x() > this.leftBpt.x() & site.x() < this.rightBpt.x());
 	}
-	void update() {
-//		this.leftBpt.update();
-//		this.rightBpt.update();
-//		rightX = rightBpt.x();
-//		leftX = leftBpt.x();		
-//		p = (float) (Math.abs(focusY - dictx.y()) * 0.5);
-//		k = dictx.y() - p;
-//		if (leftX < 0) { // deal with corner case (x < 0)
-//			leftX = 0;
-//		}
-//		if (y(leftX) < 0) { // deal with corner case (y < 0)			
-//			leftX = (float) (focusX - Math.sqrt(Math.pow(dictx.y(), 2)-Math.pow(focusY, 2) + 0.1f * 2 * (focusY - dictx.y())));
-//			if (leftX >= rightX) { //the arc is outside of the canvas
-//				hide = true;
-//				return;
-//			}
-//		}
-//		if (y(rightX) < 0) {			
-//			rightX = (float) (focusX + Math.sqrt(Math.pow(dictx.y(), 2)-Math.pow(focusY, 2) + 0.1f * 2 * (focusY - dictx.y())));
-//			if (rightX <= leftX) { //the arc is outside of the canvas
-//				hide = true;
-//				return;
-//			}
-//		}		
+	void update() {		
 	}
-	BreakPoint leftInterPt(Parabola other) {
+	public BreakPoint leftInterPt(Parabola other) {
 		float da, db, dc, h, x;
 		float x1, x2;
 		da = this.a() - other.a();
@@ -152,7 +135,7 @@ public class Parabola {
 			return null;	
 		}		
 	}
-	BreakPoint rightInterPt(Parabola other) {
+	public BreakPoint rightInterPt(Parabola other) {
 		float da, db, dc, h, x;
 		float x1, x2;
 		da = this.a() - other.a();

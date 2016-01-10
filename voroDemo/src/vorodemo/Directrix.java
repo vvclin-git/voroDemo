@@ -18,4 +18,7 @@ public class Directrix{
 	float y() {
 		return y;
 	}
+	void setY(float y) {
+		this.y = y;
+	}
 }

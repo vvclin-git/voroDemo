@@ -11,8 +11,8 @@ public class SiteEvent extends Event {
 		if (voronoi.beachLine.isEmpty()) {			
 			Parabola newPara = new Parabola(voronoi.dictx, site, 600, voronoi.p);
 			site.setPara(newPara);
-			BptNode leftNode = new BptNode("leftBound", null, site, voronoi.dictx);
-			BptNode rightNode = new BptNode("rightBound", site, null, voronoi.dictx);
+			BptNode leftNode = new BptNode("leftBound", null, site, site, voronoi.dictx);
+			BptNode rightNode = new BptNode("rightBound", site, null, site, voronoi.dictx);
 			voronoi.beachLine.put(leftNode, leftNode);
 			voronoi.beachLine.put(rightNode, rightNode);
 			// for drawing beach line
@@ -29,14 +29,16 @@ public class SiteEvent extends Event {
 			Parabola oldPara = voronoi.arcs.get(oldLeftNode);
 			BreakPoint oldLeftBpt = oldPara.leftBpt;
 			BreakPoint oldRightBpt = oldPara.rightBpt;
-			System.out.println("old para " + oldPara.a() + ", " + oldPara.b() + ", " + oldPara.c());			
+			//System.out.println("old para " + oldPara.a() + ", " + oldPara.b() + ", " + oldPara.c());			
 			Parabola newPara = new Parabola(voronoi.dictx, site, oldPara, voronoi.p);
 			site.setPara(newPara);
-			System.out.println("new para " + newPara.a() + ", " + newPara.b() + ", " + newPara.c());
+			//System.out.println("new para " + newPara.a() + ", " + newPara.b() + ", " + newPara.c());
 			// create new break points
-			BptNode newLeftNode = new BptNode("left", oldLeftNode.rightSite, site, voronoi.dictx);
-			BptNode newRightNode = new BptNode("right", site, oldRightNode.leftSite, voronoi.dictx);
+			BptNode newLeftNode = new BptNode("left", oldLeftNode.rightSite, site, site, voronoi.dictx);
+			BptNode newRightNode = new BptNode("right", site, oldRightNode.leftSite, site, voronoi.dictx);
+			System.out.println("add: " + newLeftNode.x);
 			voronoi.beachLine.put(newLeftNode, newLeftNode);
+			System.out.println("add: " + newRightNode.x);
 			voronoi.beachLine.put(newRightNode, newRightNode);
 			// for drawing beach line
 			BreakPoint newLeftBpt = newPara.leftBpt;

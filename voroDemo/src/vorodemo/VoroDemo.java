@@ -17,13 +17,13 @@ public class VoroDemo extends PApplet {
 			//System.out.print("(" + mouseX + ", " + mouseY + "), ");			
 			voronoi.addSite(new Site(mouseX, mouseY, this));
 			//for debugging
-			Event[] eventsOut = new Event[voronoi.events.size()];
-			eventsOut = voronoi.events.toArray(new Event[voronoi.events.size()]);
-			System.out.println();
-			Arrays.sort(eventsOut);
-			for (Event event : eventsOut) {
-				System.out.print(event.toString() + ",");
-			}
+//			Event[] eventsOut = new Event[voronoi.events.size()];
+//			eventsOut = voronoi.events.toArray(new Event[voronoi.events.size()]);
+//			System.out.println();
+//			Arrays.sort(eventsOut);
+//			for (Event event : eventsOut) {
+//				System.out.print(event.toString() + ",");
+//			}
 		}		
 	}
 	public void keyPressed() {
@@ -43,7 +43,7 @@ public class VoroDemo extends PApplet {
 				//System.out.println(voronoi.circles.size());
 				// event
 				if (!voronoi.events.isEmpty()) {
-					while (voronoi.events.peek().y() < voronoi.dictx.y()) { // "<=" is a must have in the future
+					while (voronoi.events.peek().y() <= voronoi.dictx.y()) { // "<=" is a must have in the future
 						voronoi.events.poll().eventHandler();
 						// for debugging
 						//System.out.println(voronoi.arcs.size());
