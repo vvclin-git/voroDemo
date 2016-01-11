@@ -23,6 +23,7 @@ public class CircleEvent extends Event{
 		BreakPoint tmpLeftBpt = nextArc.leftInterPt(prevArc);
 		BreakPoint tmpRightBpt = nextArc.rightInterPt(prevArc);
 		BreakPoint newBpt;
+		// determine the relation between new break point and its neighbor arcs
 		if (tmpLeftBpt.distSqrTo(circle.getCenter()) > tmpRightBpt.distSqrTo(circle.getCenter())) {
 			newBpt = tmpRightBpt; 
 		}
