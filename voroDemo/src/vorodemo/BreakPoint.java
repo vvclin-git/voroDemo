@@ -15,6 +15,7 @@ public class BreakPoint extends Point{
 		return new BreakPoint(this.x, this.y, this.type, this.paraLeft, this.paraRight, this.p);
 	}
 	void update() {
+		//TODO
 	    if (type == "left") {
 	      this.x = paraLeft.leftInterPt(paraRight).x();
 	      this.y = paraLeft.y(this.x);	      

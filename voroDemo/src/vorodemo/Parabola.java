@@ -105,6 +105,12 @@ public class Parabola {
 		this.rightBpt = rightBpt;
 		return;
 	}
+	public BreakPoint getLeftBpt() {		
+		return leftBpt;
+	}
+	public BreakPoint getRightBpt() {		
+		return rightBpt;
+	}
 	public boolean hidden() {
 		return hide;
 	}

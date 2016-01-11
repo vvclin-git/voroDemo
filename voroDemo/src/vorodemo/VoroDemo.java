@@ -11,10 +11,11 @@ import processing.core.PApplet;
 public class VoroDemo extends PApplet {
 	PApplet canvas;
 	Voronoi voronoi = new Voronoi(100, this);
+	
 	public void mouseClicked() {
 		//Event[] eventsOut;
 		if (mouseY > voronoi.dictx.y()) {
-			//System.out.print("(" + mouseX + ", " + mouseY + "), ");			
+			System.out.print("(" + mouseX + ", " + mouseY + "), ");			
 			voronoi.addSite(new Site(mouseX, mouseY, this));
 			//for debugging
 //			Event[] eventsOut = new Event[voronoi.events.size()];
@@ -59,11 +60,9 @@ public class VoroDemo extends PApplet {
 	}
 	public void settings() {		
 		size(600, 600);
-		//float[][] testSites = {{376.0f, 122.0f},{269.0f, 126.0f},{151.0f, 162.0f},{98.0f, 212.0f}};
-//		float[][] testSites = {{376.0f, 122.0f},{269.0f, 122.0f},{151.0f, 122.0f},{98.0f, 122.0f}}; 
-//		for (float[] coord : testSites) {
-//			sitesBelow.add(new Site(coord[0], coord[1], this));
-//		}
+		voronoi.addSite(new Site(270, 118, this));
+		voronoi.addSite(new Site(252, 126, this));
+		voronoi.addSite(new Site(287, 136, this));
 	}	
 
 	public void draw() {
@@ -72,5 +71,6 @@ public class VoroDemo extends PApplet {
 	}
 	public static void main(String args[]) {		
 	    PApplet.main(new String[] { vorodemo.VoroDemo.class.getName() });
+	    
 	}
 }

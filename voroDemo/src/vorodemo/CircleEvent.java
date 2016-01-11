@@ -1,5 +1,7 @@
 package vorodemo;
 
+import processing.core.PApplet;
+
 public class CircleEvent extends Event{
 	Circle circle;
 	public CircleEvent(Voronoi voronoi, Circle circle) {
@@ -11,12 +13,27 @@ public class CircleEvent extends Event{
 		float tempY = voronoi.dictx.y();
 		voronoi.dictx.setY(this.y());
 		// pull off the degenerate arc and break points (for drawing)
-		voronoi.breakPoints.remove(circle.getMedSite().parabola.leftBpt);
-		voronoi.breakPoints.remove(circle.getMedSite().parabola.rightBpt);
+		System.out.println(voronoi.breakPoints.toString());
+		voronoi.breakPoints.remove(voronoi.arcs.get(circle.getBpt1()).getLeftBpt());
+		voronoi.breakPoints.remove(voronoi.arcs.get(circle.getBpt1()).getRightBpt());
+		System.out.println(voronoi.breakPoints.toString());
+		voronoi.arcs.remove(circle.getBpt1());
 		Parabola prevArc = voronoi.arcs.floorEntry(circle.getBpt1()).getValue();
 		Parabola nextArc = voronoi.arcs.get(circle.getBpt2());
-		BreakPoint newBpt = prevArc.rightInterPt(nextArc);
-		voronoi.arcs.remove(circle.getBpt1());
+		BreakPoint tmpLeftBpt = nextArc.leftInterPt(prevArc);
+		BreakPoint tmpRightBpt = nextArc.rightInterPt(prevArc);
+		BreakPoint newBpt;
+		if (tmpLeftBpt.distSqrTo(circle.getCenter()) > tmpRightBpt.distSqrTo(circle.getCenter())) {
+			newBpt = tmpRightBpt; 
+		}
+		else {
+			newBpt = tmpLeftBpt;
+		}
+//		BreakPoint newBpt = nextArc.leftInterPt(prevArc);
+		
+//		BreakPoint newBpt = new BreakPoint(circle.x(), prevArc.y(circle.x()), "right", prevArc, nextArc, voronoi.p);
+		voronoi.breakPoints.add(newBpt);
+		System.out.println(voronoi.breakPoints.toString());
 		prevArc.setRightBpt(newBpt);
 		nextArc.setLeftBpt(newBpt);
 
@@ -29,14 +46,14 @@ public class CircleEvent extends Event{
 			System.out.println(x.x);			
 		}
 		System.out.println("=====");
-		voronoi.beachLine.remove(circle.getBpt2());
+		voronoi.beachLine.remove(circle.getBpt1());
 		System.out.println(voronoi.beachLine.size() + " , " + circle.getBpt1().x + ", " + circle.getBpt2().x);
 		System.out.println("==2===");
 		for (BptNode x : voronoi.beachLine.keySet()) {			
 			System.out.println(x.x);			
 		}
 		System.out.println("=====");
-		voronoi.beachLine.remove(circle.getBpt1());
+		voronoi.beachLine.remove(circle.getBpt2());
 		System.out.println(voronoi.beachLine.size() + " , " + circle.getBpt1().x + ", " + circle.getBpt2().x);
 		System.out.println("==3===");
 		for (BptNode x : voronoi.beachLine.keySet()) {			
