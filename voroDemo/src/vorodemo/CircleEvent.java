@@ -12,7 +12,20 @@ public class CircleEvent extends Event{
 	public void eventHandler() {
 		float tempY = voronoi.dictx.y();
 		voronoi.dictx.setY(this.y());
-		// pull off the degenerate arc and break points (for drawing)
+		// update data structures
+//		System.out.println(voronoi.beachLine.size() + " , " + circle.getBpt1().x + ", " + circle.getBpt2().x);
+//		System.out.println("==1===");
+//		for (BptNode x : voronoi.beachLine.keySet()) {			
+//			System.out.println(x.x);			
+//		}
+//		System.out.println("=====");
+		// remove old bptnodes
+		voronoi.beachLine.remove(circle.getBpt1());		
+		voronoi.beachLine.remove(circle.getBpt2());				
+		// create new bptnode
+		BptNode newBptNode = new BptNode("right", circle.getLeftSite(), circle.getRightSite(), circle.getLeftSite(), voronoi.dictx);
+		voronoi.beachLine.put(newBptNode, newBptNode);
+		// for drawing
 		System.out.println(voronoi.breakPoints.toString());
 		voronoi.breakPoints.remove(voronoi.arcs.get(circle.getBpt1()).getLeftBpt());
 		voronoi.breakPoints.remove(voronoi.arcs.get(circle.getBpt1()).getRightBpt());
@@ -22,55 +35,26 @@ public class CircleEvent extends Event{
 		Parabola nextArc = voronoi.arcs.get(circle.getBpt2());
 		BreakPoint tmpLeftBpt = nextArc.leftInterPt(prevArc);
 		BreakPoint tmpRightBpt = nextArc.rightInterPt(prevArc);
-		BreakPoint newBpt;
+		BreakPoint newLeftBpt; 
+		BreakPoint newRightBpt = nextArc.getRightBpt();
 		// determine the relation between new break point and its neighbor arcs
 		if (tmpLeftBpt.distSqrTo(circle.getCenter()) > tmpRightBpt.distSqrTo(circle.getCenter())) {
-			newBpt = tmpRightBpt; 
+			newLeftBpt = tmpRightBpt;			
 		}
 		else {
-			newBpt = tmpLeftBpt;
+			newLeftBpt = tmpLeftBpt;
 		}
-//		BreakPoint newBpt = nextArc.leftInterPt(prevArc);
-		
-//		BreakPoint newBpt = new BreakPoint(circle.x(), prevArc.y(circle.x()), "right", prevArc, nextArc, voronoi.p);
-		voronoi.breakPoints.add(newBpt);
+		voronoi.breakPoints.add(newLeftBpt);
 		System.out.println(voronoi.breakPoints.toString());
-		prevArc.setRightBpt(newBpt);
-		nextArc.setLeftBpt(newBpt);
-
-		// add new break point
+		prevArc.setRightBpt(newLeftBpt);
+		nextArc.setLeftBpt(newLeftBpt);
+		voronoi.arcs.remove(circle.getBpt2());
+		voronoi.arcs.put(circle.getBpt2(), new Parabola (voronoi.dictx, circle.getRightSite(), newLeftBpt, newRightBpt, voronoi.p));
+		for (BptNode k : voronoi.arcs.keySet()) {
+			k.update();
+			System.out.println(k.x);
+		}
 		
-		// join the break points and update the beachLine
-		System.out.println(voronoi.beachLine.size() + " , " + circle.getBpt1().x + ", " + circle.getBpt2().x);
-		System.out.println("==1===");
-		for (BptNode x : voronoi.beachLine.keySet()) {			
-			System.out.println(x.x);			
-		}
-		System.out.println("=====");
-		voronoi.beachLine.remove(circle.getBpt1());
-		System.out.println(voronoi.beachLine.size() + " , " + circle.getBpt1().x + ", " + circle.getBpt2().x);
-		System.out.println("==2===");
-		for (BptNode x : voronoi.beachLine.keySet()) {			
-			System.out.println(x.x);			
-		}
-		System.out.println("=====");
-		voronoi.beachLine.remove(circle.getBpt2());
-		System.out.println(voronoi.beachLine.size() + " , " + circle.getBpt1().x + ", " + circle.getBpt2().x);
-		System.out.println("==3===");
-		for (BptNode x : voronoi.beachLine.keySet()) {			
-			System.out.println(x.x);			
-		}
-		System.out.println("=====");		
-//		BptNode newBptNode = new BptNode("right", circle.getLeftSite(), circle.getRightSite(), voronoi.dictx);
-//		voronoi.beachLine.put(newBptNode, newBptNode);
-//		System.out.println(voronoi.beachLine.floorKey(circle.getBpt1()).x);
-//		System.out.println("==4==");
-//		voronoi.beachLine.remove(circle.getBpt1());
-//		for (BptNode x : voronoi.beachLine.keySet()) {			
-//			System.out.println(x.x);			
-//		}
-//		System.out.println("=====");
-		// 
 		voronoi.dictx.setY(tempY);
 	}
 

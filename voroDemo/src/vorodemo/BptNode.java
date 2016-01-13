@@ -22,7 +22,7 @@ public class BptNode implements Comparable<BptNode>{
 	public BptNode(String type, Site querySite) { // for query
 		this.x = querySite.x();
 	}	
-	private void update() {
+	public void update() {
 		if ((type == "left" | type == "right")) {
 			if (leftSite.y() != dictx.y() & rightSite.y() != dictx.y()) {
 				float da, db, dc, h;
