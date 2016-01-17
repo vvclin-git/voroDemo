@@ -5,7 +5,7 @@ public class BptNode implements Comparable<BptNode>{
 	Site rightSite;
 	Directrix dictx;
 	String type; // left, right, query, leftBound, rightBound
-	float x;
+	float x, y;	
 	public BptNode(String type, Site leftSite, Site rightSite, Site site, Directrix dictx) {
 		this.leftSite = leftSite;
 		this.rightSite = rightSite;
@@ -14,9 +14,11 @@ public class BptNode implements Comparable<BptNode>{
 		this.x = site.x();
 		if (type == "leftBound") {
 			this.x = Float.NEGATIVE_INFINITY;
+			this.y = Float.NEGATIVE_INFINITY;
 		}
 		if (type == "rightBound") {
 			this.x = Float.POSITIVE_INFINITY;
+			this.y = Float.POSITIVE_INFINITY;
 		}
 	}
 	public BptNode(String type, Site querySite) { // for query
@@ -49,9 +51,10 @@ public class BptNode implements Comparable<BptNode>{
 						else {
 							x = x1;
 						}
-					}
+					}					
 				}
 			}
+			y = (float) (a(leftSite) * Math.pow(x, 2) + b(leftSite) * x + c(leftSite));
 		}
 	}
 	private float a(Site site) {
@@ -62,6 +65,12 @@ public class BptNode implements Comparable<BptNode>{
 	}
 	private float c(Site site) {
 		return (float) (0.5 / (site.y() - dictx.y()) * ((Math.pow(site.x(), 2) + Math.pow(site.y(), 2)) - Math.pow(dictx.y(), 2)));
+	}
+	public float x() {
+		if ((type == "left" | type == "right")) {
+			update();
+		}		
+		return x;
 	}
 	public int compareTo(BptNode that) {		
 		//update();		
@@ -92,18 +101,7 @@ public class BptNode implements Comparable<BptNode>{
 		//System.out.println(this.x + ", " + that.x + " equal");
 		return 0;
 	}
-	public boolean equalsTo(BptNode that) {
-		if (this.type == "leftBound") {
-			return (this.rightSite.equalTo(that.rightSite));
-		}
-		if (this.type == "rightBound") {
-			return (this.leftSite.equalTo(that.leftSite));
-		}
-		else {
-			return (this.leftSite.equalTo(that.leftSite) & this.rightSite.equalTo(that.rightSite));
-		}
-		
-	}
+	
 	public Site getSharedSite(BptNode that) {
 		if (this.leftSite == that.leftSite) {
 			return this.leftSite;
@@ -118,5 +116,5 @@ public class BptNode implements Comparable<BptNode>{
 			return this.rightSite;
 		}
 		return null;
-	}
+	}	
 }

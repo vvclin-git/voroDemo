@@ -8,39 +8,52 @@ public class Parabola {
 	float p, k;
 	int step = 120;
 	Parabola thatPara;
-	BreakPoint rightBpt;
-	BreakPoint leftBpt;
+//	BreakPoint rightBpt;
+//	BreakPoint leftBpt;
+	BptNode rightBptNode;
+	BptNode leftBptNode;
 	Site site;
 	Directrix dictx;
 	PApplet c;
 	boolean hide = false;
-	Parabola (Directrix dictx, Site site, int canvasWidth, PApplet c) {    
-		this.focusX = site.x();
-		this.focusY = site.y();		
-		this.c = c;				
-		this.dictx = dictx;		
-		this.site = site;
-		this.leftBpt = new BreakPoint(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY, "leftBound", null, this, c);
-		this.rightBpt = new BreakPoint(Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY, "rightBound", this, null, c);		
-	}
-	Parabola (Directrix dictx, Site site, Parabola that, PApplet c) { // for site event    
+//	Parabola (Directrix dictx, Site site, int canvasWidth, PApplet c) {    
+//		this.focusX = site.x();
+//		this.focusY = site.y();		
+//		this.c = c;				
+//		this.dictx = dictx;		
+//		this.site = site;
+//		this.leftBpt = new BreakPoint(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY, "leftBound", null, this, c);
+//		this.rightBpt = new BreakPoint(Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY, "rightBound", this, null, c);
+//		this.leftBpt = new BreakPoint(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY, "leftBound", null, this, c);
+//		this.rightBpt = new BreakPoint(Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY, "rightBound", this, null, c);
+//	}
+//	Parabola (Directrix dictx, Site site, Parabola that, PApplet c) { // for site event    
+//		this.focusX = site.x();
+//		this.focusY = site.y();		
+//		this.dictx = dictx;
+//		this.c = c;
+//		this.site = site;
+//		this.thatPara = that;
+//		this.leftBpt = new BreakPoint(site.x(), that.y(site.x()), "left", that, this, c);
+//		this.rightBpt = new BreakPoint(site.x(), that.y(site.x()), "right", this, that, c);
+//	}
+//	Parabola (Directrix dictx, Site site, BreakPoint leftBpt, BreakPoint rightBpt, PApplet c) {    
+//		this.focusX = site.x();
+//		this.focusY = site.y();		
+//		this.dictx = dictx;
+//		this.c = c;
+//		this.site = site;
+//		this.leftBpt = leftBpt;
+//		this.rightBpt = rightBpt;		
+//	}
+	Parabola (Directrix dictx, Site site, BptNode leftBptNode, BptNode rightBptNode, PApplet c) {    
 		this.focusX = site.x();
 		this.focusY = site.y();		
 		this.dictx = dictx;
 		this.c = c;
 		this.site = site;
-		this.thatPara = that;
-		this.leftBpt = new BreakPoint(site.x(), that.y(site.x()), "left", that, this, c);
-		this.rightBpt = new BreakPoint(site.x(), that.y(site.x()), "right", this, that, c);
-	}
-	Parabola (Directrix dictx, Site site, BreakPoint leftBpt, BreakPoint rightBpt, PApplet c) {    
-		this.focusX = site.x();
-		this.focusY = site.y();		
-		this.dictx = dictx;
-		this.c = c;
-		this.site = site;
-		this.leftBpt = leftBpt;
-		this.rightBpt = rightBpt;		
+		this.leftBptNode = leftBptNode;
+		this.rightBptNode = rightBptNode;		
 	}
 	void draw() {
 		// for site event
@@ -54,8 +67,8 @@ public class Parabola {
 		}
 		// for normal situation
 		else {
-			rightX = rightBpt.x();
-			leftX = leftBpt.x();
+			rightX = rightBptNode.x();
+			leftX = leftBptNode.x();
 			if (rightX > c.width) {
 				rightX = c.width;
 			}
@@ -97,28 +110,41 @@ public class Parabola {
 		this.rightX = rightX;
 		return;
 	}
-	public void setLeftBpt(BreakPoint leftBpt) {
-		this.leftBpt = leftBpt;
+	public void setLeftBptNode(BptNode leftBptNode) {
+		this.leftBptNode = leftBptNode;
 		return;
 	}
-	public void setRightBpt(BreakPoint rightBpt) {
-		this.rightBpt = rightBpt;
+	public void setRightBptNode(BptNode rightBptNode) {
+		this.rightBptNode = rightBptNode;
 		return;
 	}
-	public BreakPoint getLeftBpt() {		
-		return leftBpt;
+	public BptNode getLeftBptNode() {		
+		return leftBptNode;
 	}
-	public BreakPoint getRightBpt() {		
-		return rightBpt;
+	public BptNode getRightBptNode() {		
+		return rightBptNode;
 	}
+//	public void setLeftBpt(BreakPoint leftBpt) {
+//		this.leftBpt = leftBpt;
+//		return;
+//	}
+//	public void setRightBpt(BreakPoint rightBpt) {
+//		this.rightBpt = rightBpt;
+//		return;
+//	}
+//	public BreakPoint getLeftBpt() {		
+//		return leftBpt;
+//	}
+//	public BreakPoint getRightBpt() {		
+//		return rightBpt;
+//	}
 	public boolean hidden() {
 		return hide;
 	}
-	public boolean inArc (Site site) {
-		return (site.x() > this.leftBpt.x() & site.x() < this.rightBpt.x());
-	}
-	void update() {		
-	}
+//	public boolean inArc (Site site) {
+//		return (site.x() > this.leftBpt.x() & site.x() < this.rightBpt.x());
+//	}
+	
 	public BreakPoint leftInterPt(Parabola other) {
 		float da, db, dc, h, x;
 		float x1, x2;
@@ -162,6 +188,9 @@ public class Parabola {
 		else {
 			return null;			
 		}		
-	}	
+	}
+	public Parabola clone() {
+		return new Parabola(dictx, site, leftBptNode, rightBptNode, c);
+	}
 
 }
