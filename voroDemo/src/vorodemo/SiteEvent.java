@@ -23,8 +23,14 @@ public class SiteEvent extends Event {
 		else {
 			// determine which arc to insert a site
 			BptNode queryNode = new BptNode("query", site);
-			BptNode oldLeftNode = voronoi.beachLine.floorEntry(queryNode).getValue();
+			for (BptNode k : voronoi.arcs.keySet()) {
+				k.update();
+				System.out.println(k.x);
+			}
+			BptNode oldLeftNode = voronoi.beachLine.floorEntry(queryNode).getValue();					
 			BptNode oldRightNode = voronoi.beachLine.ceilingEntry(queryNode).getValue();
+			System.out.println(oldRightNode.x);
+			System.out.println(oldLeftNode.x);
 			// for drawing beach line
 			Parabola oldPara = voronoi.arcs.get(oldLeftNode);
 			BreakPoint oldLeftBpt = oldPara.leftBpt;

@@ -67,11 +67,11 @@ public class BptNode implements Comparable<BptNode>{
 		//update();		
 		that.update();
 		if (this.x < that.x) {
-			System.out.println(this.x + ", " + that.x + " larger");
+			//System.out.println(this.x + ", " + that.x + " larger");
 			return -1;
 		}
 		if (this.x > that.x) {
-			System.out.println(this.x + ", " + that.x + " smaller");
+			//System.out.println(this.x + ", " + that.x + " smaller");
 			return 1;
 		}
 		// tie breaker
@@ -89,7 +89,7 @@ public class BptNode implements Comparable<BptNode>{
 //				return 0;
 //			}
 //		}
-		System.out.println(this.x + ", " + that.x + " equal");
+		//System.out.println(this.x + ", " + that.x + " equal");
 		return 0;
 	}
 	public boolean equalsTo(BptNode that) {
