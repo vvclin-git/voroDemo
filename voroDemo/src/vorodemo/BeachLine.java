@@ -3,12 +3,14 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import processing.core.PApplet;
 public class BeachLine {
-	TreeMap<BptNode, Parabola> beachLineTree = new TreeMap<BptNode, Parabola>();
+	TreeMap<BptNode, Parabola> beachLineTree;
 	PApplet p;
 	Voronoi voronoi;
 	float r = 2; 
 	public BeachLine(Voronoi voronoi, PApplet p) {
 		this.voronoi = voronoi;
+		this.p = p;
+		this.beachLineTree = voronoi.beachLineTree;
 	}
 	public void addArc(Site site) {
 		if (beachLineTree.isEmpty()) {
@@ -40,14 +42,26 @@ public class BeachLine {
 		}
 	}
 	public void removeArc(BptNode leftBpt, BptNode rightBpt) {
+		// remove arcs		
+		Parabola nextArc = beachLineTree.get(rightBpt).clone();
+		beachLineTree.remove(leftBpt);
+		beachLineTree.remove(rightBpt);		
+		// generate new arcs
+		BptNode newBptNode = new BptNode("left", leftBpt.getLeftSite(), rightBpt.getRightSite(), rightBpt.getRightSite(), voronoi.dictx);
+		beachLineTree.put(newBptNode, nextArc);
+		beachLineTree.get(newBptNode).setLeftBptNode(newBptNode);
+		beachLineTree.floorEntry(leftBpt).getValue().setRightBptNode(newBptNode);
 		
+	}
+	public void update() {
+		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
+			bptNode.update();
+		}
 	}
 	public void draw() {
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
-			Parabola arc = beachLineTree.get(bptNode);
-			bptNode.update();
-			System.out.println(bptNode.x + " " + bptNode.y);
-			p.ellipse(bptNode.x, bptNode.y, 2, 2);
+			Parabola arc = beachLineTree.get(bptNode);			
+			p.ellipse(bptNode.x, bptNode.y, r, r);
 			if (arc != null) {
 				arc.draw();
 			}

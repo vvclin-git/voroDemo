@@ -67,9 +67,9 @@ public class BptNode implements Comparable<BptNode>{
 		return (float) (0.5 / (site.y() - dictx.y()) * ((Math.pow(site.x(), 2) + Math.pow(site.y(), 2)) - Math.pow(dictx.y(), 2)));
 	}
 	public float x() {
-		if ((type == "left" | type == "right")) {
-			update();
-		}		
+//		if ((type == "left" | type == "right")) {
+//			update();
+//		}		
 		return x;
 	}
 	public int compareTo(BptNode that) {		
@@ -103,18 +103,24 @@ public class BptNode implements Comparable<BptNode>{
 	}
 	
 	public Site getSharedSite(BptNode that) {
-		if (this.leftSite == that.leftSite) {
-			return this.leftSite;
+		if (this.getLeftSite() == that.getLeftSite()) {
+			return this.getLeftSite();
 		}
-		if (this.leftSite == that.rightSite) {
-			return this.leftSite;
+		if (this.getLeftSite() == that.getRightSite()) {
+			return this.getLeftSite();
 		}
-		if (this.rightSite == that.leftSite) {
-			return this.rightSite;
+		if (this.getRightSite() == that.getLeftSite()) {
+			return this.getRightSite();
 		}
-		if (this.rightSite == that.rightSite) {
-			return this.rightSite;
+		if (this.getRightSite() == that.getRightSite()) {
+			return this.getRightSite();
 		}
 		return null;
-	}	
+	}
+	public Site getLeftSite() {
+		return leftSite;
+	}
+	public Site getRightSite() {
+		return rightSite;
+	}
 }

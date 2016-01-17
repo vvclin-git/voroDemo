@@ -12,7 +12,8 @@ public class Voronoi extends PApplet{
 	ArrayList<Circle> circles = new ArrayList<Circle>();
 	ArrayList<Site> sites = new ArrayList<Site>();
 //	TreeMap<BptNode, BptNode> beachLine = new TreeMap<BptNode, BptNode>();
-//	TreeMap<BptNode, Parabola> arcs = new TreeMap<BptNode, Parabola>();	
+//	TreeMap<BptNode, Parabola> arcs = new TreeMap<BptNode, Parabola>();
+	TreeMap<BptNode, Parabola> beachLineTree = new TreeMap<BptNode, Parabola>();
 	BeachLine beachLine;
 	Directrix dictx;
 	PApplet p;
@@ -31,11 +32,12 @@ public class Voronoi extends PApplet{
 		for (Site site : sites) {
 			site.draw();
 		}
+		for (Circle circle : circles) {
+			circle.draw();
+		}
 		beachLine.draw();
 	}
 	public void update() {
-		for (BreakPoint bpt : breakPoints) {
-			bpt.update();
-		}
+		beachLine.update();
 	}
 }
