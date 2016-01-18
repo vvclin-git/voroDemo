@@ -72,6 +72,9 @@ public class BptNode implements Comparable<BptNode>{
 //		}		
 		return x;
 	}
+	public float y() {
+		return y;
+	}
 	public int compareTo(BptNode that) {		
 		//update();		
 		that.update();
@@ -85,9 +88,11 @@ public class BptNode implements Comparable<BptNode>{
 		}
 		// tie breaker
 		if (this.type == "left" & that.type == "right") {
-			return -1;
+			//System.out.println("tiebreak -");
+			return -1;			
 		}
 		if (this.type == "right" & that.type == "left") {
+			//System.out.println("tiebreak +");
 			return 1;
 		}
 		// for debugging

@@ -11,8 +11,18 @@ public class CircleEvent extends Event{
 	}
 	public void eventHandler() {
 		float tempY = voronoi.dictx.y();
+		// fix the y-position of dictx to the exact value of circle event
 		voronoi.dictx.setY(this.y());
+		voronoi.beachLine.update();
+//		System.out.println();
+//		System.out.print(voronoi.dictx.y() + "| ");
+//		for (BptNode bptNode : voronoi.beachLineTree.navigableKeySet()) {
+//			System.out.print(bptNode.x() + ", ");
+//		}
+		// modify beach line
 		voronoi.beachLine.removeArc(circle.getBpt1(), circle.getBpt2());
+		// after the event being processed, reset the y-pos of dictx
+		voronoi.dictx.setY(tempY);
 //		// update data structures
 //		// remove old bptnodes
 //		voronoi.beachLine.remove(circle.getBpt1());		
@@ -49,9 +59,8 @@ public class CircleEvent extends Event{
 //		for (BptNode k : voronoi.beachLine.keySet()) {
 //			k.update();
 //			System.out.println(k.x);
-//		}
+//		}		
 		
-		voronoi.dictx.setY(tempY);
 	}
 
 }

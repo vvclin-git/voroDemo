@@ -44,12 +44,17 @@ public class BeachLine {
 	public void removeArc(BptNode leftBpt, BptNode rightBpt) {
 		// remove arcs		
 		Parabola nextArc = beachLineTree.get(rightBpt).clone();
-		beachLineTree.remove(leftBpt);
+		beachLineTree.remove(leftBpt);		
 		beachLineTree.remove(rightBpt);		
 		// generate new arcs
 		BptNode newBptNode = new BptNode("left", leftBpt.getLeftSite(), rightBpt.getRightSite(), rightBpt.getRightSite(), voronoi.dictx);
-		beachLineTree.put(newBptNode, nextArc);
+		beachLineTree.put(newBptNode, nextArc);		
 		beachLineTree.get(newBptNode).setLeftBptNode(newBptNode);
+		System.out.println(beachLineTree.get(newBptNode).getLeftBptNode() + "," + beachLineTree.get(newBptNode).getRightBptNode());
+		System.out.print(beachLineTree.get(newBptNode).getLeftBptNode().x() + ", " + beachLineTree.get(newBptNode).getLeftBptNode().y());
+		System.out.println(" | " + beachLineTree.get(newBptNode).getRightBptNode().x() + ", " + beachLineTree.get(newBptNode).getRightBptNode().y());
+		System.out.println(beachLineTree.get(newBptNode).y(beachLineTree.get(newBptNode).getLeftBptNode().x()));
+		System.out.println(beachLineTree.get(newBptNode).y(beachLineTree.get(newBptNode).getRightBptNode().x()));
 		beachLineTree.floorEntry(leftBpt).getValue().setRightBptNode(newBptNode);
 		
 	}

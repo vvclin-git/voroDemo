@@ -39,5 +39,10 @@ public class Voronoi extends PApplet{
 	}
 	public void update() {
 		beachLine.update();
+//		System.out.println();
+//		System.out.print(dictx.y() + "| ");
+//		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
+//			System.out.print(bptNode.x() + ", ");
+//		}
 	}
 }
