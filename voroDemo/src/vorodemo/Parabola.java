@@ -8,44 +8,12 @@ public class Parabola {
 	float p, k;
 	int step = 120;
 	Parabola thatPara;
-//	BreakPoint rightBpt;
-//	BreakPoint leftBpt;
 	BptNode rightBptNode;
 	BptNode leftBptNode;
 	Site site;
 	Directrix dictx;
 	PApplet c;
 	boolean hide = false;
-//	Parabola (Directrix dictx, Site site, int canvasWidth, PApplet c) {    
-//		this.focusX = site.x();
-//		this.focusY = site.y();		
-//		this.c = c;				
-//		this.dictx = dictx;		
-//		this.site = site;
-//		this.leftBpt = new BreakPoint(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY, "leftBound", null, this, c);
-//		this.rightBpt = new BreakPoint(Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY, "rightBound", this, null, c);
-//		this.leftBpt = new BreakPoint(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY, "leftBound", null, this, c);
-//		this.rightBpt = new BreakPoint(Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY, "rightBound", this, null, c);
-//	}
-//	Parabola (Directrix dictx, Site site, Parabola that, PApplet c) { // for site event    
-//		this.focusX = site.x();
-//		this.focusY = site.y();		
-//		this.dictx = dictx;
-//		this.c = c;
-//		this.site = site;
-//		this.thatPara = that;
-//		this.leftBpt = new BreakPoint(site.x(), that.y(site.x()), "left", that, this, c);
-//		this.rightBpt = new BreakPoint(site.x(), that.y(site.x()), "right", this, that, c);
-//	}
-//	Parabola (Directrix dictx, Site site, BreakPoint leftBpt, BreakPoint rightBpt, PApplet c) {    
-//		this.focusX = site.x();
-//		this.focusY = site.y();		
-//		this.dictx = dictx;
-//		this.c = c;
-//		this.site = site;
-//		this.leftBpt = leftBpt;
-//		this.rightBpt = rightBpt;		
-//	}
 	Parabola (Directrix dictx, Site site, BptNode leftBptNode, BptNode rightBptNode, PApplet c) {    
 		this.focusX = site.x();
 		this.focusY = site.y();		
@@ -81,12 +49,16 @@ public class Parabola {
 			float x1, y1;		
 			p = (float) (Math.abs(focusY - dictx.y()) * 0.5);
 			k = dictx.y() - p;
+			//System.out.println(rightBptNode.x() + "," + leftBptNode.x() + "," + dX);
+			//System.out.println(rightBptNode + "," + leftBptNode + "," + dX);
 			for (int i = 0; i < (rightX - leftX) / dX; i += 1) {
 				x1 = x0 + dX;
 				y0 = y(x0);
 				y1 = y(x1);			
 				c.line(x0, y0, x1, y1);			
 				x0 = x1;
+				//System.out.println(x0 + "," + y0 + "," + x1 + "," + y1);				
+				//System.out.println(dX);
 			}
 		}
 	}

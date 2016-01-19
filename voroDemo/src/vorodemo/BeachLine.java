@@ -41,22 +41,22 @@ public class BeachLine {
 			beachLineTree.get(newRightNode).setLeftBptNode(newRightNode);			
 		}
 	}
-	public void removeArc(BptNode leftBpt, BptNode rightBpt) {
-		// remove arcs		
-		Parabola nextArc = beachLineTree.get(rightBpt).clone();
-		beachLineTree.remove(leftBpt);		
-		beachLineTree.remove(rightBpt);		
+	public void removeArc(BptNode leftBptNode, BptNode rightBptNode) {
+		// remove arcs
+		beachLineTree.remove(leftBptNode);		
+		beachLineTree.remove(rightBptNode);		
 		// generate new arcs
-		BptNode newBptNode = new BptNode("left", leftBpt.getLeftSite(), rightBpt.getRightSite(), rightBpt.getRightSite(), voronoi.dictx);
-		beachLineTree.put(newBptNode, nextArc);		
-		beachLineTree.get(newBptNode).setLeftBptNode(newBptNode);
-		System.out.println(beachLineTree.get(newBptNode).getLeftBptNode() + "," + beachLineTree.get(newBptNode).getRightBptNode());
-		System.out.print(beachLineTree.get(newBptNode).getLeftBptNode().x() + ", " + beachLineTree.get(newBptNode).getLeftBptNode().y());
-		System.out.println(" | " + beachLineTree.get(newBptNode).getRightBptNode().x() + ", " + beachLineTree.get(newBptNode).getRightBptNode().y());
-		System.out.println(beachLineTree.get(newBptNode).y(beachLineTree.get(newBptNode).getLeftBptNode().x()));
-		System.out.println(beachLineTree.get(newBptNode).y(beachLineTree.get(newBptNode).getRightBptNode().x()));
-		beachLineTree.floorEntry(leftBpt).getValue().setRightBptNode(newBptNode);
-		
+		BptNode oldRightBptNode = beachLineTree.higherKey(rightBptNode);
+		BptNode newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), rightBptNode.getRightSite(), voronoi.dictx);		
+		beachLineTree.put(newBptNode, new Parabola(voronoi.dictx, rightBptNode.getRightSite(), newBptNode, oldRightBptNode, voronoi.p));		
+		beachLineTree.lowerEntry(newBptNode).getValue().setRightBptNode(newBptNode);
+		// for debugging
+//		System.out.println();
+//		System.out.print(voronoi.dictx.y() + "| ");
+//		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
+//			System.out.print(bptNode.x() + ", ");
+//		}
+//		System.out.println();
 	}
 	public void update() {
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
@@ -64,9 +64,17 @@ public class BeachLine {
 		}
 	}
 	public void draw() {
-		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
-			Parabola arc = beachLineTree.get(bptNode);			
-			p.ellipse(bptNode.x, bptNode.y, r, r);
+//		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
+//			Parabola arc = beachLineTree.get(bptNode);			
+//			p.ellipse(bptNode.x, bptNode.y, r, r);
+//			if (arc != null) {
+//				arc.draw();
+//			}
+//		}
+		for (BptNode bptNode : beachLineTree.navigableKeySet()) {						
+			p.ellipse(bptNode.x, bptNode.y, r, r);			
+		}
+		for (Parabola arc : beachLineTree.values()) {			
 			if (arc != null) {
 				arc.draw();
 			}

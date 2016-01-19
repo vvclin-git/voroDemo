@@ -11,6 +11,7 @@ import processing.core.PApplet;
 public class VoroDemo extends PApplet {
 	PApplet canvas;
 	Voronoi voronoi = new Voronoi(100, this);
+	Integer step = 1;
 	
 	public void mouseClicked() {
 		//Event[] eventsOut;
@@ -39,17 +40,29 @@ public class VoroDemo extends PApplet {
 			if (keyCode == UP) { // not necessary
 			} 
 			else if (keyCode == DOWN) {				
-				voronoi.dictx.move(1);
-				voronoi.update();
+//				voronoi.dictx.move(1);
+//				voronoi.update();
 				//System.out.println(voronoi.circles.size());
 				// event
-				if (!voronoi.events.isEmpty()) {
-					while (voronoi.events.peek().y() <= voronoi.dictx.y()) { // "<=" is a must have in the future
-						voronoi.events.poll().eventHandler();
-						// for debugging
-						//System.out.println(voronoi.arcs.size());
-						if (voronoi.events.isEmpty()) break;
+				if (!voronoi.events.isEmpty()) {					
+					if (voronoi.events.peek().y() - voronoi.dictx.y() <= step) {
+						voronoi.dictx.setY(voronoi.events.peek().y());
+						voronoi.update();
+						while (voronoi.events.peek().y() == voronoi.dictx.y()) { // "<=" is a must have in the future						
+							voronoi.events.poll().eventHandler();
+							// for debugging
+							//System.out.println(voronoi.arcs.size());
+							if (voronoi.events.isEmpty()) break;
+						}
 					}
+					else {
+						voronoi.dictx.move(step);
+						voronoi.update();
+					}
+				}
+				else {
+					voronoi.dictx.move(step);
+					voronoi.update();
 				}
 			} 
 		} 
@@ -60,9 +73,9 @@ public class VoroDemo extends PApplet {
 	}
 	public void settings() {		
 		size(600, 600);
-		voronoi.addSite(new Site(270, 118, this));
-		voronoi.addSite(new Site(252, 126, this));
-		voronoi.addSite(new Site(287, 136, this));
+//		voronoi.addSite(new Site(270, 118, this));
+//		voronoi.addSite(new Site(252, 126, this));
+//		voronoi.addSite(new Site(287, 136, this));
 	}	
 
 	public void draw() {

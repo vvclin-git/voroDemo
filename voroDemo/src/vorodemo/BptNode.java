@@ -26,7 +26,7 @@ public class BptNode implements Comparable<BptNode>{
 	}	
 	public void update() {
 		if ((type == "left" | type == "right")) {
-			if (leftSite.y() != dictx.y() & rightSite.y() != dictx.y()) {
+			if (leftSite.y() != dictx.y() & rightSite.y() != dictx.y()) {				
 				float da, db, dc, h;
 				float x1, x2;
 				da = a(leftSite) - a(rightSite);
@@ -66,10 +66,7 @@ public class BptNode implements Comparable<BptNode>{
 	private float c(Site site) {
 		return (float) (0.5 / (site.y() - dictx.y()) * ((Math.pow(site.x(), 2) + Math.pow(site.y(), 2)) - Math.pow(dictx.y(), 2)));
 	}
-	public float x() {
-//		if ((type == "left" | type == "right")) {
-//			update();
-//		}		
+	public float x() {		
 		return x;
 	}
 	public float y() {
