@@ -14,18 +14,22 @@ public class SiteEvent extends Event {
 			BptNode oldLeftNode = voronoi.beachLineTree.floorKey(queryNode);										
 			BptNode oldRightNode = voronoi.beachLineTree.ceilingKey(queryNode);				
 			voronoi.beachLine.addArc(site);
-			BptNode newLeftNode = voronoi.beachLineTree.floorKey(queryNode);										
-			BptNode newRightNode = voronoi.beachLineTree.ceilingKey(queryNode);		
+			BptNode newLeftNode = voronoi.beachLine.getNewLeftNode();								
+			BptNode newRightNode = voronoi.beachLine.getNewRightNode();
+			// create half edges
+			voronoi.edges.add(new Edge(newLeftNode, newRightNode, voronoi.p));
 			// create circle event
 			if (oldLeftNode.type != "leftBound") {
 				Circle newCircle = new Circle(oldLeftNode, newLeftNode, voronoi.p);
 				voronoi.circles.add(newCircle);
 				voronoi.events.add(new CircleEvent(voronoi, newCircle));
+				System.out.println(newCircle.getCenter());
 			}
 			if (oldRightNode.type != "rightBound") {
 				Circle newCircle = new Circle(newRightNode, oldRightNode, voronoi.p);
 				voronoi.circles.add(newCircle);
 				voronoi.events.add(new CircleEvent(voronoi, newCircle));
+				System.out.println(newCircle.getCenter());
 			}
 		}
 		else {

@@ -73,9 +73,16 @@ public class VoroDemo extends PApplet {
 	}
 	public void settings() {		
 		size(600, 600);
+		// known good sites
 //		voronoi.addSite(new Site(270, 118, this));
 //		voronoi.addSite(new Site(252, 126, this));
 //		voronoi.addSite(new Site(287, 136, this));
+		
+		// known bad sites
+		voronoi.addSite(new Site(320, 124, this));
+		voronoi.addSite(new Site(269, 130, this));		
+		voronoi.addSite(new Site(343, 157, this));
+
 	}	
 
 	public void draw() {

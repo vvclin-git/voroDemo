@@ -7,6 +7,7 @@ public class BeachLine {
 	PApplet p;
 	Voronoi voronoi;
 	float r = 2; 
+	BptNode newLeftNode, newRightNode;	
 	public BeachLine(Voronoi voronoi, PApplet p) {
 		this.voronoi = voronoi;
 		this.p = p;
@@ -15,13 +16,13 @@ public class BeachLine {
 	public void addArc(Site site) {
 		if (beachLineTree.isEmpty()) {
 			// create boundary nodes
-			BptNode newleftNode = new BptNode("leftBound", null, site, site, voronoi.dictx);
-			BptNode newrightNode = new BptNode("rightBound", site, null, site, voronoi.dictx);
+			newLeftNode = new BptNode("leftBound", null, site, site, voronoi.dictx);
+			newRightNode = new BptNode("rightBound", site, null, site, voronoi.dictx);
 			// create new arc
-			Parabola newArc = new Parabola(voronoi.dictx, site, newleftNode, newrightNode, voronoi.p);
+			Parabola newArc = new Parabola(voronoi.dictx, site, newLeftNode, newRightNode, voronoi.p);
 			site.setPara(newArc);
-			beachLineTree.put(newleftNode, newArc);
-			beachLineTree.put(newrightNode, null);
+			beachLineTree.put(newLeftNode, newArc);
+			beachLineTree.put(newRightNode, null);
 		}
 		else {
 			// looking for the existing arc for adding a new one
@@ -30,8 +31,8 @@ public class BeachLine {
 			BptNode oldRightNode = beachLineTree.ceilingKey(queryNode);
 			Parabola oldArc = beachLineTree.get(oldLeftNode).clone();
 			// create new nodes
-			BptNode newLeftNode = new BptNode("left", oldLeftNode.rightSite, site, site, voronoi.dictx);
-			BptNode newRightNode = new BptNode("right", site, oldRightNode.leftSite, site, voronoi.dictx);
+			newLeftNode = new BptNode("left", oldLeftNode.rightSite, site, site, voronoi.dictx);
+			newRightNode = new BptNode("right", site, oldRightNode.leftSite, site, voronoi.dictx);
 			// create new arc
 			Parabola newArc = new Parabola(voronoi.dictx, site, newLeftNode, newRightNode, voronoi.p);
 			beachLineTree.put(newLeftNode, newArc);			
@@ -51,17 +52,18 @@ public class BeachLine {
 		beachLineTree.put(newBptNode, new Parabola(voronoi.dictx, rightBptNode.getRightSite(), newBptNode, oldRightBptNode, voronoi.p));		
 		beachLineTree.lowerEntry(newBptNode).getValue().setRightBptNode(newBptNode);
 		// for debugging
-//		System.out.println();
-//		System.out.print(voronoi.dictx.y() + "| ");
-//		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
-//			System.out.print(bptNode.x() + ", ");
-//		}
+		System.out.println();
+		System.out.print(voronoi.dictx.y() + "| ");
+		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
+			System.out.print(bptNode.x() + ", ");
+		}
 //		System.out.println();
 	}
-	public void update() {
-		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
-			bptNode.update();
-		}
+	public BptNode getNewLeftNode() {
+		return newLeftNode;
+	}
+	public BptNode getNewRightNode() {
+		return newRightNode;
 	}
 	public void draw() {
 //		for (BptNode bptNode : beachLineTree.navigableKeySet()) {

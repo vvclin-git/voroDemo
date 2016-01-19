@@ -2,15 +2,17 @@ package vorodemo;
 import processing.core.PApplet;
 public class Edge {
 	PApplet c;
-	BreakPoint leftBpt;
-	BreakPoint rightBpt;
-	public Edge(BreakPoint leftBpt, BreakPoint rightBpt, PApplet c) {
-		this.rightBpt = rightBpt;
-		this.leftBpt = leftBpt;
+	BptNode leftBptNode;
+	BptNode rightBptNode;
+	public Edge(BptNode leftBptNode, BptNode rightBptNode, PApplet c) {
+		this.leftBptNode = leftBptNode;
+		this.rightBptNode = rightBptNode;
 		this.c = c;
 	}
 	void draw() {
-		c.line(leftBpt.x(), leftBpt.y(), rightBpt.x(), rightBpt.y());
+//		System.out.println(leftBptNode.x() + ", " + leftBptNode.y() + ", " + rightBptNode.x() + ", " + rightBptNode.y());
+//		System.out.println(leftBptNode + ", " + rightBptNode);
+		c.line(leftBptNode.x(), leftBptNode.y(), rightBptNode.x(), rightBptNode.y());
 	}
 
 }

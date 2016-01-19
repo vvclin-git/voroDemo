@@ -92,6 +92,14 @@ public class BptNode implements Comparable<BptNode>{
 			//System.out.println("tiebreak +");
 			return 1;
 		}
+		if (this.type == "query" & that.type == "right") {
+			//System.out.println("tiebreak -");
+			return -1;			
+		}
+		if (this.type == "query" & that.type == "left") {
+			//System.out.println("tiebreak +");
+			return 1;
+		}
 		// for debugging
 //		System.out.println(this.x + ", " + that.x + " equal");
 		//return 0;

@@ -25,7 +25,7 @@ public class Voronoi extends PApplet{
 	public void addSite(Site site) {
 		sites.add(site);
 		//add site event
-		events.add(new SiteEvent(this, site));
+		events.add(new SiteEvent(this, site));		
 	}
 	public void draw() {
 		dictx.draw();
@@ -35,20 +35,26 @@ public class Voronoi extends PApplet{
 		for (Circle circle : circles) {
 			circle.draw();
 		}
+		for (Edge edge : edges) {
+			edge.draw();
+		}
 		beachLine.draw();
 	}
 	public void update() {
-		beachLine.update();
-//		System.out.println();
-//		System.out.print(dictx.y() + "| ");
-//		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
-//			System.out.print(bptNode.x() + ", ");
-//		}
-//		System.out.println();
-//		System.out.print(dictx.y() + "| ");
-//		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
-//			System.out.print(bptNode.type + ", ");
-//		}
-//		System.out.println();
+		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
+			bptNode.update();
+		}
+//		System.out.println(edges.size());
+		System.out.println();
+		System.out.print(dictx.y() + "| ");
+		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
+			System.out.print(bptNode.x() + ", ");
+		}
+		System.out.println();
+		System.out.print(dictx.y() + "| ");
+		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
+			System.out.print(bptNode.type + ", ");
+		}
+		System.out.println();
 	}
 }
