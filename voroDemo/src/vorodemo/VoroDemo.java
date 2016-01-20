@@ -46,14 +46,17 @@ public class VoroDemo extends PApplet {
 				// event
 				if (!voronoi.events.isEmpty()) {					
 					if (voronoi.events.peek().y() - voronoi.dictx.y() <= step) {
-						voronoi.dictx.setY(voronoi.events.peek().y());
-						voronoi.update();
+						//voronoi.dictx.setY(Math.round((voronoi.events.peek().y() / step)) * step);
+						voronoi.dictx.setY(voronoi.events.peek().y());						
 						while (voronoi.events.peek().y() == voronoi.dictx.y()) { // "<=" is a must have in the future						
 							voronoi.events.poll().eventHandler();
 							// for debugging
 							//System.out.println(voronoi.arcs.size());
 							if (voronoi.events.isEmpty()) break;
+							voronoi.update();
 						}
+//						voronoi.dictx.setY(voronoi.events.peek().y());
+						voronoi.update();
 					}
 					else {
 						voronoi.dictx.move(step);
@@ -78,10 +81,12 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(252, 126, this));
 //		voronoi.addSite(new Site(287, 136, this));
 		
-		// known bad sites
-		voronoi.addSite(new Site(320, 124, this));
-		voronoi.addSite(new Site(269, 130, this));		
-		voronoi.addSite(new Site(343, 157, this));
+		// known bad sites (work sometimes?)
+//		voronoi.addSite(new Site(320, 124, this));
+//		voronoi.addSite(new Site(269, 130, this));		
+//		voronoi.addSite(new Site(343, 157, this));
+		
+		
 
 	}	
 
