@@ -9,6 +9,7 @@ public class Voronoi extends PApplet{
 	PriorityQueue<Event> events = new PriorityQueue<Event>();
 	ArrayList<BreakPoint> breakPoints = new ArrayList<BreakPoint>();
 	ArrayList<Edge> edges = new ArrayList<Edge>();
+	ArrayList<BptNode> vertices = new ArrayList<BptNode>();
 	ArrayList<Circle> circles = new ArrayList<Circle>();
 	ArrayList<Site> sites = new ArrayList<Site>();
 //	TreeMap<BptNode, BptNode> beachLine = new TreeMap<BptNode, BptNode>();
@@ -38,6 +39,9 @@ public class Voronoi extends PApplet{
 		for (Edge edge : edges) {
 			edge.draw();
 		}
+		for (BptNode vertex : vertices) {						
+			p.ellipse(vertex.x, vertex.y, 2, 2);			
+		}
 		beachLine.draw();
 	}
 	public void update() {
@@ -45,7 +49,7 @@ public class Voronoi extends PApplet{
 			bptNode.update();
 		}
 //		System.out.println(edges.size());
-		System.out.println();
+//		System.out.println();
 		System.out.print(dictx.y() + "| ");
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
 			System.out.print(bptNode.x() + ", ");

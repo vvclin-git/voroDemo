@@ -42,7 +42,7 @@ public class BeachLine {
 			beachLineTree.get(newRightNode).setLeftBptNode(newRightNode);			
 		}
 	}
-	public void removeArc(BptNode leftBptNode, BptNode rightBptNode) {
+	public void removeArc(BptNode leftBptNode, BptNode rightBptNode) {		
 		// remove arcs
 		beachLineTree.remove(leftBptNode);		
 		beachLineTree.remove(rightBptNode);		
@@ -51,6 +51,16 @@ public class BeachLine {
 		BptNode newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), rightBptNode.getRightSite(), voronoi.dictx);		
 		beachLineTree.put(newBptNode, new Parabola(voronoi.dictx, rightBptNode.getRightSite(), newBptNode, oldRightBptNode, voronoi.p));		
 		beachLineTree.lowerEntry(newBptNode).getValue().setRightBptNode(newBptNode);
+		// connecting edges
+		BptNode vertex = new BptNode("vertex", newBptNode);
+		Edge leftEdge = leftBptNode.getEdge();
+		Edge rightEdge = rightBptNode.getEdge();
+		System.out.println(leftEdge + "," + rightEdge);
+		leftEdge.replaceNode(leftBptNode, vertex);
+		rightEdge.replaceNode(rightBptNode, vertex);
+		Edge newEdge = new Edge(newBptNode, vertex, voronoi.p);
+		voronoi.edges.add(newEdge);
+		newBptNode.setEdge(newEdge);
 		// for debugging
 		System.out.println();
 		System.out.print(voronoi.dictx.y() + "| ");

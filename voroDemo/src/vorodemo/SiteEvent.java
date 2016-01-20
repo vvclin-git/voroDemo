@@ -9,6 +9,8 @@ public class SiteEvent extends Event {
 	}	
 	public void eventHandler() {		
 		if (!voronoi.beachLineTree.isEmpty()) {
+			// TODO need to deal with special case (circle event + site event)
+			
 			// add new arc on an existing arc
 			BptNode queryNode = new BptNode("query", site);
 			BptNode oldLeftNode = voronoi.beachLineTree.floorKey(queryNode);										
@@ -17,19 +19,22 @@ public class SiteEvent extends Event {
 			BptNode newLeftNode = voronoi.beachLine.getNewLeftNode();								
 			BptNode newRightNode = voronoi.beachLine.getNewRightNode();
 			// create half edges
-			voronoi.edges.add(new Edge(newLeftNode, newRightNode, voronoi.p));
+			Edge newEdge = new Edge(newLeftNode, newRightNode, voronoi.p);
+			newLeftNode.setEdge(newEdge);
+			newRightNode.setEdge(newEdge);
+			voronoi.edges.add(newEdge);
 			// create circle event
 			if (oldLeftNode.type != "leftBound") {
 				Circle newCircle = new Circle(oldLeftNode, newLeftNode, voronoi.p);
 				voronoi.circles.add(newCircle);
 				voronoi.events.add(new CircleEvent(voronoi, newCircle));
-				System.out.println(newCircle.getCenter());
+				//System.out.println(newCircle.getCenter());
 			}
 			if (oldRightNode.type != "rightBound") {
 				Circle newCircle = new Circle(newRightNode, oldRightNode, voronoi.p);
 				voronoi.circles.add(newCircle);
 				voronoi.events.add(new CircleEvent(voronoi, newCircle));
-				System.out.println(newCircle.getCenter());
+				//System.out.println(newCircle.getCenter());
 			}
 		}
 		else {

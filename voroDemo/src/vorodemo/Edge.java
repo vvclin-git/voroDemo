@@ -9,6 +9,17 @@ public class Edge {
 		this.rightBptNode = rightBptNode;
 		this.c = c;
 	}
+	public Edge twins() {
+		return new Edge(rightBptNode, leftBptNode, c);
+	}
+	public void replaceNode(BptNode oldBptNode, BptNode newBptNode) {		
+		if (leftBptNode == oldBptNode) {			
+			leftBptNode = newBptNode;
+		}		
+		else if (rightBptNode == oldBptNode) {			
+			rightBptNode = newBptNode;
+		}
+	}
 	void draw() {
 //		System.out.println(leftBptNode.x() + ", " + leftBptNode.y() + ", " + rightBptNode.x() + ", " + rightBptNode.y());
 //		System.out.println(leftBptNode + ", " + rightBptNode);

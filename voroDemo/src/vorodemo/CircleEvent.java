@@ -12,6 +12,9 @@ public class CircleEvent extends Event{
 	public void eventHandler() {
 		// modify beach line
 		voronoi.beachLine.removeArc(circle.getBpt1(), circle.getBpt2());
+		// TODO add new edge
+		// TODO remove non-existing circle events
+		
 	}
 
 }

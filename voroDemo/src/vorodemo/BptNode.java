@@ -4,7 +4,8 @@ public class BptNode implements Comparable<BptNode>{
 	Site leftSite;
 	Site rightSite;
 	Directrix dictx;
-	String type; // left, right, query, leftBound, rightBound
+	String type; // left, right, query, vertex, leftBound, rightBound
+	Edge edge;
 	float x, y;	
 	public BptNode(String type, Site leftSite, Site rightSite, Site site, Directrix dictx) {
 		this.leftSite = leftSite;
@@ -23,7 +24,12 @@ public class BptNode implements Comparable<BptNode>{
 	}
 	public BptNode(String type, Site querySite) { // for query
 		this.x = querySite.x();
-	}	
+	}
+	public BptNode(String type, BptNode bptNode) { // for transforming a normal node into a vertex
+		this.x = bptNode.x();
+		this.y = bptNode.y();
+		this.type = "vertex";
+	}
 	public void update() {
 		if ((type == "left" | type == "right")) {
 			if (leftSite.y() != dictx.y() & rightSite.y() != dictx.y()) {				
@@ -111,7 +117,12 @@ public class BptNode implements Comparable<BptNode>{
 		//System.out.println(this.x + ", " + that.x + " equal");
 		return 0;
 	}
-	
+	public void setEdge(Edge edge) {
+		this.edge = edge;		
+	}
+	public Edge getEdge() {
+		return edge;
+	}
 	public Site getSharedSite(BptNode that) {
 		if (this.getLeftSite() == that.getLeftSite()) {
 			return this.getLeftSite();
