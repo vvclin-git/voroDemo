@@ -44,6 +44,7 @@ public class BeachLine {
 	}
 	public void removeArc(BptNode leftBptNode, BptNode rightBptNode) {		
 		// remove arcs
+		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
 		beachLineTree.remove(leftBptNode);		
 		beachLineTree.remove(rightBptNode);		
 		// generate new arcs
