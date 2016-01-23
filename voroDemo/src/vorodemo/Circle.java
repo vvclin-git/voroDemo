@@ -8,7 +8,7 @@ public class Circle implements Comparable<Circle>{
 	float lowY;
 	BptNode bpt1, bpt2;
 	PApplet c;
-	ArrayList<Point> sites = new ArrayList<Point>(); 
+	ArrayList<Site> sites = new ArrayList<Site>(); 
 	//public Circle (Point p1, Point p2, Point p3, PApplet c) {
 	public Circle (BptNode bpt1, BptNode bpt2, PApplet c) {
 		this.bpt1 = bpt1;
@@ -91,6 +91,14 @@ public class Circle implements Comparable<Circle>{
 	public boolean containSite(Point site) {
 		return sites.contains(site);
 	}
+	public boolean containProcessedSite() {
+		for (Site site : sites) {
+			if (site.isProcessed()) {
+				return true;				
+			}
+		}
+		return false;
+	}
 	public BptNode getBpt1() {
 		return bpt1;
 	}
@@ -115,7 +123,7 @@ public class Circle implements Comparable<Circle>{
 		else {
 			return p3;
 		}	
-	}
+	}	
 	public static void main(String args[]) {
 //		Site p1 = new Site(10, 15, null);
 //		Site p2 = new Site(10, 23, null);

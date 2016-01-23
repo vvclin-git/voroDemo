@@ -3,6 +3,7 @@ import processing.core.PApplet;
 
 public class Site extends Point {
 	Parabola parabola = null;
+	boolean processed = false;
 	public Site(float x, float y, PApplet p) {
 		// TODO Auto-generated constructor stub
 		super(x, y, p);
@@ -12,6 +13,12 @@ public class Site extends Point {
 	}
 	public void setPara(Parabola parabola) {
 		this.parabola = parabola;
+	}
+	public boolean isProcessed() {
+		return processed;
+	}
+	public void setProcessed() {
+		processed = true;
 	}
 	public static void main(String args[]) {
 		Site a = new Site(1, 2, null);

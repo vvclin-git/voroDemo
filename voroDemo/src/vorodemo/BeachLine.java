@@ -42,11 +42,15 @@ public class BeachLine {
 			beachLineTree.get(newRightNode).setLeftBptNode(newRightNode);			
 		}
 	}
-	public void removeArc(BptNode leftBptNode, BptNode rightBptNode) {		
+	public void removeArc(BptNode leftBptNode, BptNode rightBptNode, Circle circle) {		
 		// remove arcs
-		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
+		voronoi.dictx.setY(circle.getCenter().y());
+		//System.out.println(leftBptNode.x() + "," + rightBptNode.x());
 		beachLineTree.remove(leftBptNode);		
-		beachLineTree.remove(rightBptNode);		
+		//System.out.println(leftBptNode.x() + "," + rightBptNode.x());
+		beachLineTree.remove(rightBptNode);
+		//System.out.println(leftBptNode.x() + "," + rightBptNode.x());
+		voronoi.dictx.setY(circle.getLowY());
 		// generate new arcs
 		BptNode oldRightBptNode = beachLineTree.higherKey(rightBptNode);
 		BptNode newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), rightBptNode.getRightSite(), voronoi.dictx);		
@@ -56,7 +60,7 @@ public class BeachLine {
 		BptNode vertex = new BptNode("vertex", newBptNode);
 		Edge leftEdge = leftBptNode.getEdge();
 		Edge rightEdge = rightBptNode.getEdge();
-		System.out.println(leftEdge + "," + rightEdge);
+		//System.out.println(leftEdge + "," + rightEdge);
 		leftEdge.replaceNode(leftBptNode, vertex);
 		rightEdge.replaceNode(rightBptNode, vertex);
 		Edge newEdge = new Edge(newBptNode, vertex, voronoi.p);
@@ -68,7 +72,7 @@ public class BeachLine {
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
 			System.out.print(bptNode.x() + ", ");
 		}
-//		System.out.println();
+		System.out.println();
 	}
 	public BptNode getNewLeftNode() {
 		return newLeftNode;

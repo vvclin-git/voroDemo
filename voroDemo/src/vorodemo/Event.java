@@ -3,8 +3,10 @@ package vorodemo;
 public abstract class Event implements Comparable<Event>{
 	float y;
 	Voronoi voronoi;
-	public Event(Voronoi voronoi) {
+	String type;
+	public Event(Voronoi voronoi, String type) {
 		this.voronoi = voronoi;
+		this.type = type;
 	}
 	public void eventHandler() {
 		
@@ -20,5 +22,8 @@ public abstract class Event implements Comparable<Event>{
 	}
 	public float y() {
 		return y;
+	}
+	public String getType() {
+		return type;
 	}
 }

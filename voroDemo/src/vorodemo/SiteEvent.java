@@ -3,7 +3,7 @@ package vorodemo;
 public class SiteEvent extends Event {
 	Site site;
 	public SiteEvent(Voronoi voronoi, Site site) {
-		super(voronoi);
+		super(voronoi, "site");
 		this.y = site.y();
 		this.site = site;		
 	}	
@@ -25,15 +25,19 @@ public class SiteEvent extends Event {
 			voronoi.edges.add(newEdge);
 			// create circle event
 			if (oldLeftNode.type != "leftBound") {
-				Circle newCircle = new Circle(oldLeftNode, newLeftNode, voronoi.p);
-				voronoi.circles.add(newCircle);
-				voronoi.events.add(new CircleEvent(voronoi, newCircle));
+				Circle newCircle = new Circle(oldLeftNode, newLeftNode, voronoi.p);				
+				if (!newCircle.containProcessedSite()) {
+					voronoi.circles.add(newCircle);
+					voronoi.events.add(new CircleEvent(voronoi, newCircle));					
+				}
 				//System.out.println(newCircle.getCenter());
 			}
 			if (oldRightNode.type != "rightBound") {
 				Circle newCircle = new Circle(newRightNode, oldRightNode, voronoi.p);
-				voronoi.circles.add(newCircle);
-				voronoi.events.add(new CircleEvent(voronoi, newCircle));
+				if (!newCircle.containProcessedSite()) {
+					voronoi.circles.add(newCircle);
+					voronoi.events.add(new CircleEvent(voronoi, newCircle));					
+				}
 				//System.out.println(newCircle.getCenter());
 			}
 		}
