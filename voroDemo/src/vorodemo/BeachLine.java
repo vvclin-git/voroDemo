@@ -54,8 +54,14 @@ public class BeachLine {
 		// generate new arcs
 		BptNode oldRightBptNode = beachLineTree.higherKey(rightBptNode);
 		System.out.println(leftBptNode.getLeftSite().x() + ", " + rightBptNode.getRightSite().x());
-		//BptNode newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), rightBptNode.getRightSite(), voronoi.dictx);
-		BptNode newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenter(), voronoi.dictx);
+		BptNode newBptNode;
+		if (circle.getLeftSite().y() > circle.getRightSite().y()) {
+			newBptNode = new BptNode("right", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenter(), voronoi.dictx);
+		}
+		else {
+			newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenter(), voronoi.dictx);
+		}
+		//BptNode newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenter(), voronoi.dictx);
 		System.out.println("=" + newBptNode.x());
 		beachLineTree.put(newBptNode, new Parabola(voronoi.dictx, rightBptNode.getRightSite(), newBptNode, oldRightBptNode, voronoi.p));		
 		printBptNodeX();

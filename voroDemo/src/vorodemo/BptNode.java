@@ -42,6 +42,7 @@ public class BptNode implements Comparable<BptNode>{
 				if (h >= 0) {
 					x1 = (float) ((-db - (float) Math.sqrt(h)) / da * 0.5);
 					x2 = (float) ((-db + (float) Math.sqrt(h)) / da * 0.5);
+					System.out.println(x1 + "," + x2);
 					if (type == "left") {
 						if (x1 > x2) {
 							x = x2;				
@@ -60,6 +61,7 @@ public class BptNode implements Comparable<BptNode>{
 					}					
 				}
 			}
+			
 			y = (float) (a(leftSite) * Math.pow(x, 2) + b(leftSite) * x + c(leftSite));
 		}
 	}
