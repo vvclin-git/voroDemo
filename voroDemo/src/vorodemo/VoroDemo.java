@@ -85,6 +85,11 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(269, 130, this));		
 //		voronoi.addSite(new Site(343, 157, this));
 //		voronoi.addSite(new Site(352, 217, this));
+		// known good
+//		voronoi.addSite(new Site(320, 124, this));
+//		voronoi.addSite(new Site(269, 130, this));		
+//		voronoi.addSite(new Site(343, 157, this));
+//		voronoi.addSite(new Site(200, 217, this));
 		
 //		// known bad sites (work sometimes?)
 //		voronoi.addSite(new Site(320, 124, this));
@@ -92,12 +97,12 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(343, 157, this));
 		
 		//
-		
-		
 		voronoi.addSite(new Site(320, 124, this));
 		voronoi.addSite(new Site(269, 130, this));		
-		voronoi.addSite(new Site(343, 157, this));
-		voronoi.addSite(new Site(200, 217, this));
+		voronoi.addSite(new Site(343, 130, this));
+		//voronoi.addSite(new Site(200, 217, this));
+		
+		
 
 	}	
 
