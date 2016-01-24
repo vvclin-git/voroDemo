@@ -1,7 +1,7 @@
 package vorodemo;
 
 public abstract class Event implements Comparable<Event>{
-	float y;
+	float y, x;
 	Voronoi voronoi;
 	String type;
 	public Event(Voronoi voronoi, String type) {
@@ -16,6 +16,12 @@ public abstract class Event implements Comparable<Event>{
 			return -1;
 		}    
 		if (this.y > other.y) {
+			return 1;
+		}
+		if (this.x < other.x) {
+			return -1;
+		}
+		if (this.x > other.x) {
 			return 1;
 		}
 		return 0;
