@@ -45,7 +45,7 @@ public class BeachLine {
 	public void removeArc(BptNode leftBptNode, BptNode rightBptNode, Circle circle) {		
 		// remove arcs
 		voronoi.dictx.setY(circle.getCenter().y());
-		//System.out.println(leftBptNode.x() + "," + rightBptNode.x());
+		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
 		beachLineTree.remove(leftBptNode);		
 		//System.out.println(leftBptNode.x() + "," + rightBptNode.x());
 		beachLineTree.remove(rightBptNode);
@@ -53,9 +53,15 @@ public class BeachLine {
 		voronoi.dictx.setY(circle.getLowY());
 		// generate new arcs
 		BptNode oldRightBptNode = beachLineTree.higherKey(rightBptNode);
-		BptNode newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), rightBptNode.getRightSite(), voronoi.dictx);		
+		System.out.println(leftBptNode.getLeftSite().x() + ", " + rightBptNode.getRightSite().x());
+		//BptNode newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), rightBptNode.getRightSite(), voronoi.dictx);
+		BptNode newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenter(), voronoi.dictx);
+		System.out.println("=" + newBptNode.x());
 		beachLineTree.put(newBptNode, new Parabola(voronoi.dictx, rightBptNode.getRightSite(), newBptNode, oldRightBptNode, voronoi.p));		
+		printBptNodeX();
 		beachLineTree.lowerEntry(newBptNode).getValue().setRightBptNode(newBptNode);
+		
+		printBptNodeX();
 		// connecting edges
 		BptNode vertex = new BptNode("vertex", newBptNode);
 		Edge leftEdge = leftBptNode.getEdge();
@@ -67,12 +73,7 @@ public class BeachLine {
 		voronoi.edges.add(newEdge);
 		newBptNode.setEdge(newEdge);
 		// for debugging
-		System.out.println();
-		System.out.print(voronoi.dictx.y() + "| ");
-		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
-			System.out.print(bptNode.x() + ", ");
-		}
-		System.out.println();
+		
 	}
 	public BptNode getNewLeftNode() {
 		return newLeftNode;
@@ -96,6 +97,14 @@ public class BeachLine {
 				arc.draw();
 			}
 		}
+	}
+	public void printBptNodeX() {
+		System.out.println();
+		System.out.print(voronoi.dictx.y() + "| ");
+		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
+			System.out.print(bptNode.x() + ", ");
+		}
+		System.out.println();
 	}
 
 }
