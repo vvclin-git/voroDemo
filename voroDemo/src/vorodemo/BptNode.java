@@ -42,7 +42,7 @@ public class BptNode implements Comparable<BptNode>{
 				if (h >= 0) {
 					x1 = (float) ((-db - (float) Math.sqrt(h)) / da * 0.5);
 					x2 = (float) ((-db + (float) Math.sqrt(h)) / da * 0.5);
-					System.out.println(x1 + "," + x2);
+					//System.out.println(x1 + "," + x2);
 					if (type == "left") {
 						if (x1 > x2) {
 							x = x2;				
@@ -80,6 +80,28 @@ public class BptNode implements Comparable<BptNode>{
 	public float y() {
 		return y;
 	}
+	public boolean isConverge(BptNode that) {
+		float m1, m2, m12;
+		float x1, y1, x2, y2;
+		float xInt, yInt;
+		float c12;
+		x1 = this.x();
+		y1 = this.y();
+		x2 = that.x();
+		y2 = that.y();
+		m1 = -1 / this.getLeftSite().slopeTo(this.getRightSite());
+		m2 = -1 / that.getLeftSite().slopeTo(that.getRightSite());
+		m12 = (that.y() - this.y()) / (that.x() - this.y());
+		c12 = -this.x() * m12 + this.y();
+		xInt = (m1 * x1 - m2 * x2 - y1 + y2) / (m1 - m2);
+		yInt = m1 * (m2 * (x1 - x2) + y2) - m2 * y1 / (m1 - m2);
+		if (yInt - m12 * xInt - c12 > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	public int compareTo(BptNode that) {		
 		//update();		
 		that.update();
@@ -109,14 +131,7 @@ public class BptNode implements Comparable<BptNode>{
 			return 1;
 		}
 		// for debugging
-//		System.out.println(this.x + ", " + that.x + " equal");
-		//return 0;
-//		else if (this.type != "query") {
-//			if (this.equalsTo(that)) {
-//				return 0;
-//			}
-//		}
-		//System.out.println(this.x + ", " + that.x + " equal");
+
 		return 0;
 	}
 	public void setEdge(Edge edge) {

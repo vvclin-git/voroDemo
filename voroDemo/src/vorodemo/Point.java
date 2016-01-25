@@ -45,5 +45,7 @@ public abstract class Point implements Comparable<Point>{
 		}
 		return false;
 	}
-	
+	public float slopeTo(Point that) {
+		return (this.y() - that.y()) / (this.x() - that.x());
+	}
 }

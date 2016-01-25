@@ -17,16 +17,7 @@ public class CircleEvent extends Event{
 		}
 		// modify beach line
 		System.out.println("===circle event===");
-		System.out.print(voronoi.dictx.y() + "| ");
-		for (BptNode bptNode : voronoi.beachLineTree.navigableKeySet()) {
-			System.out.print(bptNode.x() + ", ");
-		}
-		System.out.println();
-		System.out.print(voronoi.dictx.y() + "| ");
-		for (BptNode bptNode : voronoi.beachLineTree.navigableKeySet()) {
-			System.out.print(bptNode.type + ", ");
-		}
-		System.out.println();
+		voronoi.beachLine.printBptNodeX();
 		
 		voronoi.beachLine.removeArc(circle.getBpt1(), circle.getBpt2(), circle);	
 		
