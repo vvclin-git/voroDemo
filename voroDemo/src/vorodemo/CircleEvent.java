@@ -19,8 +19,11 @@ public class CircleEvent extends Event{
 		System.out.println("===circle event===");
 		voronoi.beachLine.printBptNodeX();
 		
-		voronoi.beachLine.removeArc(circle.getBpt1(), circle.getBpt2(), circle);	
-		
+		voronoi.beachLine.removeArc(circle.getBpt1(), circle.getBpt2(), circle);
+//		BptNode newBptNode = voronoi.beachLine.getNewNode();
+//		BptNode oldLeftBptNode = voronoi.beachLineTree.lowerKey(newBptNode);
+//		BptNode oldRightBptNode = voronoi.beachLineTree.higherKey(newBptNode);
+//		if (newBptNode.isConverge(oldRightBptNode))
 		// TODO remove non-existing circle events
 //		ArrayList<Event> circleEventDelList = new ArrayList<Event>();
 //		for (Event event : voronoi.events) {

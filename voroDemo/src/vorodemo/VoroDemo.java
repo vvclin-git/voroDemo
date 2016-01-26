@@ -16,7 +16,7 @@ public class VoroDemo extends PApplet {
 	public void mouseClicked() {
 		//Event[] eventsOut;
 		if (mouseY > voronoi.dictx.y()) {
-			System.out.print("(" + mouseX + ", " + mouseY + "), ");			
+			System.out.println("voronoi.addSite(new Site((" + mouseX + ", " + mouseY + ", this));");			
 			voronoi.addSite(new Site(mouseX, mouseY, this));
 			//for debugging
 //			Event[] eventsOut = new Event[voronoi.events.size()];
@@ -88,18 +88,13 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(472, 585, this));
 //		voronoi.addSite(new Site(123, 460, this));
 //		voronoi.addSite(new Site(413, 346, this));
-//		voronoi.addSite(new Site(180, 285, this));
-		
-//		voronoi.addSite(new Site(320, 124, this));
-//		voronoi.addSite(new Site(269, 130, this));		
-//		voronoi.addSite(new Site(343, 157, this));
-//		voronoi.addSite(new Site(352, 217, this));
+//		voronoi.addSite(new Site(180, 285, this));	
+
 		// known good
-//		voronoi.addSite(new Site(320, 124, this));
-//		voronoi.addSite(new Site(269, 130, this));		
-//		voronoi.addSite(new Site(343, 157, this));
-//		voronoi.addSite(new Site(200, 217, this));
-		
+		voronoi.addSite(new Site(220, 169, this));
+		voronoi.addSite(new Site(274, 139, this));
+		voronoi.addSite(new Site(330, 156, this));
+		voronoi.addSite(new Site(232, 220, this));
 //		// known bad sites (work sometimes?)
 //		voronoi.addSite(new Site(320, 124, this));
 //		voronoi.addSite(new Site(269, 130, this));		

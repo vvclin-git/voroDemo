@@ -161,4 +161,7 @@ public class BptNode implements Comparable<BptNode>{
 	public Site getRightSite() {
 		return rightSite;
 	}
+	public String getType() {
+		return type;
+	}
 }

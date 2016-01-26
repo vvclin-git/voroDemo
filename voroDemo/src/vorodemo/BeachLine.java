@@ -7,7 +7,8 @@ public class BeachLine {
 	PApplet p;
 	Voronoi voronoi;
 	float r = 2; 
-	BptNode newLeftNode, newRightNode;	
+	BptNode newLeftNode, newRightNode;
+	BptNode newBptNode;
 	public BeachLine(Voronoi voronoi, PApplet p) {
 		this.voronoi = voronoi;
 		this.p = p;
@@ -54,14 +55,28 @@ public class BeachLine {
 		// generate new arcs
 		BptNode oldRightBptNode = beachLineTree.higherKey(rightBptNode);
 		//System.out.println(leftBptNode.getLeftSite().x() + ", " + rightBptNode.getRightSite().x());
-		BptNode newBptNode;
+		
 		if (circle.getLeftSite().y() > circle.getRightSite().y()) {
 			newBptNode = new BptNode("right", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenter(), voronoi.dictx);
+			BptNode nextRightBptNode = voronoi.beachLineTree.higherKey(newBptNode);
+			if (nextRightBptNode.getType() != "rightBound") {
+				Circle newCircle = new Circle(newBptNode, nextRightBptNode, voronoi.p);
+				voronoi.circles.add(newCircle);
+				voronoi.events.add(new CircleEvent(voronoi, newCircle));
+			}
+			
 		}
 		else {
 			newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenter(), voronoi.dictx);
+			BptNode nextLeftBptNode = voronoi.beachLineTree.lowerKey(newBptNode);
+			if (nextLeftBptNode.getType() != "leftBound") {
+				Circle newCircle = new Circle(nextLeftBptNode, newBptNode, voronoi.p);
+				voronoi.circles.add(newCircle);
+				voronoi.events.add(new CircleEvent(voronoi, newCircle));
+			}
 		}
-		//BptNode newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenter(), voronoi.dictx);
+		//TODO include special case
+		
 		System.out.println("=" + newBptNode.x());
 		beachLineTree.put(newBptNode, new Parabola(voronoi.dictx, rightBptNode.getRightSite(), newBptNode, oldRightBptNode, voronoi.p));		
 		//printBptNodeX();
@@ -85,6 +100,9 @@ public class BeachLine {
 	}
 	public BptNode getNewRightNode() {
 		return newRightNode;
+	}
+	public BptNode getNewNode() {
+		return newBptNode;
 	}
 	public void draw() {
 //		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
