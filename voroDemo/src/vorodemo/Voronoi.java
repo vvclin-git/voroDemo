@@ -61,4 +61,13 @@ public class Voronoi extends PApplet{
 //		}
 //		System.out.println();
 	}
+	public void reset() {
+		beachLineTree.clear();
+		sites.clear();
+		vertices.clear();
+		events.clear();
+		circles.clear();
+		edges.clear();
+		dictx.setY(100);
+	}
 }

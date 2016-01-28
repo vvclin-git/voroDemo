@@ -29,6 +29,13 @@ public class VoroDemo extends PApplet {
 		}		
 	}
 	public void keyPressed() {
+		if (key == 'r') {
+			voronoi.reset();
+		}
+		if (key == 's') {
+			voronoi.reset();
+			initSites();
+		}
 		if (key == CODED) {
 			//for debugging
 //			System.out.println();
@@ -76,6 +83,7 @@ public class VoroDemo extends PApplet {
 	}
 	public void settings() {		
 		size(600, 600);
+		initSites();
 		// known good sites
 //		voronoi.addSite(new Site(270, 118, this));
 //		voronoi.addSite(new Site(252, 126, this));
@@ -91,10 +99,10 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(180, 285, this));	
 
 		// known good
-		voronoi.addSite(new Site(220, 169, this));
-		voronoi.addSite(new Site(274, 139, this));
-		voronoi.addSite(new Site(330, 156, this));
-		voronoi.addSite(new Site(232, 220, this));
+//		voronoi.addSite(new Site(220, 169, this));
+//		voronoi.addSite(new Site(274, 139, this));
+//		voronoi.addSite(new Site(330, 156, this));
+//		voronoi.addSite(new Site(232, 220, this));
 //		// known bad sites (work sometimes?)
 //		voronoi.addSite(new Site(320, 124, this));
 //		voronoi.addSite(new Site(269, 130, this));		
@@ -109,7 +117,16 @@ public class VoroDemo extends PApplet {
 		
 
 	}	
-
+	public void initSites() {
+		voronoi.addSite(new Site(320, 124, this));
+		voronoi.addSite(new Site(269, 130, this));		
+		voronoi.addSite(new Site(343, 157, this));
+		voronoi.addSite(new Site(352, 217, this));
+		voronoi.addSite(new Site(472, 585, this));
+		voronoi.addSite(new Site(123, 460, this));
+		voronoi.addSite(new Site(413, 346, this));
+		voronoi.addSite(new Site(180, 285, this));
+	}
 	public void draw() {
 		clear();
 		voronoi.draw();		

@@ -59,21 +59,21 @@ public class BeachLine {
 		if (circle.getLeftSite().y() > circle.getRightSite().y()) {
 			newBptNode = new BptNode("right", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenter(), voronoi.dictx);
 			BptNode nextRightBptNode = voronoi.beachLineTree.higherKey(newBptNode);
-			if (nextRightBptNode.getType() != "rightBound") {
-				Circle newCircle = new Circle(newBptNode, nextRightBptNode, voronoi.p);
-				voronoi.circles.add(newCircle);
-				voronoi.events.add(new CircleEvent(voronoi, newCircle));
-			}
+//			if (nextRightBptNode.getType() != "rightBound") {
+//				Circle newCircle = new Circle(newBptNode, nextRightBptNode, voronoi.p);
+//				voronoi.circles.add(newCircle);
+//				voronoi.events.add(new CircleEvent(voronoi, newCircle));
+//			}
 			
 		}
 		else {
 			newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenter(), voronoi.dictx);
 			BptNode nextLeftBptNode = voronoi.beachLineTree.lowerKey(newBptNode);
-			if (nextLeftBptNode.getType() != "leftBound") {
-				Circle newCircle = new Circle(nextLeftBptNode, newBptNode, voronoi.p);
-				voronoi.circles.add(newCircle);
-				voronoi.events.add(new CircleEvent(voronoi, newCircle));
-			}
+//			if (nextLeftBptNode.getType() != "leftBound") {
+//				Circle newCircle = new Circle(nextLeftBptNode, newBptNode, voronoi.p);
+//				voronoi.circles.add(newCircle);
+//				voronoi.events.add(new CircleEvent(voronoi, newCircle));
+//			}
 		}
 		//TODO include special case
 		
