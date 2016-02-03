@@ -61,8 +61,10 @@ public class BeachLine {
 			BptNode nextRightBptNode = voronoi.beachLineTree.higherKey(newBptNode);
 			if (nextRightBptNode.getType() != "rightBound") {
 				Circle newCircle = new Circle(newBptNode, nextRightBptNode, voronoi.p);
-				voronoi.circles.add(newCircle);
-				voronoi.events.add(new CircleEvent(voronoi, newCircle));
+				if (!newCircle.containProcessedSite()) {
+					voronoi.circles.add(newCircle);
+					voronoi.events.add(new CircleEvent(voronoi, newCircle));
+				}				
 			}
 			
 		}
@@ -71,8 +73,11 @@ public class BeachLine {
 			BptNode nextLeftBptNode = voronoi.beachLineTree.lowerKey(newBptNode);
 			if (nextLeftBptNode.getType() != "leftBound") {
 				Circle newCircle = new Circle(nextLeftBptNode, newBptNode, voronoi.p);
-				voronoi.circles.add(newCircle);
-				voronoi.events.add(new CircleEvent(voronoi, newCircle));
+				if (!newCircle.containProcessedSite()) {
+					voronoi.circles.add(newCircle);
+					voronoi.events.add(new CircleEvent(voronoi, newCircle));
+				}
+				
 			}
 		}
 		//TODO include special case
@@ -121,8 +126,7 @@ public class BeachLine {
 			}
 		}
 	}
-	public void printBptNodeX() {
-		System.out.println();
+	public void printBptNodeX() {		
 		System.out.print(voronoi.dictx.y() + "| ");
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
 			System.out.print(bptNode.x() + ", ");
