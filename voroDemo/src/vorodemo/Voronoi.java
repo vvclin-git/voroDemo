@@ -49,6 +49,7 @@ public class Voronoi extends PApplet{
 			bptNode.update();
 		}
 		beachLine.printBptNodeX();
+		beachLine.printBptNode();
 		
 //		System.out.print(events.size() + "| ");
 //		for (Event event : events) {

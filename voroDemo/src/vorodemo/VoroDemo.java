@@ -26,7 +26,10 @@ public class VoroDemo extends PApplet {
 //			for (Event event : eventsOut) {
 //				System.out.print(event.toString() + ",");
 //			}
-		}		
+		}
+		else {
+			System.out.println("(" + mouseX + ", " + mouseY + ")");
+		}
 	}
 	public void keyPressed() {
 		if (key == 'r') {
@@ -35,6 +38,14 @@ public class VoroDemo extends PApplet {
 		if (key == 's') {
 			voronoi.reset();
 			initSites();
+		}
+		if (key == 'n') {
+			if (!voronoi.events.isEmpty()) {
+				voronoi.dictx.setY(voronoi.events.peek().y());
+				voronoi.events.poll().eventHandler();
+				voronoi.update();
+			}
+			
 		}
 		if (key == CODED) {
 			//for debugging
@@ -103,6 +114,8 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(274, 139, this));
 //		voronoi.addSite(new Site(330, 156, this));
 //		voronoi.addSite(new Site(232, 220, this));
+
+		
 //		// known bad sites (work sometimes?)
 //		voronoi.addSite(new Site(320, 124, this));
 //		voronoi.addSite(new Site(269, 130, this));		
@@ -112,27 +125,15 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(320, 124, this));
 //		voronoi.addSite(new Site(269, 130, this));		
 //		voronoi.addSite(new Site(343, 130, this));
-		//voronoi.addSite(new Site(200, 217, this));
-		
-		
+		//voronoi.addSite(new Site(200, 217, this));		
 
 	}	
 	public void initSites() {
-		voronoi.addSite(new Site(320, 124, this));
-		voronoi.addSite(new Site(269, 130, this));		
-		voronoi.addSite(new Site(343, 157, this));
-		voronoi.addSite(new Site(352, 217, this));
-		voronoi.addSite(new Site(472, 585, this));
-		voronoi.addSite(new Site(123, 460, this));
-		voronoi.addSite(new Site(413, 346, this));
-		voronoi.addSite(new Site(180, 285, this));	
-
 		
-//		voronoi.addSite(new Site(227, 159, this));
-//		voronoi.addSite(new Site(287, 132, this));
-//		voronoi.addSite(new Site(323, 155, this));
-//		voronoi.addSite(new Site(245, 204, this));
-//		voronoi.addSite(new Site(274, 299, this));
+		voronoi.addSite(new Site(235, 151, this));
+		voronoi.addSite(new Site(283, 131, this));
+		voronoi.addSite(new Site(306, 142, this));
+		voronoi.addSite(new Site(247, 193, this));
 	}
 	public void draw() {
 		clear();

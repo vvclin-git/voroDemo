@@ -18,7 +18,7 @@ public class CircleEvent extends Event{
 		// modify beach line
 		System.out.println("===circle event===");
 		voronoi.beachLine.printBptNodeX();
-		
+		voronoi.beachLine.printBptNodeType();
 		voronoi.beachLine.removeArc(circle.getBpt1(), circle.getBpt2(), circle);
 //		BptNode newBptNode = voronoi.beachLine.getNewNode();
 //		BptNode oldLeftBptNode = voronoi.beachLineTree.lowerKey(newBptNode);

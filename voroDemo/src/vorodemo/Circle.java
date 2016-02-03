@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 public class Circle implements Comparable<Circle>{
 	Site p1, p2, p3;
-	float x, y, r;		
+	float x, y, r, yInit;		
 	float lowY;
 	BptNode bpt1, bpt2;
 	PApplet c;
 	ArrayList<Site> sites = new ArrayList<Site>(); 
 	//public Circle (Point p1, Point p2, Point p3, PApplet c) {
-	public Circle (BptNode bpt1, BptNode bpt2, PApplet c) {
+	public Circle (BptNode bpt1, BptNode bpt2, float yInit, PApplet c) {
 		this.bpt1 = bpt1;
 		this.bpt2 = bpt2;
+		this.yInit = yInit;
 		p2 = bpt1.getSharedSite(bpt2);
 		if (bpt1.leftSite.equals(p2)) {
 			p1 = bpt1.rightSite;
@@ -123,7 +124,10 @@ public class Circle implements Comparable<Circle>{
 		else {
 			return p3;
 		}	
-	}	
+	}
+	public float getYInit() {
+		return yInit;
+	}
 	public static void main(String args[]) {
 //		Site p1 = new Site(10, 15, null);
 //		Site p2 = new Site(10, 23, null);

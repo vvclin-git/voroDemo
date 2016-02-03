@@ -24,17 +24,24 @@ public class SiteEvent extends Event {
 			newRightNode.setEdge(newEdge);
 			voronoi.edges.add(newEdge);
 			// create circle event
+			// TODO: determine if bpts converge
 			if (oldLeftNode.type != "leftBound") {
-				Circle newCircle = new Circle(oldLeftNode, newLeftNode, voronoi.p);				
+				Circle newCircle = new Circle(oldLeftNode, newLeftNode, voronoi.dictx.y(), voronoi.p);
+				
 				if (!newCircle.containProcessedSite()) {
+					//System.out.println("site | " + oldLeftNode.x() + ", " + newLeftNode.x());
+					//System.out.println("site | " + oldLeftNode.getType() + ", " + newLeftNode.getType());
 					voronoi.circles.add(newCircle);
 					voronoi.events.add(new CircleEvent(voronoi, newCircle));					
 				}
 				//System.out.println(newCircle.getCenter());
 			}
 			if (oldRightNode.type != "rightBound") {
-				Circle newCircle = new Circle(newRightNode, oldRightNode, voronoi.p);
+				Circle newCircle = new Circle(newRightNode, oldRightNode, voronoi.dictx.y(), voronoi.p);
+				
 				if (!newCircle.containProcessedSite()) {
+					//System.out.println("site | " + newRightNode.x() + ", " + oldRightNode.x());
+					//System.out.println("site | " + newRightNode.getType() + ", " + oldRightNode.getType());
 					voronoi.circles.add(newCircle);
 					voronoi.events.add(new CircleEvent(voronoi, newCircle));					
 				}
