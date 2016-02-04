@@ -12,7 +12,16 @@ public class BptNode implements Comparable<BptNode>{
 		this.rightSite = rightSite;
 		this.dictx = dictx;
 		this.type = type;		
-		this.x = site.x();
+		this.x = site.x();		
+		if (type !=  "leftBound" & type != "rightBound") {
+			if (leftSite.y() == dictx.y()) {
+				this.y = (float) (a(rightSite) * Math.pow(x, 2) + b(rightSite) * x + c(rightSite));				
+			}
+			if (rightSite.y() == dictx.y()) {
+				this.y = (float) (a(leftSite) * Math.pow(x, 2) + b(leftSite) * x + c(leftSite));				
+			}
+		}		
+		
 		if (type == "leftBound") {
 			this.x = Float.NEGATIVE_INFINITY;
 			this.y = Float.NEGATIVE_INFINITY;
@@ -30,7 +39,7 @@ public class BptNode implements Comparable<BptNode>{
 		this.y = bptNode.y();
 		this.type = "vertex";
 	}
-	public void update() {
+	public void update() {		
 		if ((type == "left" | type == "right")) {
 			if (leftSite.y() != dictx.y() & rightSite.y() != dictx.y()) {				
 				float da, db, dc, h;
@@ -41,8 +50,7 @@ public class BptNode implements Comparable<BptNode>{
 				h = (float) (Math.pow(db, 2) - 4 * da * dc);
 				if (h >= 0) {
 					x1 = (float) ((-db - (float) Math.sqrt(h)) / da * 0.5);
-					x2 = (float) ((-db + (float) Math.sqrt(h)) / da * 0.5);
-					//System.out.println(x1 + "," + x2);
+					x2 = (float) ((-db + (float) Math.sqrt(h)) / da * 0.5);					
 					if (type == "left") {
 						if (x1 > x2) {
 							x = x2;				
@@ -61,8 +69,12 @@ public class BptNode implements Comparable<BptNode>{
 					}					
 				}
 			}
-			
-			y = (float) (a(leftSite) * Math.pow(x, 2) + b(leftSite) * x + c(leftSite));
+			if (type == "right") {
+				y = (float) (a(rightSite) * Math.pow(x, 2) + b(rightSite) * x + c(rightSite));
+			}			
+			if (type == "left") {
+				y = (float) (a(leftSite) * Math.pow(x, 2) + b(leftSite) * x + c(leftSite));
+			}			
 		}
 	}
 	private float a(Site site) {
@@ -84,11 +96,12 @@ public class BptNode implements Comparable<BptNode>{
 		float m1, m2, m12;
 		float x1, y1, x2, y2;
 		float xInt, yInt;
-		float c12;
+		float c12;		
 		x1 = this.x();
 		y1 = this.y();
 		x2 = that.x();
 		y2 = that.y();
+		//System.out.println("(" + x1 + ", " + y1 + ") " + "(" + x2 + ", " + y2 + ")");
 		m1 = -1 / this.getLeftSite().slopeTo(this.getRightSite());
 		m2 = -1 / that.getLeftSite().slopeTo(that.getRightSite());
 		m12 = (that.y() - this.y()) / (that.x() - this.y());

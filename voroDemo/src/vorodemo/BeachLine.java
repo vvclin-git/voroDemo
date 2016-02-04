@@ -48,30 +48,22 @@ public class BeachLine {
 		// TODO: need better way to remove bpts		
 		float yTemp = voronoi.dictx.y();
 		voronoi.dictx.setY(circle.getYInit());
-		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
+//		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
 		System.out.println(leftBptNode + "," + rightBptNode);
-		printBptNodeX();
-		printBptNode();
+//		printBptNodeX();
+//		printBptNode();
 		beachLineTree.remove(leftBptNode);		
 		
-		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
-		System.out.println(leftBptNode + "," + rightBptNode);
-		printBptNodeX();
-		printBptNode();
-		beachLineTree.remove(rightBptNode);
-
-		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
-		System.out.println(leftBptNode + "," + rightBptNode);
-		printBptNodeX();
-		printBptNode();
-//		System.out.println(beachLineTree.lowerKey(rightBptNode).x());
-		
+//		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
+//		System.out.println(leftBptNode + "," + rightBptNode);
+//		printBptNodeX();
+//		printBptNode();
+		beachLineTree.remove(rightBptNode);		
 		//printBptNode();
 		voronoi.dictx.setY(yTemp);
 		// generate new arcs
 		BptNode oldRightBptNode = beachLineTree.higherKey(rightBptNode);
-		//System.out.println(leftBptNode.getLeftSite().x() + ", " + rightBptNode.getRightSite().x());
-		
+		//System.out.println(leftBptNode.getLeftSite().x() + ", " + rightBptNode.getRightSite().x());		
 		if (circle.getLeftSite().y() > circle.getRightSite().y()) {
 			newBptNode = new BptNode("right", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenter(), voronoi.dictx);
 			BptNode nextRightBptNode = voronoi.beachLineTree.higherKey(newBptNode);
@@ -161,6 +153,13 @@ public class BeachLine {
 		System.out.print(voronoi.dictx.y() + "| ");
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
 			System.out.print(bptNode + ", ");
+		}
+		System.out.println();
+	}
+	public void printBptNodeY() {		
+		System.out.print(voronoi.dictx.y() + "| ");
+		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
+			System.out.print(bptNode.y() + ", ");
 		}
 		System.out.println();
 	}
