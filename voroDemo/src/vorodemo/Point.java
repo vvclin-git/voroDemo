@@ -1,6 +1,6 @@
 package vorodemo;
 import processing.core.PApplet;
-public abstract class Point implements Comparable<Point>{
+public class Point implements Comparable<Point>{
 	float x, y;
 	float r = 2;
 	PApplet p;
@@ -15,7 +15,7 @@ public abstract class Point implements Comparable<Point>{
 	float x() {
 		return this.x;
 	}
-	abstract Object copy();
+	//abstract Object copy();
 	void draw() {
 		p.ellipse(x, y, r, r);		
 	}

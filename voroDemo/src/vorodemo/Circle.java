@@ -6,26 +6,26 @@ public class Circle implements Comparable<Circle>{
 	Site p1, p2, p3;
 	float x, y, r, yInit;		
 	float lowY;
-	BptNode bpt1, bpt2;
+	BptNode bptNode1, bptNode2;
 	PApplet c;
 	ArrayList<Site> sites = new ArrayList<Site>(); 
 	//public Circle (Point p1, Point p2, Point p3, PApplet c) {
-	public Circle (BptNode bpt1, BptNode bpt2, float yInit, PApplet c) {
-		this.bpt1 = bpt1;
-		this.bpt2 = bpt2;
+	public Circle (BptNode bptNode1, BptNode bptNode2, float yInit, PApplet c) {
+		this.bptNode1 = bptNode1;
+		this.bptNode2 = bptNode2;
 		this.yInit = yInit;
-		p2 = bpt1.getSharedSite(bpt2);
-		if (bpt1.leftSite.equals(p2)) {
-			p1 = bpt1.rightSite;
+		p2 = bptNode1.getSharedSite(bptNode2);
+		if (bptNode1.leftSite.equals(p2)) {
+			p1 = bptNode1.rightSite;
 		}
 		else {
-			p1 = bpt1.leftSite;
+			p1 = bptNode1.leftSite;
 		}
-		if (bpt2.leftSite.equals(p2)) {
-			p3 = bpt2.rightSite;
+		if (bptNode2.leftSite.equals(p2)) {
+			p3 = bptNode2.rightSite;
 		}
 		else {
-			p3 = bpt2.leftSite;
+			p3 = bptNode2.leftSite;
 		}
 		float ma, mb;		
 		float dxa, dxb;
@@ -80,7 +80,10 @@ public class Circle implements Comparable<Circle>{
 	float y() {
 		return y;
 	}
-	public Site getCenter() {
+	public Point getCenter() {
+		return new Point(x, y, c);
+	}
+	public Site getCenterSite() {
 		return new Site(x, y, c);
 	}
 	void draw() {
@@ -100,11 +103,11 @@ public class Circle implements Comparable<Circle>{
 		}
 		return false;
 	}
-	public BptNode getBpt1() {
-		return bpt1;
+	public BptNode getBptNode1() {
+		return bptNode1;
 	}
-	public BptNode getBpt2() {
-		return bpt2;
+	public BptNode getBptNode2() {
+		return bptNode2;
 	}
 	public Site getLeftSite() {
 		if (p1.x() < p3.x()) {
@@ -128,6 +131,53 @@ public class Circle implements Comparable<Circle>{
 	public float getYInit() {
 		return yInit;
 	}
+	public boolean isConverge() {
+		Point bpt1 = bptNode1.toPoint();
+		Point bpt2 = bptNode2.toPoint();
+		Point center = getCenter(); 
+		float m1 =  center.slopeTo(bpt1);
+		float m2 =  center.slopeTo(bpt2);
+		boolean status = false;
+		if (m1 != m2) {
+			if (bptNode1.getType() == "right") {
+				if (bptNode1.x() < center.x()) {
+					status = true;
+				}
+				else {
+					status = false;
+				}
+			}
+			if (bptNode1.getType() == "left") {
+				if (bptNode1.x() > center.x()) {
+					status = true;
+				}
+				else {
+					status = false;
+				}
+			}	
+			if (bptNode2.getType() == "right") {
+				if (bptNode2.x() < center.x()) {
+					status = true;
+				}
+				else {
+					status = false;
+				}
+			}
+			if (bptNode2.getType() == "left") {
+				if (bptNode2.x() > center.x()) {
+					status = true;
+				}
+				else {
+					status = false;
+				}
+			}
+		}
+		if (status) {
+			return true;
+		}		
+		return false;
+	}
+	
 	public static void main(String args[]) {
 //		Site p1 = new Site(10, 15, null);
 //		Site p2 = new Site(10, 23, null);

@@ -114,6 +114,18 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(274, 139, this));
 //		voronoi.addSite(new Site(330, 156, this));
 //		voronoi.addSite(new Site(232, 220, this));
+		
+		// known good
+//		voronoi.addSite(new Site(235, 151, this));
+//		voronoi.addSite(new Site(283, 131, this));
+//		voronoi.addSite(new Site(306, 142, this));
+//		voronoi.addSite(new Site(247, 193, this));
+		
+		// known bad
+//		voronoi.addSite(new Site(235, 151, this));
+//		voronoi.addSite(new Site(283, 131, this));
+//		voronoi.addSite(new Site(306, 142, this));
+//		voronoi.addSite(new Site(247, 193, this));
 
 		
 //		// known bad sites (work sometimes?)
@@ -134,6 +146,7 @@ public class VoroDemo extends PApplet {
 		voronoi.addSite(new Site(283, 131, this));
 		voronoi.addSite(new Site(306, 142, this));
 		voronoi.addSite(new Site(247, 193, this));
+		voronoi.addSite(new Site(164, 231, this));
 	}
 	public void draw() {
 		clear();
