@@ -11,17 +11,22 @@ public class CircleEvent extends Event{
 		this.circle = circle;
 	}
 	public void eventHandler() {
-		if (circle.containProcessedSite()) {
+//		if (circle.containProcessedSite()) {
+//			voronoi.circles.remove(this.circle);
+//			return;
+//		}
+		if (circle.containProcessedBptNode()) {
 			voronoi.circles.remove(this.circle);
+			System.out.println("circle removed");
 			return;
 		}
 		// modify beach line
-		System.out.println("===circle event===");
+		System.out.println("===circle event=== | y = " + voronoi.dictx.y());
 //		voronoi.beachLine.printBptNodeX();
 //		voronoi.beachLine.printBptNode();
 		voronoi.beachLine.removeArc(circle.getBptNode1(), circle.getBptNode2(), circle);
 		voronoi.circles.remove(this.circle);
-		this.circle.getMedSite().setProcessed();
+		//this.circle.getMedSite().setProcessed();
 	}
 
 }

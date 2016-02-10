@@ -48,28 +48,30 @@ public class BeachLine {
 		// TODO: need better way to remove bpts		
 		float yTemp = voronoi.dictx.y();
 		voronoi.dictx.setY(circle.getYInit());
-//		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
+		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
 //		System.out.println(leftBptNode + "," + rightBptNode);
 //		printBptNodeX();
 //		printBptNode();
 		beachLineTree.remove(leftBptNode);		
-		
+		leftBptNode.setProcessed();
 //		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
 //		System.out.println(leftBptNode + "," + rightBptNode);
 //		printBptNodeX();
 //		printBptNode();
-		beachLineTree.remove(rightBptNode);		
+		beachLineTree.remove(rightBptNode);
+		rightBptNode.setProcessed();
 		//printBptNode();
 		voronoi.dictx.setY(yTemp);
 		// generate new arcs
 		BptNode oldRightBptNode = beachLineTree.higherKey(rightBptNode);
 		//System.out.println(leftBptNode.getLeftSite().x() + ", " + rightBptNode.getRightSite().x());		
 		if (circle.getLeftSite().y() > circle.getRightSite().y()) {
+			System.out.println("right");
 			newBptNode = new BptNode("right", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenterSite(), voronoi.dictx);
 			BptNode nextRightBptNode = voronoi.beachLineTree.higherKey(newBptNode);
 			if (nextRightBptNode.getType() != "rightBound") {
 				Circle newCircle = new Circle(newBptNode, nextRightBptNode, voronoi.dictx.y(), voronoi.p);
-				if (!newCircle.containProcessedSite()) {
+				if (!newCircle.containProcessedBptNode() & newCircle.isConverge()) {
 					voronoi.circles.add(newCircle);
 					voronoi.events.add(new CircleEvent(voronoi, newCircle));
 				}				
@@ -80,8 +82,9 @@ public class BeachLine {
 			newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenterSite(), voronoi.dictx);
 			BptNode nextLeftBptNode = voronoi.beachLineTree.lowerKey(newBptNode);
 			if (nextLeftBptNode.getType() != "leftBound") {
+				System.out.println("left");
 				Circle newCircle = new Circle(nextLeftBptNode, newBptNode, voronoi.dictx.y(), voronoi.p);
-				if (!newCircle.containProcessedSite()) {
+				if (!newCircle.containProcessedBptNode() & newCircle.isConverge()) {
 					voronoi.circles.add(newCircle);
 					voronoi.events.add(new CircleEvent(voronoi, newCircle));
 				}

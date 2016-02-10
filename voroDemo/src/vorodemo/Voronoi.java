@@ -44,26 +44,41 @@ public class Voronoi extends PApplet{
 		}
 		beachLine.draw();
 	}
+	public void printEvents() {
+		PriorityQueue<Event> eventsOut = new PriorityQueue<Event>(events);
+		while (!eventsOut.isEmpty()) {
+			Event event =  eventsOut.poll();
+			System.out.print(event.type + ", ");			
+		}
+		System.out.println();
+	}
+	public void printEventsY() {
+		PriorityQueue<Event> eventsOut = new PriorityQueue<Event>(events);
+		while (!eventsOut.isEmpty()) {
+			Event event =  eventsOut.poll();
+			System.out.print(event.y + ", ");			
+		}
+		System.out.println();
+	}
 	public void update() {
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
 			bptNode.update();
 		}
-		for (Site site : sites) {			
-			System.out.print(site.processed + ", ");
-		}
-		System.out.println();
-		for (Site site : sites) {
-			System.out.print(site.x() + ", ");			
-		}
-		System.out.println();
+//		for (Site site : sites) {			
+//			System.out.print(site.processed + ", ");
+//		}
+//		System.out.println();
+//		for (Site site : sites) {
+//			System.out.print(site.x() + ", ");			
+//		}
+//		System.out.println();
 		beachLine.printBptNodeX();
 		//beachLine.printBptNode();
 		//beachLine.printBptNodeY();
 //		System.out.print(events.size() + "| ");
-//		for (Event event : events) {
-//			System.out.print(event.getType() + ", ");
-//		}
-//		System.out.println();
+		
+		//printEvents();
+		//printEventsY();
 //		System.out.println();
 //		System.out.println(edges.size());
 //		System.out.println();

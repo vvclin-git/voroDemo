@@ -122,12 +122,35 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(247, 193, this));
 		
 		// known bad
+//		voronoi.addSite(new Site(419, 187, this));
+//		voronoi.addSite(new Site(363, 269, this));
+//		voronoi.addSite(new Site(278, 336, this));
+		
+		// known bad
 //		voronoi.addSite(new Site(235, 151, this));
 //		voronoi.addSite(new Site(283, 131, this));
 //		voronoi.addSite(new Site(306, 142, this));
 //		voronoi.addSite(new Site(247, 193, this));
-
-		
+		// known bad
+//		voronoi.addSite(new Site(152, 306, this));
+//		voronoi.addSite(new Site(301, 354, this));
+//		voronoi.addSite(new Site(253, 276, this));
+//		voronoi.addSite(new Site(175, 377, this));
+//		voronoi.addSite(new Site(377, 291, this));
+//		voronoi.addSite(new Site(264, 442, this));
+//		voronoi.addSite(new Site(376, 374, this));
+//		voronoi.addSite(new Site(292, 402, this));
+//		voronoi.addSite(new Site(348, 410, this));
+//		voronoi.addSite(new Site(263, 518, this));
+//		voronoi.addSite(new Site(95, 489, this));
+//		voronoi.addSite(new Site(128, 443, this));
+//		voronoi.addSite(new Site(409, 490, this));
+//		voronoi.addSite(new Site(479, 337, this));
+//		voronoi.addSite(new Site(452, 411, this));
+//		voronoi.addSite(new Site(523, 222, this));
+//		voronoi.addSite(new Site(440, 208, this));
+//		voronoi.addSite(new Site(516, 163, this));
+//		voronoi.addSite(new Site(397, 180, this));
 //		// known bad sites (work sometimes?)
 //		voronoi.addSite(new Site(320, 124, this));
 //		voronoi.addSite(new Site(269, 130, this));		
@@ -142,11 +165,9 @@ public class VoroDemo extends PApplet {
 	}	
 	public void initSites() {
 		
-		voronoi.addSite(new Site(235, 151, this));
-		voronoi.addSite(new Site(283, 131, this));
-		voronoi.addSite(new Site(306, 142, this));
-		voronoi.addSite(new Site(247, 193, this));
-		voronoi.addSite(new Site(164, 231, this));
+		voronoi.addSite(new Site(391, 156, this));
+		voronoi.addSite(new Site(367, 183, this));
+		voronoi.addSite(new Site(337, 201, this));
 	}
 	public void draw() {
 		clear();

@@ -6,9 +6,10 @@ public class BptNode implements Comparable<BptNode>{
 	Point outPoint;
 	Directrix dictx;
 	String type; // left, right, query, vertex, leftBound, rightBound, single
-	Edge edge;
-	float x, y;	
-	public BptNode(String type, Site leftSite, Site rightSite, Site site, Directrix dictx) {
+	Edge edge;	
+	float x, y;
+	boolean processed = false;
+	public BptNode(String type, Site leftSite, Site rightSite, Site site, Directrix dictx) {		
 		this.leftSite = leftSite;
 		this.rightSite = rightSite;
 		this.dictx = dictx;
@@ -117,6 +118,12 @@ public class BptNode implements Comparable<BptNode>{
 //			return false;
 //		}
 //	}
+	public void setProcessed() {
+		processed = true;
+	}
+	public boolean isProcessed() {
+		return processed;
+	}
 	public int compareTo(BptNode that) {		
 		//update();		
 		that.update();
@@ -208,4 +215,5 @@ public class BptNode implements Comparable<BptNode>{
 	public float distSqrToSite(Site site) {
 		return (float) this.outPoint.distSqrTo(site);
 	}
+	
 }

@@ -103,6 +103,15 @@ public class Circle implements Comparable<Circle>{
 		}
 		return false;
 	}
+	public boolean containProcessedBptNode() {
+		if (bptNode1.isProcessed() & bptNode2.isProcessed()) {
+			return true;
+		}
+//		if (bptNode2.isProcessed()) {
+//			return true;
+//		}
+		return false;
+	}
 	public BptNode getBptNode1() {
 		return bptNode1;
 	}
