@@ -21,12 +21,12 @@ public class CircleEvent extends Event{
 			return;
 		}
 		// modify beach line
-		System.out.println("===circle event=== | y = " + voronoi.dictx.y());
+		System.out.println("===circle event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());
 //		voronoi.beachLine.printBptNodeX();
 //		voronoi.beachLine.printBptNode();
 		voronoi.beachLine.removeArc(circle.getBptNode1(), circle.getBptNode2(), circle);
 		voronoi.circles.remove(this.circle);
-		//this.circle.getMedSite().setProcessed();
+		System.out.println("===circle event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());		
 	}
 
 }

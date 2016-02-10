@@ -47,62 +47,73 @@ public class BeachLine {
 		// remove arcs
 		// TODO: need better way to remove bpts		
 		float yTemp = voronoi.dictx.y();
+		Site newBptNodeSite1, newBptNodeSite2;
 		voronoi.dictx.setY(circle.getYInit());
 		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
+		System.out.println(voronoi.beachLineTree.size());
 //		System.out.println(leftBptNode + "," + rightBptNode);
 //		printBptNodeX();
 //		printBptNode();
 		beachLineTree.remove(leftBptNode);		
-		leftBptNode.setProcessed();
-//		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
-//		System.out.println(leftBptNode + "," + rightBptNode);
-//		printBptNodeX();
-//		printBptNode();
 		beachLineTree.remove(rightBptNode);
+		System.out.println(voronoi.beachLineTree.size());
+		leftBptNode.setProcessed();
 		rightBptNode.setProcessed();
 		//printBptNode();
 		voronoi.dictx.setY(yTemp);
-		// generate new arcs
+		// for generate new arcs
 		BptNode oldRightBptNode = beachLineTree.higherKey(rightBptNode);
-		//System.out.println(leftBptNode.getLeftSite().x() + ", " + rightBptNode.getRightSite().x());		
-		if (circle.getLeftSite().y() > circle.getRightSite().y()) {
-			System.out.println("right");
-			newBptNode = new BptNode("right", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenterSite(), voronoi.dictx);
+		// create new bptNode and circle event
+		//System.out.println(leftBptNode.getLeftSite().x() + ", " + rightBptNode.getRightSite().x());
+		if (circle.getLeftSite().compareTo(circle.getRightSite()) == 1) {
+			newBptNodeSite1 = circle.getLeftSite();
+			newBptNodeSite2 = circle.getRightSite();
+		}
+		else if (circle.getLeftSite().compareTo(circle.getRightSite()) == -1) {
+			newBptNodeSite1 = circle.getRightSite();
+			newBptNodeSite2 = circle.getLeftSite();
+		}
+		else {
+			newBptNodeSite1 = circle.getLeftSite();
+			newBptNodeSite2 = circle.getRightSite();
+		}
+		if (circle.getCenter().x() > newBptNodeSite1.x()) {
+			newBptNode = new BptNode("right", newBptNodeSite1, newBptNodeSite2, newBptNodeSite1, voronoi.dictx);
 			BptNode nextRightBptNode = voronoi.beachLineTree.higherKey(newBptNode);
 			if (nextRightBptNode.getType() != "rightBound") {
 				Circle newCircle = new Circle(newBptNode, nextRightBptNode, voronoi.dictx.y(), voronoi.p);
-				if (!newCircle.containProcessedBptNode() & newCircle.isConverge()) {
+				//System.out.println(voronoi.dictx.y() + ", " + newCircle.y() + ", " + newCircle.getLowY() + " | " + newCircle.containProcessedBptNode() + ", " + newCircle.isConverge());				
+				//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
+				//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
+				if (!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.getLowY() > voronoi.dictx.y()) {
 					voronoi.circles.add(newCircle);
 					voronoi.events.add(new CircleEvent(voronoi, newCircle));
 				}				
 			}
-			
 		}
 		else {
-			newBptNode = new BptNode("left", leftBptNode.getLeftSite(), rightBptNode.getRightSite(), circle.getCenterSite(), voronoi.dictx);
+			newBptNode = new BptNode("left", newBptNodeSite2, newBptNodeSite1, newBptNodeSite1, voronoi.dictx);
 			BptNode nextLeftBptNode = voronoi.beachLineTree.lowerKey(newBptNode);
-			if (nextLeftBptNode.getType() != "leftBound") {
-				System.out.println("left");
+			if (nextLeftBptNode.getType() != "leftBound") {				
 				Circle newCircle = new Circle(nextLeftBptNode, newBptNode, voronoi.dictx.y(), voronoi.p);
-				if (!newCircle.containProcessedBptNode() & newCircle.isConverge()) {
+				//System.out.println(voronoi.dictx.y() + ", " + newCircle.y() + ", " + newCircle.getLowY() + " | " + newCircle.containProcessedBptNode() + ", " + newCircle.isConverge());
+				//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
+				//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
+				if (!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.getLowY() > voronoi.dictx.y()) {
 					voronoi.circles.add(newCircle);
 					voronoi.events.add(new CircleEvent(voronoi, newCircle));
-				}
-				
-			}
-		}
-		//TODO include special case
-		
-		System.out.println("=" + newBptNode.x());
-		// TODO: newBptNode not inserted
-		System.out.println("=" + newBptNode.getType());
-		System.out.println("=" + newBptNode);
-		printBptNodeX();
-		printBptNodeType();
+				}				
+			}			
+		}		
+
+		// for debugging		
+//		System.out.println("=" + newBptNode.x());		
+//		System.out.println("=" + newBptNode.getType());
+//		System.out.println("=" + newBptNode);
+//		printBptNodeX();
+//		printBptNodeType();
 		beachLineTree.put(newBptNode, new Parabola(voronoi.dictx, rightBptNode.getRightSite(), newBptNode, oldRightBptNode, voronoi.p));		
-		printBptNodeX();
 		beachLineTree.lowerEntry(newBptNode).getValue().setRightBptNode(newBptNode);		
-		//printBptNodeX();
 		// connecting edges
 		BptNode vertex = new BptNode("vertex", newBptNode);
 		Edge leftEdge = leftBptNode.getEdge();
@@ -126,13 +137,6 @@ public class BeachLine {
 		return newBptNode;
 	}
 	public void draw() {
-//		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
-//			Parabola arc = beachLineTree.get(bptNode);			
-//			p.ellipse(bptNode.x, bptNode.y, r, r);
-//			if (arc != null) {
-//				arc.draw();
-//			}
-//		}
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {						
 			p.ellipse(bptNode.x, bptNode.y, r, r);			
 		}

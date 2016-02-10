@@ -20,6 +20,15 @@ public class Site extends Point {
 	public void setProcessed() {
 		processed = true;
 	}
+	public int compareTo(Site that) {
+		if (this.y < that.y) {
+			return -1;
+		}    
+		if (this.y > that.y) {
+			return 1;
+		}		
+		return 0;
+	}
 	public static void main(String args[]) {
 		Site a = new Site(1, 2, null);
 		Site b = new Site(1, 2, null);

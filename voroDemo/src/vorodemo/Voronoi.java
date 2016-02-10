@@ -18,6 +18,7 @@ public class Voronoi extends PApplet{
 	BeachLine beachLine;
 	Directrix dictx;
 	PApplet p;
+	boolean drawCircle = true;
 	public Voronoi(float dictY, PApplet p) {		
 		this.p = p;
 		dictx = new Directrix(dictY, p);
@@ -33,8 +34,10 @@ public class Voronoi extends PApplet{
 		for (Site site : sites) {
 			site.draw();
 		}
-		for (Circle circle : circles) {
-			circle.draw();
+		if (drawCircle) {
+			for (Circle circle : circles) {
+				circle.draw();
+			}
 		}
 		for (Edge edge : edges) {
 			edge.draw();
@@ -102,4 +105,13 @@ public class Voronoi extends PApplet{
 		edges.clear();
 		dictx.setY(100);
 	}
+	public void toggleCircle() {
+		if (drawCircle) {
+			drawCircle = false;
+		}
+		else {
+			drawCircle = true;
+		}
+	}
+	
 }
