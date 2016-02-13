@@ -80,8 +80,8 @@ public class Voronoi extends PApplet{
 		//beachLine.printBptNodeY();
 //		System.out.print(events.size() + "| ");
 		
-		//printEvents();
-		//printEventsY();
+		printEvents();
+		printEventsY();
 //		System.out.println();
 //		System.out.println(edges.size());
 //		System.out.println();
@@ -103,7 +103,7 @@ public class Voronoi extends PApplet{
 		events.clear();
 		circles.clear();
 		edges.clear();
-		dictx.setY(100);
+		dictx.setY(10);
 	}
 	public void toggleCircle() {
 		if (drawCircle) {

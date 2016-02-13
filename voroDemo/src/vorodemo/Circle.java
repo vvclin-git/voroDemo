@@ -141,11 +141,15 @@ public class Circle implements Comparable<Circle>{
 		return yInit;
 	}
 	public boolean isConverge() {
-		Point bpt1 = bptNode1.toPoint();
-		Point bpt2 = bptNode2.toPoint();
+//		Point bpt1 = bptNode1.toPoint();
+//		Point bpt2 = bptNode2.toPoint();
 		Point center = getCenter(); 
-		float m1 =  center.slopeTo(bpt1);
-		float m2 =  center.slopeTo(bpt2);
+//		float m1 =  center.slopeTo(bpt1);
+//		float m2 =  center.slopeTo(bpt2);
+		float m1 =  (center.y() - bptNode1.y()) / (center.x() - bptNode1.x());
+		float m2 =  (center.y() - bptNode2.y()) / (center.x() - bptNode2.x());
+//		System.out.println(bpt1 + ", " + bpt2);
+		System.out.println(bptNode1.x() + ", " + bptNode2.x());
 		boolean status = false;
 		if (m1 != m2) {
 			if (bptNode1.getType() == "right") {

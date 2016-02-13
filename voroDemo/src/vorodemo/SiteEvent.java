@@ -10,12 +10,13 @@ public class SiteEvent extends Event {
 	public void eventHandler() {		
 		if (!voronoi.beachLineTree.isEmpty()) {
 			// TODO need to deal with special case (circle event + site event)
-			
+			System.out.println("===site event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());
 			// add new arc on an existing arc
 			BptNode queryNode = new BptNode("query", site);
 			BptNode oldLeftNode = voronoi.beachLineTree.floorKey(queryNode);										
 			BptNode oldRightNode = voronoi.beachLineTree.ceilingKey(queryNode);				
 			voronoi.beachLine.addArc(site);
+			
 			BptNode newLeftNode = voronoi.beachLine.getNewLeftNode();								
 			BptNode newRightNode = voronoi.beachLine.getNewRightNode();
 			// create half edges
@@ -48,9 +49,12 @@ public class SiteEvent extends Event {
 				}
 				//System.out.println(newCircle.getCenter());
 			}
+			System.out.println("===site event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());
 		}
 		else {
+			System.out.println("===site event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());
 			voronoi.beachLine.addArc(site);
+			System.out.println("===site event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());
 		}
 		
 	}

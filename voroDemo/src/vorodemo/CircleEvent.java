@@ -16,8 +16,10 @@ public class CircleEvent extends Event{
 //			return;
 //		}
 		if (circle.containProcessedBptNode()) {
+			System.out.println("===circle event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());
 			voronoi.circles.remove(this.circle);
 			System.out.println("circle removed");
+			System.out.println("===circle event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());
 			return;
 		}
 		// modify beach line

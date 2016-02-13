@@ -10,7 +10,7 @@ import processing.core.PApplet;
 
 public class VoroDemo extends PApplet {
 	PApplet canvas;
-	Voronoi voronoi = new Voronoi(100, this);
+	Voronoi voronoi = new Voronoi(10, this);
 	Integer step = 1;
 	
 	public void mouseClicked() {
@@ -51,13 +51,7 @@ public class VoroDemo extends PApplet {
 			}			
 		}
 		if (key == CODED) {
-			//for debugging
-//			System.out.println();
-//			System.out.print("above " + sitesAbove.size());
-//			System.out.print(" below " + sitesBelow.size());
-//			if (!arcs.isEmpty()) {
-//				System.out.println(arcs.get(0).leftX + " " + arcs.get(0).rightX);
-//			}			
+			//for debugging			
 			if (keyCode == UP) { // not necessary
 			} 
 			else if (keyCode == DOWN) {				
@@ -97,49 +91,12 @@ public class VoroDemo extends PApplet {
 	}
 	public void settings() {		
 		size(600, 600);
-		initSites();
-		// known good sites
-//		voronoi.addSite(new Site(270, 118, this));
-//		voronoi.addSite(new Site(252, 126, this));
-//		voronoi.addSite(new Site(287, 136, this));
-		// known good
-//		voronoi.addSite(new Site(320, 124, this));
-//		voronoi.addSite(new Site(269, 130, this));		
-//		voronoi.addSite(new Site(343, 157, this));
-//		voronoi.addSite(new Site(352, 217, this));
-//		voronoi.addSite(new Site(472, 585, this));
-//		voronoi.addSite(new Site(123, 460, this));
-//		voronoi.addSite(new Site(413, 346, this));
-//		voronoi.addSite(new Site(180, 285, this));	
+		initSites();	
 
-		// known good
-//		voronoi.addSite(new Site(220, 169, this));
-//		voronoi.addSite(new Site(274, 139, this));
-//		voronoi.addSite(new Site(330, 156, this));
-//		voronoi.addSite(new Site(232, 220, this));
+	}	
+	public void initSites() {
 		
-		// known good
-//		voronoi.addSite(new Site(235, 151, this));
-//		voronoi.addSite(new Site(283, 131, this));
-//		voronoi.addSite(new Site(306, 142, this));
-//		voronoi.addSite(new Site(247, 193, this));
-		
-		// known bad
-//		voronoi.addSite(new Site(270, 140, this));
-//		voronoi.addSite(new Site(206, 182, this));
-//		voronoi.addSite(new Site(316, 182, this));
-		
-		// known bad
-//		voronoi.addSite(new Site(419, 187, this));
-//		voronoi.addSite(new Site(363, 269, this));
-//		voronoi.addSite(new Site(278, 336, this));
-		
-		// known bad
-//		voronoi.addSite(new Site(235, 151, this));
-//		voronoi.addSite(new Site(283, 131, this));
-//		voronoi.addSite(new Site(306, 142, this));
-//		voronoi.addSite(new Site(247, 193, this));
-		// known bad
+		// known good (random)
 //		voronoi.addSite(new Site(152, 306, this));
 //		voronoi.addSite(new Site(301, 354, this));
 //		voronoi.addSite(new Site(253, 276, this));
@@ -159,43 +116,21 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(440, 208, this));
 //		voronoi.addSite(new Site(516, 163, this));
 //		voronoi.addSite(new Site(397, 180, this));
-//		// known bad sites (work sometimes?)
-//		voronoi.addSite(new Site(320, 124, this));
-//		voronoi.addSite(new Site(269, 130, this));		
-//		voronoi.addSite(new Site(343, 157, this));
-		
-		//
-//		voronoi.addSite(new Site(320, 124, this));
-//		voronoi.addSite(new Site(269, 130, this));		
-//		voronoi.addSite(new Site(343, 130, this));
-		//voronoi.addSite(new Site(200, 217, this));		
+		// special case (co-y)
+//		voronoi.addSite(new Site(287, 161, this));
+//		voronoi.addSite(new Site(225, 190, this));
+//		voronoi.addSite(new Site(331, 190, this));
+		// special case (co circular)		
+		voronoi.addSite(new Site(400,300, this));		
+		voronoi.addSite(new Site(300,400, this));		
+		voronoi.addSite(new Site(200,300, this));		
+		voronoi.addSite(new Site(300,200, this));
+		// known bad
+//		voronoi.addSite(new Site(121, 95, this));
+//		voronoi.addSite(new Site(194, 189, this));
+//		voronoi.addSite(new Site(349, 212, this));
 
-	}	
-	public void initSites() {
 		
-//		voronoi.addSite(new Site(391, 156, this));
-//		voronoi.addSite(new Site(367, 183, this));
-//		voronoi.addSite(new Site(337, 201, this));
-		
-		voronoi.addSite(new Site(152, 306, this));
-		voronoi.addSite(new Site(301, 354, this));
-		voronoi.addSite(new Site(253, 276, this));
-		voronoi.addSite(new Site(175, 377, this));
-		voronoi.addSite(new Site(377, 291, this));
-		voronoi.addSite(new Site(264, 442, this));
-		voronoi.addSite(new Site(376, 374, this));
-		voronoi.addSite(new Site(292, 402, this));
-		voronoi.addSite(new Site(348, 410, this));
-		voronoi.addSite(new Site(263, 518, this));
-		voronoi.addSite(new Site(95, 489, this));
-		voronoi.addSite(new Site(128, 443, this));
-		voronoi.addSite(new Site(409, 490, this));
-		voronoi.addSite(new Site(479, 337, this));
-		voronoi.addSite(new Site(452, 411, this));
-		voronoi.addSite(new Site(523, 222, this));
-		voronoi.addSite(new Site(440, 208, this));
-		voronoi.addSite(new Site(516, 163, this));
-		voronoi.addSite(new Site(397, 180, this));
 	}
 	public void draw() {
 		clear();
