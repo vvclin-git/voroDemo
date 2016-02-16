@@ -5,6 +5,7 @@ public class SiteEvent extends Event {
 	public SiteEvent(Voronoi voronoi, Site site) {
 		super(voronoi, "site");
 		this.y = site.y();
+		this.x = site.x();
 		this.site = site;		
 	}	
 	public void eventHandler() {		

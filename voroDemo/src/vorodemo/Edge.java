@@ -20,6 +20,9 @@ public class Edge {
 			rightBptNode = newBptNode;
 		}
 	}
+	public boolean isStatic() {
+		return (leftBptNode.getType() == "vertex" & rightBptNode.getType() == "vertex");
+	}
 	void draw() {
 //		System.out.println(leftBptNode.x() + ", " + leftBptNode.y() + ", " + rightBptNode.x() + ", " + rightBptNode.y());
 //		System.out.println(leftBptNode + ", " + rightBptNode);

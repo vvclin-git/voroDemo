@@ -40,6 +40,8 @@ public class BptNode implements Comparable<BptNode>{
 	public BptNode(String type, BptNode bptNode) { // for transforming a normal node into a vertex
 		this.x = bptNode.x();
 		this.y = bptNode.y();
+		this.leftSite = bptNode.getLeftSite();
+		this.rightSite = bptNode.getRightSite();
 		this.type = "vertex";
 	}
 	public void update() {		

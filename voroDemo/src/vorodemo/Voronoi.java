@@ -27,7 +27,8 @@ public class Voronoi extends PApplet{
 	public void addSite(Site site) {
 		sites.add(site);
 		//add site event
-		events.add(new SiteEvent(this, site));		
+		events.add(new SiteEvent(this, site));
+		printEventsX();
 	}
 	public void draw() {
 		dictx.draw();
@@ -63,6 +64,14 @@ public class Voronoi extends PApplet{
 		}
 		System.out.println();
 	}
+	public void printEventsX() {
+		PriorityQueue<Event> eventsOut = new PriorityQueue<Event>(events);
+		while (!eventsOut.isEmpty()) {
+			Event event =  eventsOut.poll();
+			System.out.print(event.x + ", ");			
+		}
+		System.out.println();
+	}
 	public void update() {
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
 			bptNode.update();
@@ -81,7 +90,7 @@ public class Voronoi extends PApplet{
 //		System.out.print(events.size() + "| ");
 		
 		printEvents();
-		printEventsY();
+		printEventsX();
 //		System.out.println();
 //		System.out.println(edges.size());
 //		System.out.println();

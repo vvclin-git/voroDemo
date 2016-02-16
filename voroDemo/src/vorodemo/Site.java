@@ -1,14 +1,16 @@
 package vorodemo;
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 
 public class Site extends Point {
 	Parabola parabola = null;
 	boolean processed = false;
-	public Site(float x, float y, PApplet p) {
-		// TODO Auto-generated constructor stub
+	ArrayList<Edge> edges;
+	public Site(float x, float y, PApplet p) {		
 		super(x, y, p);
 	}	
-	Site copy() {
+	public Site copy() {
 		return new Site(this.x, this.y, this.p);
 	}
 	public void setPara(Parabola parabola) {
@@ -28,6 +30,17 @@ public class Site extends Point {
 			return 1;
 		}		
 		return 0;
+	}
+	public void addEdge(Edge edge) {
+		this.edges.add(edge);
+	}
+	public boolean isSurround() {
+		for (Edge edge : edges) {
+			if (!edge.isStatic()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	public static void main(String args[]) {
 		Site a = new Site(1, 2, null);
