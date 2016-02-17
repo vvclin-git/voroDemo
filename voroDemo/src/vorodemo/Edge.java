@@ -4,6 +4,7 @@ public class Edge {
 	PApplet c;
 	BptNode leftBptNode;
 	BptNode rightBptNode;
+	Edge prevEdge, nextEdge;	
 	public Edge(BptNode leftBptNode, BptNode rightBptNode, PApplet c) {
 		this.leftBptNode = leftBptNode;
 		this.rightBptNode = rightBptNode;
@@ -22,6 +23,13 @@ public class Edge {
 	}
 	public boolean isStatic() {
 		return (leftBptNode.getType() == "vertex" & rightBptNode.getType() == "vertex");
+	}
+	public void setPrev(Edge edge) {
+		prevEdge = edge;
+	}
+	public void setNext(Edge edge) {
+		nextEdge = edge;
+		
 	}
 	void draw() {
 //		System.out.println(leftBptNode.x() + ", " + leftBptNode.y() + ", " + rightBptNode.x() + ", " + rightBptNode.y());
