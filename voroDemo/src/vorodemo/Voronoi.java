@@ -12,6 +12,7 @@ public class Voronoi extends PApplet{
 	ArrayList<BptNode> vertices = new ArrayList<BptNode>();
 	ArrayList<Circle> circles = new ArrayList<Circle>();
 	ArrayList<Site> sites = new ArrayList<Site>();
+	ArrayList<VoroCell> voroCells = new ArrayList<VoroCell>();
 //	TreeMap<BptNode, BptNode> beachLine = new TreeMap<BptNode, BptNode>();
 //	TreeMap<BptNode, Parabola> arcs = new TreeMap<BptNode, Parabola>();
 	TreeMap<BptNode, Parabola> beachLineTree = new TreeMap<BptNode, Parabola>();
@@ -27,6 +28,7 @@ public class Voronoi extends PApplet{
 	public void addSite(Site site) {
 		sites.add(site);
 		//add site event
+		voroCells.add(site.voroCell);
 		events.add(new SiteEvent(this, site));
 		printEventsX();
 	}

@@ -2,39 +2,40 @@ package vorodemo;
 import processing.core.PApplet;
 public class Edge {
 	PApplet c;
-	BptNode leftBptNode;
-	BptNode rightBptNode;
-	Edge prevEdge, nextEdge;	
-	public Edge(BptNode leftBptNode, BptNode rightBptNode, PApplet c) {
-		this.leftBptNode = leftBptNode;
-		this.rightBptNode = rightBptNode;
+	BptNode startBptNode, endBptNode;	
+	Site site1, site2;
+	public Edge(BptNode startBptNode, BptNode endBptNode, Site site1, Site site2, PApplet c) {
+		this.startBptNode = startBptNode;
+		this.endBptNode = endBptNode;
+		this.site1 = site1;
+		this.site2 = site2;
 		this.c = c;
 	}
 	public Edge twins() {
-		return new Edge(rightBptNode, leftBptNode, c);
+		return new Edge(endBptNode, startBptNode, site1, site2, c);
 	}
 	public void replaceNode(BptNode oldBptNode, BptNode newBptNode) {		
-		if (leftBptNode == oldBptNode) {			
-			leftBptNode = newBptNode;
+		if (startBptNode == oldBptNode) {			
+			startBptNode = newBptNode;
 		}		
-		else if (rightBptNode == oldBptNode) {			
-			rightBptNode = newBptNode;
+		else if (endBptNode == oldBptNode) {			
+			endBptNode = newBptNode;
 		}
 	}
 	public boolean isStatic() {
-		return (leftBptNode.getType() == "vertex" & rightBptNode.getType() == "vertex");
+		return (startBptNode.getType() == "vertex" & endBptNode.getType() == "vertex");
 	}
-	public void setPrev(Edge edge) {
-		prevEdge = edge;
+	public Site getSite1() {
+		return site1;
 	}
-	public void setNext(Edge edge) {
-		nextEdge = edge;
-		
+	public Site getSite2() {
+		return site2;
 	}
+	
 	void draw() {
 //		System.out.println(leftBptNode.x() + ", " + leftBptNode.y() + ", " + rightBptNode.x() + ", " + rightBptNode.y());
 //		System.out.println(leftBptNode + ", " + rightBptNode);
-		c.line(leftBptNode.x(), leftBptNode.y(), rightBptNode.x(), rightBptNode.y());
+		c.line(startBptNode.x(), startBptNode.y(), endBptNode.x(), endBptNode.y());
 	}
 
 }

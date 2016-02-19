@@ -21,7 +21,7 @@ public class SiteEvent extends Event {
 			BptNode newLeftNode = voronoi.beachLine.getNewLeftNode();								
 			BptNode newRightNode = voronoi.beachLine.getNewRightNode();
 			// create half edges
-			Edge newEdge = new Edge(newLeftNode, newRightNode, voronoi.p);
+			Edge newEdge = new Edge(newLeftNode, newRightNode, oldLeftNode.getSharedSite(oldRightNode), site, voronoi.p);
 			newLeftNode.setEdge(newEdge);
 			newRightNode.setEdge(newEdge);
 			voronoi.edges.add(newEdge);

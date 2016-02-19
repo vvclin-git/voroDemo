@@ -1,12 +1,11 @@
 package vorodemo;
-import java.util.ArrayList;
-
 import processing.core.PApplet;
 
 public class Site extends Point {
 	Parabola parabola = null;
 	boolean processed = false;
-	ArrayList<Edge> edges;
+	VoroCell voroCell = new VoroCell(this, p);
+//	ArrayList<Edge> edges;
 	public Site(float x, float y, PApplet p) {		
 		super(x, y, p);
 	}	
@@ -32,15 +31,7 @@ public class Site extends Point {
 		return 0;
 	}
 	public void addEdge(Edge edge) {
-		this.edges.add(edge);
-	}
-	public boolean isSurround() {
-		for (Edge edge : edges) {
-			if (!edge.isStatic()) {
-				return false;
-			}
-		}
-		return true;
+		voroCell.addEdge(edge);
 	}
 	public static void main(String args[]) {
 		Site a = new Site(1, 2, null);
