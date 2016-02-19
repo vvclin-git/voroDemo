@@ -135,14 +135,14 @@ public class BeachLine {
 		//System.out.println(leftEdge + "," + rightEdge);
 		leftEdge.replaceNode(leftBptNode, vertex);
 		rightEdge.replaceNode(rightBptNode, vertex);
-		if (leftEdge.isStatic()) {
-			leftEdge.getSite1().addEdge(leftEdge);
-			leftEdge.getSite2().addEdge(leftEdge);
-		}
-		if (rightEdge.isStatic()) {
-			rightEdge.getSite1().addEdge(rightEdge);
-			rightEdge.getSite2().addEdge(rightEdge);
-		}
+//		if (leftEdge.isStatic()) {
+//			leftEdge.getSite1().addEdge(leftEdge);
+//			leftEdge.getSite2().addEdge(leftEdge);
+//		}
+//		if (rightEdge.isStatic()) {
+//			rightEdge.getSite1().addEdge(rightEdge);
+//			rightEdge.getSite2().addEdge(rightEdge);
+//		}
 		Edge newEdge = new Edge(newBptNode, vertex, newBptNodeSite1, newBptNodeSite2, voronoi.p);
 		voronoi.edges.add(newEdge);
 		newBptNode.setEdge(newEdge);

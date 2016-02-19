@@ -20,6 +20,7 @@ public class Voronoi extends PApplet{
 	Directrix dictx;
 	PApplet p;
 	boolean drawCircle = true;
+	boolean drawCell = true;
 	public Voronoi(float dictY, PApplet p) {		
 		this.p = p;
 		dictx = new Directrix(dictY, p);
@@ -30,7 +31,7 @@ public class Voronoi extends PApplet{
 		//add site event
 		voroCells.add(site.voroCell);
 		events.add(new SiteEvent(this, site));
-		printEventsX();
+//		printEventsX();
 	}
 	public void draw() {
 		dictx.draw();
@@ -49,11 +50,14 @@ public class Voronoi extends PApplet{
 			p.ellipse(vertex.x, vertex.y, 2, 2);			
 		}
 		beachLine.draw();
-		for (VoroCell voroCell : voroCells) {
-			if (voroCell.isEnclosed()) {
-				voroCell.draw();
+		if (drawCell) {
+			for (VoroCell voroCell : voroCells) {
+				if (voroCell.isEnclosed()) {
+					voroCell.draw();
+				}
 			}
 		}
+		
 	}
 	public void printEvents() {
 		PriorityQueue<Event> eventsOut = new PriorityQueue<Event>(events);
@@ -96,8 +100,8 @@ public class Voronoi extends PApplet{
 		//beachLine.printBptNodeY();
 //		System.out.print(events.size() + "| ");
 		
-		printEvents();
-		printEventsX();
+		//printEvents();
+		//printEventsX();
 //		System.out.println();
 //		System.out.println(edges.size());
 //		System.out.println();
@@ -120,6 +124,7 @@ public class Voronoi extends PApplet{
 		circles.clear();
 		edges.clear();
 		dictx.setY(10);
+		voroCells.clear();
 	}
 	public void toggleCircle() {
 		if (drawCircle) {
@@ -127,6 +132,14 @@ public class Voronoi extends PApplet{
 		}
 		else {
 			drawCircle = true;
+		}
+	}
+	public void toggleCell() {
+		if (drawCell) {
+			drawCell = false;
+		}
+		else {
+			drawCell = true;
 		}
 	}
 	

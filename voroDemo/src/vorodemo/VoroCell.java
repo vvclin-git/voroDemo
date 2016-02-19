@@ -18,6 +18,10 @@ public class VoroCell {
 		return false;
 	}
 	public void addEdge(Edge edge) {
+		if (edges.isEmpty()) {
+			edges.add(edge);
+			return;
+		}
 		if (edges.getFirst().startBptNode == edge.endBptNode) {
 			edges.addFirst(edge);
 		}
@@ -25,10 +29,10 @@ public class VoroCell {
 			edges.addFirst(edge.twins());
 		}
 		else if (edges.getLast().endBptNode == edge.startBptNode) {
-			edges.addFirst(edge);
+			edges.addLast(edge);
 		}
 		else if (edges.getLast().endBptNode == edge.endBptNode) {
-			edges.addFirst(edge.twins());
+			edges.addLast(edge.twins());
 		}
 	}
 	public boolean isEnclosed() {
@@ -50,9 +54,10 @@ public class VoroCell {
 	public void draw() {
 		for (Edge edge : edges) {
 			p.stroke(255, 255, 0);
-			p.strokeWeight(5);
+			p.strokeWeight(3);
 			p.line(edge.startBptNode.x(), edge.startBptNode.y(), edge.endBptNode.x(), edge.endBptNode.y());
 		}
+		p.strokeWeight(1);
 	}
 
 }

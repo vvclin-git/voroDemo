@@ -40,8 +40,10 @@ public class VoroDemo extends PApplet {
 			initSites();
 		}
 		if (key == 'c') {
-			voronoi.toggleCircle();
-			
+			voronoi.toggleCircle();			
+		}
+		if (key == 'v') {
+			voronoi.toggleCell();
 		}
 		if (key == 'n') {
 			if (!voronoi.events.isEmpty()) {
@@ -127,10 +129,10 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(200,300, this));		
 //		voronoi.addSite(new Site(300,200, this));
 		// special case (grid)		
-		voronoi.addSite(new Site(400,400, this));		
-		voronoi.addSite(new Site(300,400, this));		
-		voronoi.addSite(new Site(200,400, this));	
-		voronoi.addSite(new Site(100,400, this));		
+//		voronoi.addSite(new Site(400,400, this));		
+//		voronoi.addSite(new Site(300,400, this));		
+//		voronoi.addSite(new Site(200,400, this));	
+//		voronoi.addSite(new Site(100,400, this));		
 //		voronoi.addSite(new Site(400,300, this));		
 //		voronoi.addSite(new Site(300,300, this));		
 //		voronoi.addSite(new Site(200,300, this));		
@@ -139,6 +141,36 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(121, 95, this));
 //		voronoi.addSite(new Site(194, 189, this));
 //		voronoi.addSite(new Site(349, 212, this));
+		
+//		voronoi.addSite(new Site(144, 197, this));		
+//		voronoi.addSite(new Site(229, 139, this));		
+//		voronoi.addSite(new Site(344, 131, this));		 
+//		voronoi.addSite(new Site(377, 216, this));		 
+//		voronoi.addSite(new Site(335, 300, this));		 
+//		voronoi.addSite(new Site(212, 341, this));		 
+//		voronoi.addSite(new Site(151, 254, this));		 
+//		voronoi.addSite(new Site(288, 217, this));
+//		voronoi.addSite(new Site(428, 135, this));
+//		voronoi.addSite(new Site(439, 219, this));
+//		voronoi.addSite(new Site(297, 356, this));
+//		voronoi.addSite(new Site(253, 270, this));
+//		voronoi.addSite(new Site(228, 215, this));
+//		voronoi.addSite(new Site(104, 357, this));
+//		voronoi.addSite(new Site(50, 221, this));
+//		voronoi.addSite(new Site(111, 280, this));
+//		voronoi.addSite(new Site(143, 118, this));
+//		voronoi.addSite(new Site(92, 171, this));
+//		voronoi.addSite(new Site(198, 288, this));
+//		voronoi.addSite(new Site(220, 419, this));
+//		voronoi.addSite(new Site(166, 382, this));
+//		voronoi.addSite(new Site(157, 319, this));
+//		voronoi.addSite(new Site(312, 402, this));
+//		voronoi.addSite(new Site(396, 363, this));
+//		voronoi.addSite(new Site(415, 298, this));
+//		voronoi.addSite(new Site(378, 247, this));
+		voronoi.addSite(new Site(265, 215, this));
+		voronoi.addSite(new Site(437, 151, this));
+		voronoi.addSite(new Site(367, 326, this));
 
 		
 	}
