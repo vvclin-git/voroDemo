@@ -49,6 +49,11 @@ public class Voronoi extends PApplet{
 			p.ellipse(vertex.x, vertex.y, 2, 2);			
 		}
 		beachLine.draw();
+		for (VoroCell voroCell : voroCells) {
+			if (voroCell.isEnclosed()) {
+				voroCell.draw();
+			}
+		}
 	}
 	public void printEvents() {
 		PriorityQueue<Event> eventsOut = new PriorityQueue<Event>(events);

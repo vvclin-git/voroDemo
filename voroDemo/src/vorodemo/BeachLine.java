@@ -121,9 +121,9 @@ public class BeachLine {
 		}		
 
 		// for debugging		
-		System.out.println("=" + newBptNode.x());		
-		System.out.println("=" + newBptNode.getType());
-		System.out.println("=" + newBptNode);
+//		System.out.println("=" + newBptNode.x());		
+//		System.out.println("=" + newBptNode.getType());
+//		System.out.println("=" + newBptNode);
 //		printBptNodeX();
 //		printBptNodeType();
 		beachLineTree.put(newBptNode, new Parabola(voronoi.dictx, rightBptNode.getRightSite(), newBptNode, oldRightBptNode, voronoi.p));		
