@@ -95,7 +95,7 @@ public class BeachLine {
 					System.out.println(voronoi.dictx.y() + ", " + newCircle.y() + ", " + newCircle.getLowY() + " | " + newCircle.containProcessedBptNode() + ", " + newCircle.isConverge());				
 					//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
 					//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
-					if (!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.getLowY() > voronoi.dictx.y() & !newCircle.isEqual(circle)) {
+					if (!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.getLowY() > voronoi.dictx.y()) {
 						voronoi.circles.add(newCircle);
 						voronoi.events.add(new CircleEvent(voronoi, newCircle));
 					}				
@@ -114,7 +114,7 @@ public class BeachLine {
 					System.out.println(voronoi.dictx.y() + ", " + newCircle.y() + ", " + newCircle.getLowY() + " | " + newCircle.containProcessedBptNode() + ", " + newCircle.isConverge());
 					//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
 					//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
-					if (!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.getLowY() > voronoi.dictx.y() & !newCircle.isEqual(circle)) {
+					if (!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.getLowY() > voronoi.dictx.y()) {
 						voronoi.circles.add(newCircle);
 						voronoi.events.add(new CircleEvent(voronoi, newCircle));
 					}				
@@ -138,14 +138,14 @@ public class BeachLine {
 		leftEdge.replaceNode(leftBptNode, vertex);
 		rightEdge.replaceNode(rightBptNode, vertex);
 		// for recording voronoi cells
-//		if (leftEdge.isStatic()) {
-//			leftEdge.getSite1().addEdge(leftEdge);
-//			leftEdge.getSite2().addEdge(leftEdge);
-//		}
-//		if (rightEdge.isStatic()) {
-//			rightEdge.getSite1().addEdge(rightEdge);
-//			rightEdge.getSite2().addEdge(rightEdge);
-//		}
+		if (leftEdge.isStatic()) {
+			leftEdge.getSite1().addEdge(leftEdge);
+			leftEdge.getSite2().addEdge(leftEdge);
+		}
+		if (rightEdge.isStatic()) {
+			rightEdge.getSite1().addEdge(rightEdge);
+			rightEdge.getSite2().addEdge(rightEdge);
+		}
 		Edge newEdge = new Edge(newBptNode, vertex, newBptNodeSite1, newBptNodeSite2, voronoi.p);
 		voronoi.edges.add(newEdge);
 		newBptNode.setEdge(newEdge);
