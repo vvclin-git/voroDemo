@@ -95,12 +95,12 @@ public class Voronoi extends PApplet{
 //			System.out.print(site.x() + ", ");			
 //		}
 //		System.out.println();
-		beachLine.printBptNodeX();
+//		beachLine.printBptNodeX();
 		//beachLine.printBptNode();
 		//beachLine.printBptNodeY();
 //		System.out.print(events.size() + "| ");
 		
-		//printEvents();
+		printEvents();
 		//printEventsX();
 //		System.out.println();
 //		System.out.println(edges.size());

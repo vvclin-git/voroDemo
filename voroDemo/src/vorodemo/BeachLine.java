@@ -70,6 +70,7 @@ public class BeachLine {
 		BptNode oldRightBptNode = beachLineTree.higherKey(rightBptNode);
 		// create new bptNode and circle event
 		//System.out.println(leftBptNode.getLeftSite().x() + ", " + rightBptNode.getRightSite().x());
+		// determine which site produces the latest arc
 		if (circle.getLeftSite().compareTo(circle.getRightSite()) == 1) {
 			newBptNodeSite1 = circle.getLeftSite();
 			newBptNodeSite2 = circle.getRightSite();
@@ -82,6 +83,7 @@ public class BeachLine {
 			newBptNodeSite1 = circle.getLeftSite();
 			newBptNodeSite2 = circle.getRightSite();
 		}
+		// new bptNode must be on the latest arc for convergence detection (its type must be exactly right or left)
 		if (circle.getCenter().x() > newBptNodeSite1.x()) {
 			newBptNode = new BptNode("right", newBptNodeSite1, newBptNodeSite2, newBptNodeSite1, voronoi.dictx);
 			newBptNode.update();
@@ -93,7 +95,7 @@ public class BeachLine {
 					System.out.println(voronoi.dictx.y() + ", " + newCircle.y() + ", " + newCircle.getLowY() + " | " + newCircle.containProcessedBptNode() + ", " + newCircle.isConverge());				
 					//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
 					//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
-					if (!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.getLowY() > voronoi.dictx.y()) {
+					if (!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.getLowY() > voronoi.dictx.y() & !newCircle.isEqual(circle)) {
 						voronoi.circles.add(newCircle);
 						voronoi.events.add(new CircleEvent(voronoi, newCircle));
 					}				
@@ -112,7 +114,7 @@ public class BeachLine {
 					System.out.println(voronoi.dictx.y() + ", " + newCircle.y() + ", " + newCircle.getLowY() + " | " + newCircle.containProcessedBptNode() + ", " + newCircle.isConverge());
 					//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
 					//System.out.println((!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.y() > voronoi.dictx.y()));
-					if (!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.getLowY() > voronoi.dictx.y()) {
+					if (!newCircle.containProcessedBptNode() & newCircle.isConverge() & newCircle.getLowY() > voronoi.dictx.y() & !newCircle.isEqual(circle)) {
 						voronoi.circles.add(newCircle);
 						voronoi.events.add(new CircleEvent(voronoi, newCircle));
 					}				
@@ -135,6 +137,7 @@ public class BeachLine {
 		//System.out.println(leftEdge + "," + rightEdge);
 		leftEdge.replaceNode(leftBptNode, vertex);
 		rightEdge.replaceNode(rightBptNode, vertex);
+		// for recording voronoi cells
 //		if (leftEdge.isStatic()) {
 //			leftEdge.getSite1().addEdge(leftEdge);
 //			leftEdge.getSite2().addEdge(leftEdge);
