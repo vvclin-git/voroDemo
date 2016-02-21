@@ -16,8 +16,7 @@ public class SiteEvent extends Event {
 			BptNode queryNode = new BptNode("query", site);
 			BptNode oldLeftNode = voronoi.beachLineTree.floorKey(queryNode);										
 			BptNode oldRightNode = voronoi.beachLineTree.ceilingKey(queryNode);				
-			voronoi.beachLine.addArc(site);
-			
+			voronoi.beachLine.addArc(site);			
 			BptNode newLeftNode = voronoi.beachLine.getNewLeftNode();								
 			BptNode newRightNode = voronoi.beachLine.getNewRightNode();
 			// create half edges
@@ -55,6 +54,7 @@ public class SiteEvent extends Event {
 		else {
 			System.out.println("===site event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());
 			voronoi.beachLine.addArc(site);
+			//TODO: need to deal with special case here (the first N site events share the same y-pos)
 			System.out.println("===site event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());
 		}
 		
