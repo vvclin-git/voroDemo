@@ -122,7 +122,8 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(287, 161, this));
 //		voronoi.addSite(new Site(225, 191, this));
 //		voronoi.addSite(new Site(331, 191, this));
-
+		// special case (site & circle at the same time)
+		
 		// special case (co circular)		
 //		voronoi.addSite(new Site(400,300, this));		
 //		voronoi.addSite(new Site(300,400, this));		
@@ -142,10 +143,13 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(194, 189, this));
 //		voronoi.addSite(new Site(349, 212, this));
 //		
-		voronoi.addSite(new Site(265, 215, this)); 
-		voronoi.addSite(new Site(437, 151, this)); 
-		voronoi.addSite(new Site(367, 326, this)); 
+//		voronoi.addSite(new Site(265, 215, this)); 
+//		voronoi.addSite(new Site(437, 151, this)); 
+//		voronoi.addSite(new Site(367, 326, this)); 
 
+		voronoi.addSite(new Site(200,300, this));		
+		voronoi.addSite(new Site(300,400, this));		
+		voronoi.addSite(new Site(300,200, this));	 
 
 		
 	}

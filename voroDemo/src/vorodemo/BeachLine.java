@@ -30,17 +30,41 @@ public class BeachLine {
 			BptNode oldLeftNode = beachLineTree.floorKey(queryNode);										
 			BptNode oldRightNode = beachLineTree.ceilingKey(queryNode);
 			System.out.println(oldLeftNode + "," + oldRightNode);
-			Parabola oldArc = beachLineTree.get(oldLeftNode).clone();
-			// create new nodes
-			newLeftNode = new BptNode("left", oldLeftNode.rightSite, site, site, voronoi.dictx);
-			newRightNode = new BptNode("right", site, oldRightNode.leftSite, site, voronoi.dictx);
-			// create new arc
-			Parabola newArc = new Parabola(voronoi.dictx, site, newLeftNode, newRightNode, voronoi.p);
-			beachLineTree.put(newLeftNode, newArc);			
-			// modify existing arcs (break)
-			beachLineTree.get(oldLeftNode).setRightBptNode(newLeftNode);
-			beachLineTree.put(newRightNode, oldArc);
-			beachLineTree.get(newRightNode).setLeftBptNode(newRightNode);			
+			if (oldLeftNode == oldRightNode) { // special case where there will be only one old node
+				BptNode oldNode = oldLeftNode;
+				BptNode oldPrevNode = beachLineTree.lowerKey(oldNode);
+				Site leftSite, rightSite;
+				if (oldNode.getLeftSite().x() < oldNode.getRightSite().x()) { 
+					// to guarantee that left/right site is exactly the one on the left/right of the new site
+					leftSite = oldNode.getLeftSite();
+					rightSite = oldNode.getRightSite();
+				}
+				else {
+					leftSite = oldNode.getRightSite();
+					rightSite = oldNode.getLeftSite();
+				}
+				newLeftNode = new BptNode("left", leftSite, site, site, voronoi.dictx);
+				newRightNode = new BptNode("right", site, rightSite, site, voronoi.dictx);				
+				// create new arc
+				Parabola newArc = new Parabola(voronoi.dictx, site, newLeftNode, newRightNode, voronoi.p);
+				beachLineTree.put(newLeftNode, newArc);			
+				// modify existing arcs (break)
+				beachLineTree.get(oldNode).setLeftBptNode(newRightNode);				
+				beachLineTree.get(oldPrevNode).setRightBptNode(newLeftNode);
+			}
+			else {
+				// create new nodes
+				newLeftNode = new BptNode("left", oldLeftNode.rightSite, site, site, voronoi.dictx);
+				newRightNode = new BptNode("right", site, oldRightNode.leftSite, site, voronoi.dictx);
+				Parabola oldArc = beachLineTree.get(oldLeftNode).clone();
+				// create new arc
+				Parabola newArc = new Parabola(voronoi.dictx, site, newLeftNode, newRightNode, voronoi.p);
+				beachLineTree.put(newLeftNode, newArc);			
+				// modify existing arcs (break)
+				beachLineTree.get(oldLeftNode).setRightBptNode(newLeftNode);
+				beachLineTree.put(newRightNode, oldArc);
+				beachLineTree.get(newRightNode).setLeftBptNode(newRightNode);		
+			}				
 		}
 	}
 	public void removeArc(BptNode leftBptNode, BptNode rightBptNode, Circle circle) {		

@@ -87,19 +87,10 @@ public class Voronoi extends PApplet{
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
 			bptNode.update();
 		}
-//		for (Site site : sites) {			
-//			System.out.print(site.processed + ", ");
-//		}
-//		System.out.println();
-//		for (Site site : sites) {
-//			System.out.print(site.x() + ", ");			
-//		}
-//		System.out.println();
-//		beachLine.printBptNodeX();
-		//beachLine.printBptNode();
+		beachLine.printBptNodeType();
+		beachLine.printBptNodeX();
 		//beachLine.printBptNodeY();
-//		System.out.print(events.size() + "| ");
-		
+//		System.out.print(events.size() + "| ");		
 		printEvents();
 		//printEventsX();
 //		System.out.println();
