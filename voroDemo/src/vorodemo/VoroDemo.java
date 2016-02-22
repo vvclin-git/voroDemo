@@ -31,6 +31,19 @@ public class VoroDemo extends PApplet {
 			System.out.println("(" + mouseX + ", " + mouseY + ")");
 		}
 	}
+	public void mouseMoved() {
+		Point mousePos = new Point(mouseX, mouseY, this);
+		for (VoroCell voroCell : voronoi.voroCells) {
+			if (voroCell.isEnclosed()) {
+				if (voroCell.inCell(mousePos)) {
+					voroCell.setSelected();
+				}
+				else {
+					voroCell.setNotSelected();
+				}
+			}			
+		}
+	}
 	public void keyPressed() {
 		if (key == 'r') {
 			voronoi.reset();
@@ -99,25 +112,25 @@ public class VoroDemo extends PApplet {
 	public void initSites() {
 		
 		// known good (random)
-//		voronoi.addSite(new Site(152, 306, this));
-//		voronoi.addSite(new Site(301, 354, this));
-//		voronoi.addSite(new Site(253, 276, this));
-//		voronoi.addSite(new Site(175, 377, this));
-//		voronoi.addSite(new Site(377, 291, this));
-//		voronoi.addSite(new Site(264, 442, this));
-//		voronoi.addSite(new Site(376, 374, this));
-//		voronoi.addSite(new Site(292, 402, this));
-//		voronoi.addSite(new Site(348, 410, this));
-//		voronoi.addSite(new Site(263, 518, this));
-//		voronoi.addSite(new Site(95, 489, this));
-//		voronoi.addSite(new Site(128, 443, this));
-//		voronoi.addSite(new Site(409, 490, this));
-//		voronoi.addSite(new Site(479, 337, this));
-//		voronoi.addSite(new Site(452, 411, this));
-//		voronoi.addSite(new Site(523, 222, this));
-//		voronoi.addSite(new Site(440, 208, this));
-//		voronoi.addSite(new Site(516, 163, this));
-//		voronoi.addSite(new Site(397, 180, this));
+		voronoi.addSite(new Site(152, 306, this));
+		voronoi.addSite(new Site(301, 354, this));
+		voronoi.addSite(new Site(253, 276, this));
+		voronoi.addSite(new Site(175, 377, this));
+		voronoi.addSite(new Site(377, 291, this));
+		voronoi.addSite(new Site(264, 442, this));
+		voronoi.addSite(new Site(376, 374, this));
+		voronoi.addSite(new Site(292, 402, this));
+		voronoi.addSite(new Site(348, 410, this));
+		voronoi.addSite(new Site(263, 518, this));
+		voronoi.addSite(new Site(95, 489, this));
+		voronoi.addSite(new Site(128, 443, this));
+		voronoi.addSite(new Site(409, 490, this));
+		voronoi.addSite(new Site(479, 337, this));
+		voronoi.addSite(new Site(452, 411, this));
+		voronoi.addSite(new Site(523, 222, this));
+		voronoi.addSite(new Site(440, 208, this));
+		voronoi.addSite(new Site(516, 163, this));
+		voronoi.addSite(new Site(397, 180, this));
 //		 special case (co-y)
 //		voronoi.addSite(new Site(287, 161, this));
 //		voronoi.addSite(new Site(225, 191, this));
@@ -129,6 +142,19 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(300,400, this));		
 //		voronoi.addSite(new Site(200,300, this));		
 //		voronoi.addSite(new Site(300,200, this));
+		
+//		voronoi.addSite(new Site(40,130,this));
+//		voronoi.addSite(new Site(40,70,this));
+//		voronoi.addSite(new Site(160,130,this));
+//		voronoi.addSite(new Site(160,70,this));
+//		voronoi.addSite(new Site(130,160,this));
+//		voronoi.addSite(new Site(130,40,this));
+//		voronoi.addSite(new Site(70,160,this));
+//		voronoi.addSite(new Site(70,40,this));
+
+
+
+		
 		// special case (grid)		
 //		voronoi.addSite(new Site(400,400, this));		
 //		voronoi.addSite(new Site(300,400, this));		

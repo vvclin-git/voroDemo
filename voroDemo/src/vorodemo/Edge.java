@@ -31,7 +31,20 @@ public class Edge {
 	public Site getSite2() {
 		return site2;
 	}
-	
+	public boolean isIntersect(float x) {
+		float x1 = startBptNode.x();
+		float x2 = endBptNode.x();		
+		float t = (x - x1) / (x2 - x1);
+		return (t >= 0 & t <= 1);
+	}
+	public float getY(float x) {
+		float x1 = startBptNode.x();
+		float x2 = endBptNode.x();
+		float y1 = startBptNode.y();
+		float y2 = endBptNode.y();
+		float t = (x - x1) / (x2 - x1);		
+		return y1 + (y2 - y1) * t;		
+	}
 	void draw() {
 //		System.out.println(leftBptNode.x() + ", " + leftBptNode.y() + ", " + rightBptNode.x() + ", " + rightBptNode.y());
 //		System.out.println(leftBptNode + ", " + rightBptNode);
