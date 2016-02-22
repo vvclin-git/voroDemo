@@ -1,7 +1,6 @@
 package vorodemo;
 import processing.core.PApplet;
 import java.util.ArrayList;
-import java.util.Arrays;
 public class Circle implements Comparable<Circle>{
 	Site p1, p2, p3;
 	float x, y, r, yInit;		
@@ -137,58 +136,69 @@ public class Circle implements Comparable<Circle>{
 			return p3;
 		}	
 	}
+	public Site getLowSite() {
+		float lowY = p1.y();
+		Site lowSite = p1;		
+		if (p2.y() < lowY) {
+			lowY = p2.y();
+			lowSite = p2;
+		}
+		else if (p3.y() < lowY) {
+			lowY = p3.y();
+			lowSite = p3;
+		}
+		return lowSite;
+	}
 	public float getYInit() {
 		return yInit;
 	}
 	public boolean isConverge() {
-//		Point bpt1 = bptNode1.toPoint();
-//		Point bpt2 = bptNode2.toPoint();
-		Point center = getCenter(); 
-//		float m1 =  center.slopeTo(bpt1);
-//		float m2 =  center.slopeTo(bpt2);
+		Point center = getCenter();
 		float m1 =  (center.y() - bptNode1.y()) / (center.x() - bptNode1.x());
 		float m2 =  (center.y() - bptNode2.y()) / (center.x() - bptNode2.x());
 //		System.out.println(bpt1 + ", " + bpt2);
-		System.out.println(bptNode1.x() + ", " + bptNode2.x());
-		boolean status = false;
+//		System.out.println(bptNode1.x() + ", " + bptNode2.x());
+		boolean status1 = false;
+		boolean status2 = false;
 		if (m1 != m2) {
 			if (bptNode1.getType() == "right") {
 				if (bptNode1.x() < center.x()) {
-					status = true;
+					status1 = true;
 				}
 				else {
-					status = false;
+					status1 = false;
 				}
 			}
 			if (bptNode1.getType() == "left") {
 				if (bptNode1.x() > center.x()) {
-					status = true;
+					status1 = true;
 				}
 				else {
-					status = false;
+					status1 = false;
 				}
 			}	
 			if (bptNode2.getType() == "right") {
 				if (bptNode2.x() < center.x()) {
-					status = true;
+					status2 = true;
 				}
 				else {
-					status = false;
+					status2 = false;
 				}
 			}
 			if (bptNode2.getType() == "left") {
 				if (bptNode2.x() > center.x()) {
-					status = true;
+					status2 = true;
 				}
 				else {
-					status = false;
+					status2 = false;
 				}
 			}
 		}
-		if (status) {
-			return true;
-		}		
-		return false;
+		return (status1 & status2);
+//		if (status) {
+//			return true;
+//		}		
+//		return false;
 	}
 	
 	public static void main(String args[]) {
@@ -197,6 +207,11 @@ public class Circle implements Comparable<Circle>{
 //		Site p3 = new Site(43, 56, null);
 //		Circle c = new Circle(p1, p2, p3, null);
 //		System.out.print(c.x() + ", " + c.y() + ", " + c.r);
+	}
+	
+	public boolean isEqual(Circle that) {
+		System.out.println(this.x() + ", " + this.y() + "|" + that.x() + ", " + that.y());
+		return (this.x() == that.x() & this.y() == that.y());
 	}
 	@Override
 	public int compareTo(Circle that) {
