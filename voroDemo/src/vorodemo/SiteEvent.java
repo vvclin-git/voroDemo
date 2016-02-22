@@ -18,12 +18,23 @@ public class SiteEvent extends Event {
 			BptNode oldRightNode = voronoi.beachLineTree.ceilingKey(queryNode);				
 			voronoi.beachLine.addArc(site);			
 			BptNode newLeftNode = voronoi.beachLine.getNewLeftNode();								
-			BptNode newRightNode = voronoi.beachLine.getNewRightNode();
-			// create half edges
-			Edge newEdge = new Edge(newLeftNode, newRightNode, oldLeftNode.getSharedSite(oldRightNode), site, voronoi.p);
-			newLeftNode.setEdge(newEdge);
-			newRightNode.setEdge(newEdge);
-			voronoi.edges.add(newEdge);
+			BptNode newRightNode = voronoi.beachLine.getNewRightNode();			
+			if (oldLeftNode == oldRightNode) { // special case
+				BptNode oldNode = oldLeftNode;
+				BptNode vertex = new BptNode("vertex", oldNode);
+				Edge newEdge1 = new Edge(newLeftNode, vertex, newLeftNode.getLeftSite(), site, voronoi.p);
+				Edge newEdge2 = new Edge(newRightNode, vertex, newRightNode.getRightSite(), site, voronoi.p);
+				voronoi.edges.add(newEdge1);
+				voronoi.edges.add(newEdge2);
+				newLeftNode.setEdge(newEdge1);
+				newRightNode.setEdge(newEdge2);
+			}
+			else { // normal cases
+				Edge newEdge = new Edge(newLeftNode, newRightNode, oldLeftNode.getSharedSite(oldRightNode), site, voronoi.p);
+				newLeftNode.setEdge(newEdge);
+				newRightNode.setEdge(newEdge);
+				voronoi.edges.add(newEdge);				
+			}			
 			// create circle event			
 			if (oldLeftNode.type != "leftBound") {
 				Circle newCircle = new Circle(oldLeftNode, newLeftNode, voronoi.dictx.y(), voronoi.p);

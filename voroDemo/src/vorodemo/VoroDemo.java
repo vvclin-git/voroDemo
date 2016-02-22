@@ -147,9 +147,9 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(437, 151, this)); 
 //		voronoi.addSite(new Site(367, 326, this)); 
 
-		voronoi.addSite(new Site(200,300, this));		
-		voronoi.addSite(new Site(300,400, this));		
-		voronoi.addSite(new Site(300,200, this));	 
+//		voronoi.addSite(new Site(200,300, this));		
+//		voronoi.addSite(new Site(300,400, this));		
+//		voronoi.addSite(new Site(300,200, this));	 
 
 		
 	}
