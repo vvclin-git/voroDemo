@@ -21,6 +21,7 @@ public class Voronoi extends PApplet{
 	PApplet p;
 	boolean drawCircle = true;
 	boolean drawCell = true;
+	boolean drawSite = true;
 	public Voronoi(float dictY, PApplet p) {		
 		this.p = p;
 		dictx = new Directrix(dictY, p);
@@ -35,9 +36,11 @@ public class Voronoi extends PApplet{
 	}
 	public void draw() {
 		dictx.draw();
-		for (Site site : sites) {
-			site.draw();
-		}
+		if (drawSite) {
+			for (Site site : sites) {
+				site.draw();
+			}
+		}		
 		if (drawCircle) {
 			for (Circle circle : circles) {
 				circle.draw();
@@ -53,7 +56,12 @@ public class Voronoi extends PApplet{
 		if (drawCell) {
 			for (VoroCell voroCell : voroCells) {
 				if (voroCell.isEnclosed()) {
-					voroCell.draw();
+					voroCell.draw("idle");
+				}
+			}
+			for (VoroCell voroCell : voroCells) {
+				if (voroCell.isEnclosed() & voroCell.isSelected()) {
+					voroCell.draw("selected");
 				}
 			}
 		}
@@ -133,5 +141,12 @@ public class Voronoi extends PApplet{
 			drawCell = true;
 		}
 	}
-	
+	public void toggleSite() {
+		if (drawSite) {
+			drawSite = false;
+		}
+		else {
+			drawSite = true;
+		}
+	}
 }

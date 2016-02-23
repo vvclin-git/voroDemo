@@ -50,5 +50,8 @@ public class Edge {
 //		System.out.println(leftBptNode + ", " + rightBptNode);
 		c.line(startBptNode.x(), startBptNode.y(), endBptNode.x(), endBptNode.y());
 	}
+	public String toString() {
+		return ("(" + startBptNode.x() + ", " +  startBptNode.y() + ") -> (" + endBptNode.x() + ", " +  endBptNode.y() + ")");
+	}
 
 }

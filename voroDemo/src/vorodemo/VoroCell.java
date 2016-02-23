@@ -23,9 +23,11 @@ public class VoroCell {
 		for (Edge edge : edges) {
 			if (edge.isIntersect(x)) {
 				i += 1;
-				tmpEdges[i] = edge;
-				i = -1;
+				tmpEdges[i] = edge;				
 			}
+		}
+		if (i < 1) {
+			return false;
 		}
 		if (tmpEdges[0].getY(x) > tmpEdges[1].getY(x)) {
 			return (tmpEdges[1].getY(x) < y & tmpEdges[0].getY(x) > y);
@@ -74,18 +76,28 @@ public class VoroCell {
 	public void setNotSelected() {
 		selected = false;
 	}
-	public void draw() {
+	public boolean isSelected() {
+		return selected;
+	}
+	public void draw(String type) {
 		for (Edge edge : edges) {
-			if (selected) {
-				p.stroke(255, 0, 0);
+			if (type == "idle") {
+				p.stroke(255, 255, 255);
 			}
-			else {
+			else if (type == "selected"){
 				p.stroke(255, 255, 0);
-			}			
-			p.strokeWeight(3);
+				p.strokeWeight(3);
+			}	
 			p.line(edge.startBptNode.x(), edge.startBptNode.y(), edge.endBptNode.x(), edge.endBptNode.y());
 		}
 		p.strokeWeight(1);
 	}
-
+	public String toString() {
+		String output = Boolean.toString(isEnclosed()) + "|";		
+		for (Edge edge : edges) {
+			output += edge.toString() + " -> ";
+		}
+		return output;
+	}
+	
 }
