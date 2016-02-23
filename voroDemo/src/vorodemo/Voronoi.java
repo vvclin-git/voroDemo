@@ -26,14 +26,14 @@ public class Voronoi extends PApplet{
 		this.p = p;
 		dictx = new Directrix(dictY, p);
 		beachLine = new BeachLine(this, p);
-	}
+	}	
 	public void addSite(Site site) {
 		sites.add(site);
 		//add site event
 		voroCells.add(site.voroCell);
 		events.add(new SiteEvent(this, site));
 //		printEventsX();
-	}
+	}	
 	public void draw() {
 		dictx.draw();
 		if (drawSite) {

@@ -11,8 +11,9 @@ import processing.core.PApplet;
 public class VoroDemo extends PApplet {
 	PApplet canvas;
 	Voronoi voronoi = new Voronoi(10, this);
-	Integer step = 1; // for drawing	
-	
+	Integer step = 1; // for drawing
+	int eventInd = 0;
+	int targetEvent = 69;
 	public void mouseClicked() {
 		//Event[] eventsOut;		
 		if (mouseY > voronoi.dictx.y()) {			
@@ -52,7 +53,9 @@ public class VoroDemo extends PApplet {
 		// v : toggle cell drawing on / off
 		// b : toggle site drawing on / off
 		// n : to next event
+		// m : to previous event
 		// f : process all sites at once
+		// t : process until target event
 		if (key == 'r') {
 			voronoi.reset();
 		}
@@ -69,19 +72,47 @@ public class VoroDemo extends PApplet {
 		if (key == 'b') {
 			voronoi.toggleSite();
 		}
-		if (key == 'n') {
+		if (key == 'n') {			
 			if (!voronoi.events.isEmpty()) {
+				System.out.println("=====Event #: " + eventInd + "=====");
 				voronoi.dictx.setY(voronoi.events.peek().y());
 				voronoi.events.poll().eventHandler();
 				voronoi.update();
-			}			
+				eventInd += 1;
+			}
+			System.out.println("=====Event #: " + eventInd + "=====");
+		}
+		if (key == 'm') {
+			voronoi.reset();
+			initSites();
+			eventInd = 0;
+			targetEvent -= 1;
+			while (eventInd < targetEvent) {
+				voronoi.dictx.setY(voronoi.events.peek().y());
+				voronoi.events.poll().eventHandler();
+				eventInd += 1;
+				voronoi.update();
+			}
+			System.out.println("=====Event #: " + eventInd + "=====");
+			voronoi.printEvents();			
 		}
 		if (key == 'f') {
 			while (!voronoi.events.isEmpty()) {
 				voronoi.dictx.setY(voronoi.events.peek().y());
+				voronoi.events.poll().eventHandler();				
+				voronoi.update();
+			}
+			voronoi.printEvents();
+		}
+		if (key == 't') {
+			while (eventInd < targetEvent) {
+				voronoi.dictx.setY(voronoi.events.peek().y());
 				voronoi.events.poll().eventHandler();
-				//voronoi.update();
-			}			
+				eventInd += 1;
+				voronoi.update();
+			}
+			System.out.println("=====Event #: " + eventInd + "=====");
+			voronoi.printEvents();
 		}
 		if (key == CODED) {
 			//for debugging			
@@ -192,46 +223,48 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(200,300, this));		
 //		voronoi.addSite(new Site(100,300, this));
 		// known bad
-//		voronoi.addSite(new Site(152, 306, this));
-//		voronoi.addSite(new Site(301, 354, this));
-//		voronoi.addSite(new Site(253, 276, this));
-//		voronoi.addSite(new Site(175, 377, this));
-//		voronoi.addSite(new Site(377, 291, this));
-//		voronoi.addSite(new Site(264, 442, this));
-//		voronoi.addSite(new Site(376, 374, this));
-//		voronoi.addSite(new Site(292, 402, this));
-//		voronoi.addSite(new Site(348, 410, this));
-//		voronoi.addSite(new Site(263, 518, this));
-//		voronoi.addSite(new Site(95, 489, this));
-//		voronoi.addSite(new Site(128, 443, this));
-//		voronoi.addSite(new Site(409, 490, this));
-//		voronoi.addSite(new Site(479, 337, this));
-//		voronoi.addSite(new Site(452, 411, this));
-//		voronoi.addSite(new Site(523, 222, this));
-//		voronoi.addSite(new Site(440, 208, this));
-//		voronoi.addSite(new Site(516, 163, this));
-//		voronoi.addSite(new Site(397, 180, this));
-//		voronoi.addSite(new Site(253, 175, this));
-//		voronoi.addSite(new Site(321, 252, this));
-//		voronoi.addSite(new Site(331, 118, this));
-//		voronoi.addSite(new Site(203, 250, this));
-//		voronoi.addSite(new Site(109, 152, this));
-//		voronoi.addSite(new Site(203, 79, this));
-//		voronoi.addSite(new Site(153, 220, this));
-//		voronoi.addSite(new Site(40, 73, this));
-//		voronoi.addSite(new Site(62, 243, this));
-//		voronoi.addSite(new Site(117, 47, this));
-//		voronoi.addSite(new Site(119, 232, this));
-//		voronoi.addSite(new Site(166, 145, this));
-//		voronoi.addSite(new Site(283, 76, this));
-//		voronoi.addSite(new Site(294, 204, this));
-//		voronoi.addSite(new Site(386, 72, this));
-//		voronoi.addSite(new Site(398, 132, this));
-//		voronoi.addSite(new Site(428, 71, this));
-//		voronoi.addSite(new Site(477, 156, this));
-//		voronoi.addSite(new Site(549, 48, this));
-//		voronoi.addSite(new Site(512, 98, this));
-//		voronoi.addSite(new Site(571, 201, this));	 
+		voronoi.addSite(new Site(152, 306, this));
+		voronoi.addSite(new Site(301, 354, this));
+		voronoi.addSite(new Site(253, 276, this));
+		voronoi.addSite(new Site(175, 377, this));
+		voronoi.addSite(new Site(377, 291, this));
+		voronoi.addSite(new Site(264, 442, this));
+		voronoi.addSite(new Site(376, 374, this));
+		voronoi.addSite(new Site(292, 402, this));
+		voronoi.addSite(new Site(348, 410, this));
+		voronoi.addSite(new Site(263, 518, this));
+		voronoi.addSite(new Site(95, 489, this));
+		voronoi.addSite(new Site(128, 443, this));
+		voronoi.addSite(new Site(409, 490, this));
+		voronoi.addSite(new Site(479, 337, this));
+		voronoi.addSite(new Site(452, 411, this));
+		voronoi.addSite(new Site(523, 222, this));
+		voronoi.addSite(new Site(440, 208, this));
+		voronoi.addSite(new Site(516, 163, this));
+		voronoi.addSite(new Site(397, 180, this));
+		
+		voronoi.addSite(new Site(254, 175, this));
+		
+		voronoi.addSite(new Site(321, 252, this));
+		voronoi.addSite(new Site(331, 118, this));
+		voronoi.addSite(new Site(203, 250, this));
+		voronoi.addSite(new Site(109, 152, this));
+		voronoi.addSite(new Site(203, 79, this));
+		voronoi.addSite(new Site(153, 220, this));
+		voronoi.addSite(new Site(40, 73, this));
+		voronoi.addSite(new Site(62, 243, this));
+		voronoi.addSite(new Site(117, 47, this));
+		voronoi.addSite(new Site(119, 232, this));
+		voronoi.addSite(new Site(166, 145, this));
+		voronoi.addSite(new Site(283, 76, this));
+		voronoi.addSite(new Site(294, 204, this));
+		voronoi.addSite(new Site(386, 72, this));
+		voronoi.addSite(new Site(398, 132, this));
+		voronoi.addSite(new Site(428, 71, this));
+		voronoi.addSite(new Site(477, 156, this));
+		voronoi.addSite(new Site(549, 48, this));
+		voronoi.addSite(new Site(512, 98, this));
+		voronoi.addSite(new Site(571, 201, this));	 
 
 		
 	}
