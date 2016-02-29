@@ -38,23 +38,16 @@ public class SiteEvent extends Event {
 			// create circle event			
 			if (oldLeftNode.type != "leftBound") {
 				Circle newCircle = new Circle(oldLeftNode, newLeftNode, voronoi.dictx.y(), voronoi.p);
-				System.out.println("site | " + oldLeftNode.x() + ", " + newLeftNode.x() + ", " + newCircle.isConverge());
-				if (!newCircle.containProcessedSite() & newCircle.isConverge()) {
-//					System.out.println("site | " + oldLeftNode.x() + ", " + newLeftNode.x());
-//					System.out.println("site | " + oldLeftNode.getType() + ", " + newLeftNode.getType());
-					//oldLeftNode.setProcessed();
+				System.out.println("convergence of left circle: " + newCircle.isConverge());
+				if (newCircle.isConverge()) {
 					voronoi.circles.add(newCircle);
 					voronoi.events.add(new CircleEvent(voronoi, newCircle));					
-				}
-				//System.out.println(newCircle.getCenter());
+				}				
 			}
 			if (oldRightNode.type != "rightBound") {
 				Circle newCircle = new Circle(newRightNode, oldRightNode, voronoi.dictx.y(), voronoi.p);
-				System.out.println("site | " + newRightNode.x() + ", " + oldRightNode.x() + ", " + newCircle.isConverge());
-				if (!newCircle.containProcessedSite() & newCircle.isConverge()) {
-//					System.out.println("site | " + newRightNode.x() + ", " + oldRightNode.x());
-//					System.out.println("site | " + newRightNode.getType() + ", " + oldRightNode.getType());
-					//oldRightNode.setProcessed();
+				System.out.println("convergence of right circle: " + newCircle.isConverge());
+				if (newCircle.isConverge()) {
 					voronoi.circles.add(newCircle);
 					voronoi.events.add(new CircleEvent(voronoi, newCircle));					
 				}

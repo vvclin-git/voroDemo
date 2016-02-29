@@ -94,14 +94,14 @@ public class Circle implements Comparable<Circle>{
 	public boolean containSite(Point site) {
 		return sites.contains(site);
 	}
-	public boolean containProcessedSite() {
-		for (Site site : sites) {
-			if (site.isProcessed()) {
-				return true;				
-			}
-		}
-		return false;
-	}
+//	public boolean containProcessedSite() {
+//		for (Site site : sites) {
+//			if (site.isProcessed()) {
+//				return true;				
+//			}
+//		}
+//		return false;
+//	}
 	public boolean containProcessedBptNode() {
 		if (bptNode1.isProcessed() & bptNode2.isProcessed()) {
 			return true;
@@ -160,7 +160,7 @@ public class Circle implements Comparable<Circle>{
 //		System.out.println(bptNode1.x() + ", " + bptNode2.x());
 		boolean status1 = false;
 		boolean status2 = false;
-		if (m1 != m2) {
+		if (m1 != m2) {			
 			if (bptNode1.getType() == "right") {
 				if (bptNode1.x() < center.x()) {
 					status1 = true;

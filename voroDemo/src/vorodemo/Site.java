@@ -33,6 +33,9 @@ public class Site extends Point {
 	public void addEdge(Edge edge) {
 		voroCell.addEdge(edge);
 	}
+	public String toOutString() {
+		return x + "," + y;
+	}
 	public static void main(String args[]) {
 		Site a = new Site(1, 2, null);
 		Site b = new Site(1, 2, null);

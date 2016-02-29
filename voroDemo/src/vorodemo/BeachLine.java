@@ -28,11 +28,9 @@ public class BeachLine {
 			// looking for the existing arc for adding a new one
 			BptNode queryNode = new BptNode("query", site);
 			BptNode oldLeftNode = beachLineTree.floorKey(queryNode);										
-			BptNode oldRightNode = beachLineTree.ceilingKey(queryNode);
-			System.out.println(oldLeftNode + "," + oldRightNode);
+			BptNode oldRightNode = beachLineTree.ceilingKey(queryNode);			
 			// special case where there will be only one old node
-			if (oldLeftNode == oldRightNode) { 
-				voronoi.beachLine.printBptNodeX();
+			if (oldLeftNode == oldRightNode) {				
 				BptNode oldNode = oldLeftNode;
 				BptNode oldPrevNode = beachLineTree.lowerKey(oldNode);
 				Site leftSite, rightSite;
@@ -76,17 +74,27 @@ public class BeachLine {
 	public void removeArc(BptNode leftBptNode, BptNode rightBptNode, Circle circle) {		
 		// remove arcs
 		// TODO: need better way to remove bpts
-		System.out.println(leftBptNode.x() + "," + rightBptNode.x());
-		System.out.println(leftBptNode + "," + rightBptNode);
+		System.out.println("x-pos of left/right bptNode to be removed: " + leftBptNode.x() + "," + rightBptNode.x());
+		System.out.println("left/right bptNode to be removed: " + leftBptNode + "," + rightBptNode);
+		System.out.println("the beach line before removal");
 		printBptNodeX();
 		printBptNode();		
 		// remove bptNodes
-		Parabola arcRemoved = beachLineTree.remove(leftBptNode);		
-		beachLineTree.remove(rightBptNode);
+		Parabola arcRemoved1 = beachLineTree.remove(leftBptNode);		
+		Parabola arcRemoved2 = beachLineTree.remove(rightBptNode);
 		// remove leftBptNode again in case of the natural order of beachLineTree messing up by the modified compareTo method		
-		if (arcRemoved == null) {
-			beachLineTree.remove(leftBptNode);
+		if (arcRemoved1 == null) {
+			leftBptNode.update();
+			arcRemoved1 = beachLineTree.remove(leftBptNode);
 		}
+		if (arcRemoved2 == null) {
+			rightBptNode.update();
+			arcRemoved2 = beachLineTree.remove(rightBptNode);
+		}
+		// to ensure the bptNodes are removed successfully
+		assert arcRemoved1 != null;
+		assert arcRemoved2 != null;
+		System.out.println("the beach line after removal");
 		printBptNodeX();
 		printBptNode();
 		// set both of bptNodes as processed (for circle event removal)
@@ -104,7 +112,7 @@ public class BeachLine {
 	}
 	public void draw() {
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {						
-			p.fill(255, 0, 0);
+			p.fill(255, 255, 0);
 			p.stroke(255, 255, 0);
 			p.ellipse(bptNode.x, bptNode.y, r, r);			
 		}
@@ -116,32 +124,45 @@ public class BeachLine {
 		}
 	}
 	public void printBptNodeX() {		
-		System.out.print(voronoi.dictx.y() + "| ");
+		System.out.print("the y-pos of directrix: " + voronoi.dictx.y() + "| the x-pos of bptNodes: ");
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
 			System.out.print(bptNode.x() + ", ");
 		}
 		System.out.println();
 	}
 	public void printBptNodeType() {		
-		System.out.print(voronoi.dictx.y() + "| ");
+		System.out.print("the y-pos of directrix: " + voronoi.dictx.y() + "| the type of bptNodes: ");
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
 			System.out.print(bptNode.getType() + ", ");
 		}
 		System.out.println();
 	}
 	public void printBptNode() {		
-		System.out.print(voronoi.dictx.y() + "| ");
+		System.out.print("the y-pos of directrix: " + voronoi.dictx.y() + "| the bptNodes: ");
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
 			System.out.print(bptNode + ", ");
 		}
 		System.out.println();
 	}
 	public void printBptNodeY() {		
-		System.out.print(voronoi.dictx.y() + "| ");
+		System.out.print("the y-pos of directrix: " + voronoi.dictx.y() + "| the y-pos of bptNodes: ");
 		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
 			System.out.print(bptNode.y() + ", ");
 		}
 		System.out.println();
 	}
-
+	public boolean checkBptOrder() {
+		float xTmp = Float.NEGATIVE_INFINITY;
+		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
+			if (bptNode.getType() != "leftBound") {
+				if (bptNode.x() < xTmp) {
+					return false;
+				}
+				else {					
+					xTmp = bptNode.x();
+				}
+			}
+		}
+		return true;
+	}
 }

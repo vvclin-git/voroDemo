@@ -13,15 +13,13 @@ public class Voronoi extends PApplet{
 	ArrayList<Circle> circles = new ArrayList<Circle>();
 	ArrayList<Site> sites = new ArrayList<Site>();
 	ArrayList<VoroCell> voroCells = new ArrayList<VoroCell>();
-//	TreeMap<BptNode, BptNode> beachLine = new TreeMap<BptNode, BptNode>();
-//	TreeMap<BptNode, Parabola> arcs = new TreeMap<BptNode, Parabola>();
 	TreeMap<BptNode, Parabola> beachLineTree = new TreeMap<BptNode, Parabola>();
 	BeachLine beachLine;
 	Directrix dictx;
 	PApplet p;
 	boolean drawCircle = true;
 	boolean drawCell = true;
-	boolean drawSite = true;
+	boolean drawSite = true;	
 	public Voronoi(float dictY, PApplet p) {		
 		this.p = p;
 		dictx = new Directrix(dictY, p);
@@ -42,16 +40,25 @@ public class Voronoi extends PApplet{
 			}
 		}		
 		if (drawCircle) {
-			for (Circle circle : circles) {
-				circle.draw();
-			}
+			// draw the nearest circle
+			circles.sort(null);
+			if (!circles.isEmpty()) {
+				circles.get(0).draw();
+			}			
+			// draw all circles
+//			for (Circle circle : circles) {
+//				circle.draw();
+//			}
 		}
 		for (Edge edge : edges) {
 			edge.draw();
 		}
-		for (BptNode vertex : vertices) {						
-			p.ellipse(vertex.x, vertex.y, 2, 2);			
+		for (BptNode vertex : vertices) {
+			p.fill(255, 0, 0);
+			p.stroke(255, 0, 0);
+			p.ellipse(vertex.x(), vertex.y(), 3, 3);			
 		}
+		p.stroke(255);
 		beachLine.draw();
 		if (drawCell) {
 			for (VoroCell voroCell : voroCells) {
@@ -59,16 +66,17 @@ public class Voronoi extends PApplet{
 					voroCell.draw("idle");
 				}
 			}
-			for (VoroCell voroCell : voroCells) {
-				if (voroCell.isEnclosed() & voroCell.isSelected()) {
-					voroCell.draw("selected");
-				}
-			}
+//			for (VoroCell voroCell : voroCells) {
+//				if (voroCell.isEnclosed() & voroCell.isSelected()) {
+//					voroCell.draw("selected");
+//				}
+//			}
 		}
 		
 	}
 	public void printEvents() {
 		PriorityQueue<Event> eventsOut = new PriorityQueue<Event>(events);
+		System.out.print("the following events are: ");
 		while (!eventsOut.isEmpty()) {
 			Event event =  eventsOut.poll();
 			System.out.print(event.type + ", ");			
@@ -77,6 +85,7 @@ public class Voronoi extends PApplet{
 	}
 	public void printEventsY() {
 		PriorityQueue<Event> eventsOut = new PriorityQueue<Event>(events);
+		System.out.print("the y-pos of following events are: ");
 		while (!eventsOut.isEmpty()) {
 			Event event =  eventsOut.poll();
 			System.out.print(event.y + ", ");			
@@ -85,6 +94,7 @@ public class Voronoi extends PApplet{
 	}
 	public void printEventsX() {
 		PriorityQueue<Event> eventsOut = new PriorityQueue<Event>(events);
+		System.out.print("the x-pos of following events are: ");
 		while (!eventsOut.isEmpty()) {
 			Event event =  eventsOut.poll();
 			System.out.print(event.x + ", ");			
@@ -97,23 +107,11 @@ public class Voronoi extends PApplet{
 		}
 		beachLine.printBptNodeType();
 		beachLine.printBptNodeX();
+		beachLine.printBptNode();
 		//beachLine.printBptNodeY();
 //		System.out.print(events.size() + "| ");		
 		printEvents();
-		//printEventsX();
-//		System.out.println();
-//		System.out.println(edges.size());
-//		System.out.println();
-//		System.out.print(dictx.y() + "| ");
-//		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
-//			System.out.print(bptNode.x() + ", ");
-//		}
-//		System.out.println();
-//		System.out.print(dictx.y() + "| ");
-//		for (BptNode bptNode : beachLineTree.navigableKeySet()) {
-//			System.out.print(bptNode.type + ", ");
-//		}
-//		System.out.println();
+		printEventsY();
 	}
 	public void reset() {
 		beachLineTree.clear();
@@ -148,5 +146,5 @@ public class Voronoi extends PApplet{
 		else {
 			drawSite = true;
 		}
-	}
+	}	
 }

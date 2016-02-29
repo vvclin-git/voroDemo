@@ -103,6 +103,9 @@ public class BptNode implements Comparable<BptNode>{
 	public float y() {
 		return y;
 	}
+	public String getXY() {
+		return "(" + x + ", " + y + ")";
+	}
 	public void setProcessed() {
 		processed = true;
 	}
