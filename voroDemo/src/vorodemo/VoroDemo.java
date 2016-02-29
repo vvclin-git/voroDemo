@@ -15,9 +15,10 @@ public class VoroDemo extends PApplet {
 	Voronoi voronoi = new Voronoi(10, this);
 	Integer step = 1; // for drawing
 	int eventInd = 0;
-	int targetEvent = 19;
+	int targetEvent = 95;
 	Path fileReadPath = FileSystems.getDefault().getPath("./bin/testdata/test.txt");
 	Path fileTmpWritePath = FileSystems.getDefault().getPath("./bin/testdata/tmp.txt");
+	boolean update = true;
 	public void mouseClicked() {
 		//Event[] eventsOut;		
 		if (mouseY > voronoi.dictx.y()) {			
@@ -61,6 +62,7 @@ public class VoroDemo extends PApplet {
 		// f : process all sites at once
 		// t : process until target event
 		// o : output sites
+		// l : load temporary output file
 		if (key == 'r') {
 			voronoi.reset();
 			eventInd = 0;
@@ -85,7 +87,9 @@ public class VoroDemo extends PApplet {
 				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType());
 				voronoi.dictx.setY(voronoi.events.peek().y());
 				voronoi.events.poll().eventHandler();
-				//voronoi.update();
+				if (update) {
+					voronoi.update();
+				}				
 				voronoi.printEvents();
 				voronoi.printEventsY();
 				System.out.println("=====Event #: " + eventInd + "=====");
@@ -103,7 +107,9 @@ public class VoroDemo extends PApplet {
 				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType() + " | " + voronoi.beachLine.beachLineTree.size());
 				voronoi.dictx.setY(voronoi.events.peek().y());
 				voronoi.events.poll().eventHandler();				
-				//voronoi.update();
+				if (update) {
+					voronoi.update();
+				}
 				voronoi.printEvents();
 				voronoi.printEventsY();
 				System.out.println("=====Event #: " + eventInd + "=====");
@@ -116,7 +122,9 @@ public class VoroDemo extends PApplet {
 				System.out.print("-====Event #: " + eventInd + "=====");
 				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType() + " | " + voronoi.beachLine.beachLineTree.size());				voronoi.dictx.setY(voronoi.events.peek().y());
 				voronoi.events.poll().eventHandler();				
-				//voronoi.update();
+				if (update) {
+					voronoi.update();
+				}
 				voronoi.printEvents();
 				voronoi.printEventsY();
 				System.out.println("=====Event #: " + eventInd + "=====");
@@ -131,11 +139,14 @@ public class VoroDemo extends PApplet {
 				voronoi.events.poll().eventHandler();
 				voronoi.beachLine.printBptNode();
 				voronoi.beachLine.printBptNodeX();
+				if (update) {
+					voronoi.update();
+				}
 				voronoi.printEvents();
 				voronoi.printEventsY();
 				System.out.println("=====Event #: " + eventInd + "=====");
 				eventInd += 1;
-				//voronoi.update();
+				
 			}			
 		}
 		if (key == 'x') {
@@ -143,6 +154,11 @@ public class VoroDemo extends PApplet {
 		}
 		if (key == 'o') {
 			writeSites(fileTmpWritePath);
+		}
+		if (key == 'l') {
+			voronoi.reset();
+			eventInd = 0;
+			readSites(fileTmpWritePath);
 		}
 		if (key == CODED) {
 			//for debugging			

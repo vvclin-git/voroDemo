@@ -12,6 +12,8 @@ public class SiteEvent extends Event {
 		if (!voronoi.beachLineTree.isEmpty()) {
 			// TODO need to deal with special case (circle event + site event)
 			System.out.println("===site event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());
+			voronoi.beachLine.printBptNode();
+			voronoi.beachLine.printBptNodeX();
 			// add new arc on an existing arc
 			BptNode queryNode = new BptNode("query", site);
 			BptNode oldLeftNode = voronoi.beachLineTree.floorKey(queryNode);										

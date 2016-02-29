@@ -157,7 +157,8 @@ public class Circle implements Comparable<Circle>{
 		float m1 =  (center.y() - bptNode1.y()) / (center.x() - bptNode1.x());
 		float m2 =  (center.y() - bptNode2.y()) / (center.x() - bptNode2.x());
 //		System.out.println(bpt1 + ", " + bpt2);
-//		System.out.println(bptNode1.x() + ", " + bptNode2.x());
+		System.out.println("x-pos of left/right bptNode: " + bptNode1.x() + ", " + bptNode2.x());
+		System.out.println("center pos: " + center);
 		boolean status1 = false;
 		boolean status2 = false;
 		if (m1 != m2) {			
