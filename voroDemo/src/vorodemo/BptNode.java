@@ -112,6 +112,34 @@ public class BptNode implements Comparable<BptNode>{
 	public boolean isProcessed() {
 		return processed;
 	}
+	public int getSiteOrient() {
+		// return its main site orientation to alternative site
+		if (type == "left") {
+			// main site = rightSite, alter site = leftSite
+			if (rightSite.x() < leftSite.x()) {
+				return -1;
+			}
+			else if (rightSite.x() > leftSite.x()) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		}
+		if (type == "right") {
+			// main site = leftSite, alter site = rightSite
+			if (leftSite.x() < rightSite.x()) {
+				return -1;
+			}
+			else if (leftSite.x() > rightSite.x()) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		}
+		return 2;
+	}
 	public int compareTo(BptNode that) {		
 		//update();		
 		that.update();

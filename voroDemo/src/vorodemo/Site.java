@@ -36,6 +36,7 @@ public class Site extends Point {
 	public String toOutString() {
 		return x + "," + y;
 	}
+
 	public static void main(String args[]) {
 		Site a = new Site(1, 2, null);
 		Site b = new Site(1, 2, null);

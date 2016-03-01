@@ -152,6 +152,22 @@ public class Circle implements Comparable<Circle>{
 	public float getYInit() {
 		return yInit;
 	}
+	public boolean isConverge1() {
+		Point center = getCenter();
+		float m1 =  (center.y() - bptNode1.y()) / (center.x() - bptNode1.x());
+		float m2 =  (center.y() - bptNode2.y()) / (center.x() - bptNode2.x());
+		System.out.println("the x-pos of bptnodes: " + bptNode1.x() + ", " + bptNode2.x());
+		System.out.println("the orientation of bptnodes: " + bptNode1.getSiteOrient() + ", " + bptNode2.getSiteOrient());
+		if (m1 != m2) {	
+			if (bptNode1.getType() == bptNode2.getType()) {
+				return (bptNode1.getSiteOrient() != bptNode2.getSiteOrient());
+			}
+			else {
+				return ((bptNode1.getSiteOrient() != bptNode2.getSiteOrient()) | (bptNode1.getSiteOrient() == 0 & bptNode2.getSiteOrient() == 0));				
+			}
+		}
+		return false;		
+	}
 	public boolean isConverge() {
 		Point center = getCenter();
 		float m1 =  (center.y() - bptNode1.y()) / (center.x() - bptNode1.x());

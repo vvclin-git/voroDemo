@@ -16,8 +16,8 @@ public class VoroDemo extends PApplet {
 	Integer step = 1; // for drawing
 	int eventInd = 0;
 	int targetEvent = 95;
-	Path fileReadPath = FileSystems.getDefault().getPath("./bin/testdata/test.txt");
-	Path fileTmpWritePath = FileSystems.getDefault().getPath("./bin/testdata/tmp.txt");
+	Path fileReadPath = FileSystems.getDefault().getPath("./res/test.txt");
+	Path fileTmpWritePath = FileSystems.getDefault().getPath("./bin/tmp.txt");
 	boolean update = true;
 	public void mouseClicked() {
 		//Event[] eventsOut;		
@@ -205,7 +205,10 @@ public class VoroDemo extends PApplet {
 
 	}	
 	public void initSites() {
-		readSites(fileReadPath);
+		voronoi.addSite(new Site(319, 194, this));
+		voronoi.addSite(new Site(279, 217, this));
+		voronoi.addSite(new Site(250, 255, this));
+//		readSites(fileReadPath);
 //		 special case (co-y)
 //		voronoi.addSite(new Site(287, 161, this));
 //		voronoi.addSite(new Site(225, 191, this));
