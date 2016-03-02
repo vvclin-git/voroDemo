@@ -15,10 +15,11 @@ public class VoroDemo extends PApplet {
 	Voronoi voronoi = new Voronoi(10, this);
 	Integer step = 1; // for drawing
 	int eventInd = 0;
-	int targetEvent = 95;
+	int targetEvent = 94;
 	Path fileReadPath = FileSystems.getDefault().getPath("./res/test.txt");
 	Path fileTmpWritePath = FileSystems.getDefault().getPath("./bin/tmp.txt");
 	boolean update = true;
+	boolean loadFile = false;
 	public void mouseClicked() {
 		//Event[] eventsOut;		
 		if (mouseY > voronoi.dictx.y()) {			
@@ -27,7 +28,10 @@ public class VoroDemo extends PApplet {
 		}
 		else {
 			if (!voronoi.events.isEmpty()) {
-				System.out.println("(" + mouseX + ", " + mouseY + ")");
+				Point mousePos = new Point(mouseX, mouseY, this);
+				System.out.print("mouse pos: " + mousePos);
+				voronoi.sites.sort(mousePos.distSqrToOrder());
+				System.out.println("the nearest site is: " + voronoi.sites.get(0));
 			}
 			else {
 				for (VoroCell voroCell : voronoi.voroCells) {
@@ -205,9 +209,14 @@ public class VoroDemo extends PApplet {
 
 	}	
 	public void initSites() {
-		voronoi.addSite(new Site(319, 194, this));
-		voronoi.addSite(new Site(279, 217, this));
-		voronoi.addSite(new Site(250, 255, this));
+		if (loadFile) {
+			readSites(fileReadPath);			
+		}
+		else {
+			voronoi.addSite(new Site(355, 392, this));
+			voronoi.addSite(new Site(309, 296, this));
+			voronoi.addSite(new Site(413, 322, this));
+		}
 //		readSites(fileReadPath);
 //		 special case (co-y)
 //		voronoi.addSite(new Site(287, 161, this));
