@@ -1,5 +1,7 @@
 package vorodemo;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,15 +14,17 @@ import processing.core.PApplet;
 
 public class VoroDemo extends PApplet {
 	PApplet canvas;
-	Voronoi voronoi = new Voronoi(10, this);
+	Voronoi voronoi = new Voronoi(1, this);
 	Integer step = 1; // for drawing
 	int eventInd = 0;
 	int targetEvent = 29;
-	Path fileReadPath = FileSystems.getDefault().getPath("./res/test.txt");
+//	Path fileReadPath = FileSystems.getDefault().getPath("./res/test.txt");
+	Path fileReadPath = FileSystems.getDefault().getPath("./res/collection/sun flower.txt");
 	Path fileTmpWritePath = FileSystems.getDefault().getPath("./bin/tmp.txt");
 	VoroCell lastSelectedVCell;
 	boolean update = false;
 	int loadFile = 1;
+	static int printOut = 0;
 	public void mouseClicked() {
 		//Event[] eventsOut;		
 		Point mousePos = new Point(mouseX, mouseY, this);
@@ -125,7 +129,8 @@ public class VoroDemo extends PApplet {
 			}			
 			voronoi.printEvents();			
 		}
-		if (key == 'f') {			
+		if (key == 'f') {
+			final long startTime = System.currentTimeMillis();			
 			while (!voronoi.events.isEmpty()) {
 				System.out.print("-====Event #: " + eventInd + "=====");
 				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType() + " | " + voronoi.beachLine.beachLineTree.size());				voronoi.dictx.setY(voronoi.events.peek().y());
@@ -137,8 +142,13 @@ public class VoroDemo extends PApplet {
 				voronoi.printEventsY();
 				System.out.println("=====Event #: " + eventInd + "=====");
 				eventInd += 1;
-			}
+			}			
 			voronoi.update();
+			final long endTime = System.currentTimeMillis();
+			System.out.println(voronoi.sites.size() + " sites processed");
+			System.out.println(voronoi.edges.size() * 0.5 + " edges created");
+			System.out.println(voronoi.vertices.size() + " vertices created");
+			System.out.println("Total execution time: " + (endTime - startTime) );
 		}
 		if (key == 't') {
 			while (eventInd < targetEvent) {
@@ -237,50 +247,7 @@ public class VoroDemo extends PApplet {
 //		voronoi.addSite(new Site(200,300, this));		
 //		voronoi.addSite(new Site(300,200, this));
 		
-//		voronoi.addSite(new Site(40,130,this));
-//		voronoi.addSite(new Site(40,70,this));
-//		voronoi.addSite(new Site(160,130,this));
-//		voronoi.addSite(new Site(160,70,this));
-//		voronoi.addSite(new Site(130,160,this));
-//		voronoi.addSite(new Site(130,40,this));
-//		voronoi.addSite(new Site(70,160,this));
-//		voronoi.addSite(new Site(70,40,this));
 
-//		voronoi.addSite(new Site(160, 315, this));
-//		voronoi.addSite(new Site(242, 171, this));
-//		voronoi.addSite(new Site(375, 191, this));
-//		voronoi.addSite(new Site(368, 285, this));
-//		voronoi.addSite(new Site(343, 422, this));
-//		voronoi.addSite(new Site(267, 281, this));
-		
-		// special case (grid)		
-//		voronoi.addSite(new Site(400,400, this));		
-//		voronoi.addSite(new Site(300,400, this));		
-//		voronoi.addSite(new Site(200,400, this));	
-//		voronoi.addSite(new Site(100,400, this));		
-//		voronoi.addSite(new Site(400,300, this));		
-//		voronoi.addSite(new Site(300,300, this));		
-//		voronoi.addSite(new Site(200,300, this));		
-//		voronoi.addSite(new Site(100,300, this));
-		// known bad
-
-//		voronoi.addSite(new Site(479, 337, this));
-//		voronoi.addSite(new Site(301, 354, this));
-//		voronoi.addSite(new Site(376, 374, this));
-//		voronoi.addSite(new Site(175, 377, this));
-//		voronoi.addSite(new Site(292, 402, this));
-//		voronoi.addSite(new Site(348, 410, this));
-//		voronoi.addSite(new Site(452, 411, this));
-//		voronoi.addSite(new Site(456, 428, this));
-//		voronoi.addSite(new Site(264, 442, this));
-//		voronoi.addSite(new Site(128, 443, this));
-//		voronoi.addSite(new Site(95, 489, this));
-//		voronoi.addSite(new Site(409, 490, this));
-//		voronoi.addSite(new Site(263, 518, this));
-		
-//		voronoi.addSite(new Site(452,411, this));		
-//		voronoi.addSite(new Site(456,428, this));		
-//		voronoi.addSite(new Site(409,490, this));
 
 		
 	}
@@ -308,7 +275,15 @@ public class VoroDemo extends PApplet {
 			e.printStackTrace();
 		}		
 	}
-	public static void main(String args[]) {		
+	public static void main(String args[]) {
+		if (printOut == 0) {
+			System.setOut(new PrintStream(new OutputStream() {
+			     @Override
+			     public void write(int arg0) throws IOException {
+			     }
+			  }));
+		}
+		
 	    PApplet.main(new String[] { vorodemo.VoroDemo.class.getName() });
 	    
 	}
