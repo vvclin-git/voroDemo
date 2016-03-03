@@ -153,10 +153,10 @@ public class Circle implements Comparable<Circle>{
 		return yInit;
 	}
 	public boolean isConverge() {
-		System.out.println("left bptNode: " + bptNode1 + ", right bptNode: " + bptNode2);
-		System.out.println("site1: " + p1 + ", site2: " + p2 + ", site3: " + p3);
-		System.out.println("center pos: " + center);
-		System.out.println("lowY: " + getLowY());
+//		System.out.println("left bptNode: " + bptNode1 + ", right bptNode: " + bptNode2);
+//		System.out.println("site1: " + p1 + ", site2: " + p2 + ", site3: " + p3);
+//		System.out.println("center pos: " + center);
+//		System.out.println("lowY: " + getLowY());
 		if (bptNode1.distSqrTo(center) > bptNode1.getTwin().distSqrTo(center)) {
 			return false;
 		}

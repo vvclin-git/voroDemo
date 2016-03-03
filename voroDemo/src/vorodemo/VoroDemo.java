@@ -115,16 +115,16 @@ public class VoroDemo extends PApplet {
 			targetEvent = eventInd - 1;
 			eventInd = 0;			
 			while (eventInd < targetEvent) {
-				System.out.print("-====Event #: " + eventInd + "=====");
-				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType() + " | " + voronoi.beachLine.beachLineTree.size());
+//				System.out.print("-====Event #: " + eventInd + "=====");
+//				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType() + " | " + voronoi.beachLine.beachLineTree.size());
 				voronoi.dictx.setY(voronoi.events.peek().y());
 				voronoi.events.poll().eventHandler();				
 				if (update) {
 					voronoi.update();
 				}
-				voronoi.printEvents();
-				voronoi.printEventsY();
-				System.out.println("=====Event #: " + eventInd + "=====");
+//				voronoi.printEvents();
+//				voronoi.printEventsY();
+//				System.out.println("=====Event #: " + eventInd + "=====");
 				eventInd += 1;
 			}			
 			voronoi.printEvents();			
@@ -132,15 +132,16 @@ public class VoroDemo extends PApplet {
 		if (key == 'f') {
 			final long startTime = System.currentTimeMillis();			
 			while (!voronoi.events.isEmpty()) {
-				System.out.print("-====Event #: " + eventInd + "=====");
-				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType() + " | " + voronoi.beachLine.beachLineTree.size());				voronoi.dictx.setY(voronoi.events.peek().y());
+//				System.out.print("-====Event #: " + eventInd + "=====");
+//				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType() + " | " + voronoi.beachLine.beachLineTree.size());				
+				voronoi.dictx.setY(voronoi.events.peek().y());
 				voronoi.events.poll().eventHandler();				
 				if (update) {
 					voronoi.update();
 				}
-				voronoi.printEvents();
-				voronoi.printEventsY();
-				System.out.println("=====Event #: " + eventInd + "=====");
+//				voronoi.printEvents();
+//				voronoi.printEventsY();
+//				System.out.println("=====Event #: " + eventInd + "=====");
 				eventInd += 1;
 			}			
 			voronoi.update();
@@ -276,13 +277,13 @@ public class VoroDemo extends PApplet {
 		}		
 	}
 	public static void main(String args[]) {
-		if (printOut == 0) {
-			System.setOut(new PrintStream(new OutputStream() {
-			     @Override
-			     public void write(int arg0) throws IOException {
-			     }
-			  }));
-		}
+//		if (printOut == 0) {
+//			System.setOut(new PrintStream(new OutputStream() {
+//			     @Override
+//			     public void write(int arg0) throws IOException {
+//			     }
+//			  }));
+//		}
 		
 	    PApplet.main(new String[] { vorodemo.VoroDemo.class.getName() });
 	    

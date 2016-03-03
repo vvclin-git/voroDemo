@@ -19,11 +19,13 @@ public class Voronoi extends PApplet{
 	PApplet p;
 	boolean drawCircle = true;
 	boolean drawCell = true;
-	boolean drawSite = true;	
+	boolean drawSite = true;
+	float initDictY;
 	public Voronoi(float dictY, PApplet p) {		
 		this.p = p;
 		dictx = new Directrix(dictY, p);
 		beachLine = new BeachLine(this, p);
+		initDictY = dictY;
 	}	
 	public void addSite(Site site) {
 		sites.add(site);
@@ -124,7 +126,7 @@ public class Voronoi extends PApplet{
 		events.clear();
 		circles.clear();
 		edges.clear();
-		dictx.setY(10);
+		dictx.setY(initDictY);
 		voroCells.clear();
 	}
 	public void toggleCircle() {
