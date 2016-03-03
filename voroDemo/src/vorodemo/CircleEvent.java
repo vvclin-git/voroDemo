@@ -53,6 +53,28 @@ public class CircleEvent extends Event{
 		newBptNode.update();
 		System.out.println("the new bptNode is: " + newBptNode);
 		System.out.println("the pos of new bptNode is: " + newBptNode.getXY());
+		
+		// connecting edges
+		BptNode vertex = new BptNode("vertex", newBptNode);
+		voronoi.vertices.add(vertex);
+		Edge leftEdge = leftBptNode.getEdge();
+		Edge rightEdge = rightBptNode.getEdge();
+		//System.out.println(leftEdge + "," + rightEdge);
+		leftEdge.replaceNode(leftBptNode, vertex);
+		rightEdge.replaceNode(rightBptNode, vertex);
+		// for recording voronoi cells
+//				if (leftEdge.isStatic()) {
+//					leftEdge.getSite1().addEdge(leftEdge);
+//					leftEdge.getSite2().addEdge(leftEdge);
+//				}
+//				if (rightEdge.isStatic()) {
+//					rightEdge.getSite1().addEdge(rightEdge);
+//					rightEdge.getSite2().addEdge(rightEdge);
+//				}
+		Edge newEdge = new Edge(newBptNode, vertex, newBptNodeSite1, newBptNodeSite2, voronoi.p);
+		voronoi.edges.add(newEdge);
+		newBptNode.setEdge(newEdge);
+		
 		// create new circle event
 		Site sharedSite;
 		// create new right circle
@@ -93,26 +115,7 @@ public class CircleEvent extends Event{
 		}		
 		voronoi.beachLineTree.put(newBptNode, new Parabola(voronoi.dictx, rightBptNode.getRightSite(), newBptNode, oldRightBptNode, voronoi.p));		
 		voronoi.beachLineTree.lowerEntry(newBptNode).getValue().setRightBptNode(newBptNode);		
-		// connecting edges
-		BptNode vertex = new BptNode("vertex", newBptNode);
-		voronoi.vertices.add(vertex);
-		Edge leftEdge = leftBptNode.getEdge();
-		Edge rightEdge = rightBptNode.getEdge();
-		//System.out.println(leftEdge + "," + rightEdge);
-		leftEdge.replaceNode(leftBptNode, vertex);
-		rightEdge.replaceNode(rightBptNode, vertex);
-		// for recording voronoi cells
-//		if (leftEdge.isStatic()) {
-//			leftEdge.getSite1().addEdge(leftEdge);
-//			leftEdge.getSite2().addEdge(leftEdge);
-//		}
-//		if (rightEdge.isStatic()) {
-//			rightEdge.getSite1().addEdge(rightEdge);
-//			rightEdge.getSite2().addEdge(rightEdge);
-//		}
-		Edge newEdge = new Edge(newBptNode, vertex, newBptNodeSite1, newBptNodeSite2, voronoi.p);
-		voronoi.edges.add(newEdge);
-		newBptNode.setEdge(newEdge);		
+				
 		voronoi.circles.remove(this.circle);
 		System.out.println("===circle event=== | y = " + voronoi.dictx.y() + " | " + voronoi.beachLineTree.size());		
 	}

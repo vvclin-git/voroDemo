@@ -225,6 +225,17 @@ public class BptNode implements Comparable<BptNode>{
 	public String getType() {
 		return type;
 	}
+	public float distSqrTo(Point that) {
+		return (float) (Math.pow((x - that.x()), 2) + Math.pow((y - that.y()), 2));
+	}
+	public BptNode getTwin() {
+		if (this == edge.startBptNode) {
+			return edge.endBptNode;
+		}
+		else {
+			return edge.startBptNode;
+		}
+	}
 //	public Point toPoint() {		
 //		return this.outPoint;
 //	}

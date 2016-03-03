@@ -53,11 +53,11 @@ public class Voronoi extends PApplet{
 		for (Edge edge : edges) {
 			edge.draw();
 		}
-		for (BptNode vertex : vertices) {
-			p.fill(255, 0, 0);
-			p.stroke(255, 0, 0);
-			p.ellipse(vertex.x(), vertex.y(), 3, 3);			
-		}
+//		for (BptNode vertex : vertices) {
+//			p.fill(255, 0, 0);
+//			p.stroke(255, 0, 0);
+//			p.ellipse(vertex.x(), vertex.y(), 3, 3);			
+//		}
 		p.stroke(255);
 		beachLine.draw();
 		if (drawCell) {
@@ -73,6 +73,10 @@ public class Voronoi extends PApplet{
 //			}
 		}
 		
+	}
+	public Site getNearestSite(Point point) {
+		sites.sort(point.distSqrToOrder());
+		return sites.get(0);
 	}
 	public void printEvents() {
 		PriorityQueue<Event> eventsOut = new PriorityQueue<Event>(events);
