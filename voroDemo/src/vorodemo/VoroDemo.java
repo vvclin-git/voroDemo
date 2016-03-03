@@ -19,7 +19,7 @@ public class VoroDemo extends PApplet {
 	int eventInd = 0;
 	int targetEvent = 29;
 //	Path fileReadPath = FileSystems.getDefault().getPath("./res/test.txt");
-	Path fileReadPath = FileSystems.getDefault().getPath("./res/collection/sun flower.txt");
+	Path fileReadPath = FileSystems.getDefault().getPath("./res/collection/croc skin.txt");
 	Path fileTmpWritePath = FileSystems.getDefault().getPath("./bin/tmp.txt");
 	VoroCell lastSelectedVCell;
 	boolean update = false;
