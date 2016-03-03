@@ -7,7 +7,8 @@ public class Circle implements Comparable<Circle>{
 	float lowY;
 	BptNode bptNode1, bptNode2;
 	PApplet c;
-	ArrayList<Site> sites = new ArrayList<Site>(); 
+	ArrayList<Site> sites = new ArrayList<Site>();
+	Point center;
 	//public Circle (Point p1, Point p2, Point p3, PApplet c) {
 	public Circle (BptNode bptNode1, BptNode bptNode2, float yInit, PApplet c) {
 		this.bptNode1 = bptNode1;
@@ -64,11 +65,18 @@ public class Circle implements Comparable<Circle>{
 		}			
 		ma = (y2 - y1) / dxa;
 		mb = (y3 - y2) / dxb;
+		
 		x = ((ma * mb) * (y1 - y3) + mb * (x1 + x2) - ma * (x2 + x3)) / 
 				(2 * (mb - ma));		
-		y = (-1 / ma) * (x - (x1 + x2) / 2) + (y1 + y2) /2;
+		if (ma != 0) {
+			y = (-1 / ma) * (x - (x1 + x2) / 2) + (y1 + y2) /2;
+		}
+		else {
+			y = (-1 / mb) * (x1 + x2) * 0.5f + (y2 + y3) * 0.5f - (-1 / mb) * (x2 + x3) * 0.5f;
+		}		
 		r = (float) Math.sqrt(Math.pow((double) (p1.x() - x), 2) + Math.pow((double) (p1.y() - y), 2));
 		lowY = y + r;
+		center = new Point(x, y, c);
 	}
 	float getLowY() {
 		return lowY;
@@ -80,7 +88,7 @@ public class Circle implements Comparable<Circle>{
 		return y;
 	}
 	public Point getCenter() {
-		return new Point(x, y, c);
+		return center;
 	}
 	public Site getCenterSite() {
 		return new Site(x, y, c);
@@ -94,14 +102,6 @@ public class Circle implements Comparable<Circle>{
 	public boolean containSite(Point site) {
 		return sites.contains(site);
 	}
-//	public boolean containProcessedSite() {
-//		for (Site site : sites) {
-//			if (site.isProcessed()) {
-//				return true;				
-//			}
-//		}
-//		return false;
-//	}
 	public boolean containProcessedBptNode() {
 		if (bptNode1.isProcessed() & bptNode2.isProcessed()) {
 			return true;
@@ -152,28 +152,36 @@ public class Circle implements Comparable<Circle>{
 	public float getYInit() {
 		return yInit;
 	}
+	public boolean isConverge() {
+		System.out.println("left bptNode: " + bptNode1 + ", right bptNode: " + bptNode2);
+		System.out.println("site1: " + p1 + ", site2: " + p2 + ", site3: " + p3);
+		System.out.println("center pos: " + center);
+		System.out.println("lowY: " + getLowY());
+		if (bptNode1.distSqrTo(center) > bptNode1.getTwin().distSqrTo(center)) {
+			return false;
+		}
+		
+		if (bptNode2.distSqrTo(center) > bptNode2.getTwin().distSqrTo(center)) {
+			return false;
+		}
+//		if (bptNode2.distSqrTo(center) == bptNode2.getTwin().distSqrTo(center)) {
+//			if (bptNode2.getType() == "left" & bptNode2.x() < center.x()) {
+//				return false;
+//			}
+//			if (bptNode2.getType() == "right" & bptNode2.x() > center.x()) {
+//				return false;
+//			}			
+//			return false;
+//		}
+		return true;		
+	}
 	public boolean isConverge1() {
 		Point center = getCenter();
 		float m1 =  (center.y() - bptNode1.y()) / (center.x() - bptNode1.x());
 		float m2 =  (center.y() - bptNode2.y()) / (center.x() - bptNode2.x());
-		System.out.println("the x-pos of bptnodes: " + bptNode1.x() + ", " + bptNode2.x());
-		System.out.println("the orientation of bptnodes: " + bptNode1.getSiteOrient() + ", " + bptNode2.getSiteOrient());
-		if (m1 != m2) {	
-			if (bptNode1.getType() == bptNode2.getType()) {
-				return (bptNode1.getSiteOrient() != bptNode2.getSiteOrient());
-			}
-			else {
-				return ((bptNode1.getSiteOrient() != bptNode2.getSiteOrient()) | (bptNode1.getSiteOrient() == 0 & bptNode2.getSiteOrient() == 0));				
-			}
-		}
-		return false;		
-	}
-	public boolean isConverge() {
-		Point center = getCenter();
-		float m1 =  (center.y() - bptNode1.y()) / (center.x() - bptNode1.x());
-		float m2 =  (center.y() - bptNode2.y()) / (center.x() - bptNode2.x());
 //		System.out.println(bpt1 + ", " + bpt2);
-		System.out.println("x-pos of left/right bptNode: " + bptNode1.x() + ", " + bptNode2.x());
+//		System.out.println("x-pos of left/right bptNode: " + bptNode1.x() + ", " + bptNode2.x());
+		System.out.println("left bptNode: " + bptNode1 + ", right bptNode: " + bptNode2);
 		System.out.println("site1: " + p1 + ", site2: " + p2 + ", site3: " + p3);
 		System.out.println("center pos: " + center);
 		System.out.println("lowY: " + getLowY());

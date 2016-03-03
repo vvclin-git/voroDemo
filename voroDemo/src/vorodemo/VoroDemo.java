@@ -15,45 +15,49 @@ public class VoroDemo extends PApplet {
 	Voronoi voronoi = new Voronoi(10, this);
 	Integer step = 1; // for drawing
 	int eventInd = 0;
-	int targetEvent = 94;
+	int targetEvent = 29;
 	Path fileReadPath = FileSystems.getDefault().getPath("./res/test.txt");
 	Path fileTmpWritePath = FileSystems.getDefault().getPath("./bin/tmp.txt");
-	boolean update = true;
-	boolean loadFile = false;
+	VoroCell lastSelectedVCell;
+	boolean update = false;
+	int loadFile = 1;
 	public void mouseClicked() {
 		//Event[] eventsOut;		
+		Point mousePos = new Point(mouseX, mouseY, this);
 		if (mouseY > voronoi.dictx.y()) {			
 				System.out.println("voronoi.addSite(new Site(" + mouseX + ", " + mouseY + ", this));");			
 				voronoi.addSite(new Site(mouseX, mouseY, this));
 		}
 		else {
 			if (!voronoi.events.isEmpty()) {
-				Point mousePos = new Point(mouseX, mouseY, this);
-				System.out.print("mouse pos: " + mousePos);
-				voronoi.sites.sort(mousePos.distSqrToOrder());
-				System.out.println("the nearest site is: " + voronoi.sites.get(0));
+				
+				System.out.print("mouse pos: " + mousePos);				
+				System.out.println("the nearest site is: " + voronoi.getNearestSite(mousePos));
 			}
 			else {
-				for (VoroCell voroCell : voronoi.voroCells) {
-					if (voroCell.isSelected()) {
-						System.out.println(voroCell);
-					}					
-				}				
+				if (lastSelectedVCell != null) {
+					lastSelectedVCell.setNotSelected();
+				}
+				VoroCell voroCell = voronoi.getNearestSite(mousePos).getVoroCell();
+				if ( voroCell != null) {
+					voroCell.setSelected();
+					lastSelectedVCell = voroCell;
+				}
 			}
 		}
 	}
 	public void mouseMoved() {
-		Point mousePos = new Point(mouseX, mouseY, this);
-		for (VoroCell voroCell : voronoi.voroCells) {
-			if (voroCell.isEnclosed()) {
-				if (voroCell.inCell(mousePos)) {
-					voroCell.setSelected();
-				}
-				else {
-					voroCell.setNotSelected();
-				}
-			}			
-		}
+//		Point mousePos = new Point(mouseX, mouseY, this);
+//		for (VoroCell voroCell : voronoi.voroCells) {
+//			if (voroCell.isEnclosed()) {
+//				if (voroCell.inCell(mousePos)) {
+//					voroCell.setSelected();
+//				}
+//				else {
+//					voroCell.setNotSelected();
+//				}
+//			}			
+//		}
 	}
 	public void keyPressed() {
 		// r : clear canvas
@@ -209,13 +213,16 @@ public class VoroDemo extends PApplet {
 
 	}	
 	public void initSites() {
-		if (loadFile) {
+		if (loadFile == 1) {
 			readSites(fileReadPath);			
 		}
 		else {
-			voronoi.addSite(new Site(355, 392, this));
-			voronoi.addSite(new Site(309, 296, this));
-			voronoi.addSite(new Site(413, 322, this));
+//			voronoi.addSite(new Site(355, 392, this));
+//			voronoi.addSite(new Site(309, 296, this));
+//			voronoi.addSite(new Site(413, 322, this));
+			voronoi.addSite(new Site(481, 95, this));
+			voronoi.addSite(new Site(542, 95, this));
+			voronoi.addSite(new Site(520, 142, this));
 		}
 //		readSites(fileReadPath);
 //		 special case (co-y)
