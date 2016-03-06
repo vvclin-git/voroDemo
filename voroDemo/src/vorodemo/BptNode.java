@@ -3,6 +3,7 @@ package vorodemo;
 public class BptNode implements Comparable<BptNode>{
 	Site leftSite;
 	Site rightSite;
+	Site site;
 //	Point outPoint;
 	Directrix dictx;
 	String type; // left, right, query, vertex, leftBound, rightBound, single
@@ -14,6 +15,7 @@ public class BptNode implements Comparable<BptNode>{
 		this.rightSite = rightSite;
 		this.dictx = dictx;
 		this.type = type;		
+		this.site = site;
 		this.x = site.x();		
 		if (type !=  "leftBound" & type != "rightBound") {
 			if (leftSite.y() == dictx.y()) {
@@ -221,6 +223,9 @@ public class BptNode implements Comparable<BptNode>{
 	}
 	public Site getRightSite() {
 		return rightSite;
+	}
+	public Site getSite() {
+		return site;
 	}
 	public String getType() {
 		return type;

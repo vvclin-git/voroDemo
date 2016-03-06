@@ -20,20 +20,21 @@ public class VoroDemo extends PApplet {
 	Voronoi voronoi = new Voronoi(1, this);
 	Integer step = 1; // for drawing
 	int eventInd = 0;
-	int targetEvent = 29;
+	int targetEvent = 1477;
 	Path fileReadPath;
 //	Path fileReadPath = FileSystems.getDefault().getPath("./res/test.txt");
-//	Path fileReadPath = FileSystems.getDefault().getPath("./res/collection/croc skin.txt");
+	Path defFileReadPath = FileSystems.getDefault().getPath("./res/collection/circular.txt");
 	Path fileTmpWritePath = FileSystems.getDefault().getPath("./bin/tmp.txt");
 	VoroCell lastSelectedVCell;
 	boolean update = false;
-	int loadFile = 0;
+	int loadFile = 2; // 0: not loading file, 1: prompt file selection, 2: load default file
 	static int printOut = 0;
+	boolean addSite = false;
 	public void mouseClicked() {
 		//Event[] eventsOut;		
 		Point mousePos = new Point(mouseX, mouseY, this);
 //		if (mouseY > voronoi.dictx.y()) {
-		if (loadFile != 1 & mouseY > voronoi.dictx.y()) {
+		if (mouseY > voronoi.dictx.y() & addSite) {
 				System.out.println("voronoi.addSite(new Site(" + mouseX + ", " + mouseY + ", this));");			
 				voronoi.addSite(new Site(mouseX, mouseY, this));
 		}
@@ -80,6 +81,17 @@ public class VoroDemo extends PApplet {
 		// o : output sites
 		// l : load temporary output file
 		// e : toggle edge drawing on / off
+		// a : toggle add site by hand on / off
+		if (key == 'a') {
+			if (addSite) {
+				addSite = false;
+				System.out.println("manual site additon : off");
+			}
+			else {
+				addSite = true;
+				System.out.println("manual site additon : on");
+			}
+		}
 		if (key == 'r') {
 			voronoi.reset();
 			eventInd = 0;
@@ -140,8 +152,8 @@ public class VoroDemo extends PApplet {
 		if (key == 'f') {
 			final long startTime = System.currentTimeMillis();			
 			while (!voronoi.events.isEmpty()) {
-//				System.out.print("-====Event #: " + eventInd + "=====");
-//				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType() + " | " + voronoi.beachLine.beachLineTree.size());				
+				System.out.print("-====Event #: " + eventInd + "=====");
+				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType() + " | " + voronoi.beachLine.beachLineTree.size());				
 				voronoi.dictx.setY(voronoi.events.peek().y());
 				voronoi.events.poll().eventHandler();				
 				if (update) {
@@ -149,7 +161,7 @@ public class VoroDemo extends PApplet {
 				}
 //				voronoi.printEvents();
 //				voronoi.printEventsY();
-//				System.out.println("=====Event #: " + eventInd + "=====");
+				System.out.println("=====Event #: " + eventInd + "=====");
 				eventInd += 1;
 			}			
 			voronoi.update();
@@ -243,7 +255,10 @@ public class VoroDemo extends PApplet {
 	        }
 					
 		}
-		else {
+		else if (loadFile == 2) {
+			readSites(defFileReadPath);	
+		}
+		else if (loadFile == 0){
 //			voronoi.addSite(new Site(355, 392, this));
 //			voronoi.addSite(new Site(309, 296, this));
 //			voronoi.addSite(new Site(413, 322, this));

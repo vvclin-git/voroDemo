@@ -36,7 +36,8 @@ public class SiteEvent extends Event {
 				newRightNode.setEdge(newEdge2);
 			}
 			else { // normal cases
-				Edge newEdge = new Edge(newLeftNode, newRightNode, oldLeftNode.getSharedSite(oldRightNode), site, voronoi.p);
+//				Edge newEdge = new Edge(newLeftNode, newRightNode, oldLeftNode.getSharedSite(oldRightNode), site, voronoi.p);
+				Edge newEdge = new Edge(newLeftNode, newRightNode, oldLeftNode.getSite(), site, voronoi.p);
 				assert(newEdge.getSite1() != null);
 				assert(newEdge.getSite2() != null);
 				newLeftNode.setEdge(newEdge);

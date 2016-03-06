@@ -63,8 +63,7 @@ public class CircleEvent extends Event{
 		leftEdge.replaceNode(leftBptNode, vertex);
 		rightEdge.replaceNode(rightBptNode, vertex);
 		assert(leftEdge.getSite1() != null);
-		assert(leftEdge.getSite2() != null);
-		System.out.println(leftEdge.getSite1() + "," + leftEdge.getSite2());
+		assert(leftEdge.getSite2() != null);		
 		// for recording voronoi cells
 		if (leftEdge.isStatic()) {
 			leftEdge.getSite1().addEdge(leftEdge);
