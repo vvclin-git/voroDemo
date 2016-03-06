@@ -25,7 +25,11 @@ public class SiteEvent extends Event {
 				BptNode oldNode = oldLeftNode;
 				BptNode vertex = new BptNode("vertex", oldNode);
 				Edge newEdge1 = new Edge(newLeftNode, vertex, newLeftNode.getLeftSite(), site, voronoi.p);
+				assert(newEdge1.getSite1() != null);
+				assert(newEdge1.getSite2() != null);
 				Edge newEdge2 = new Edge(newRightNode, vertex, newRightNode.getRightSite(), site, voronoi.p);
+				assert(newEdge2.getSite1() != null);
+				assert(newEdge2.getSite2() != null);				
 				voronoi.edges.add(newEdge1);
 				voronoi.edges.add(newEdge2);
 				newLeftNode.setEdge(newEdge1);
@@ -33,6 +37,8 @@ public class SiteEvent extends Event {
 			}
 			else { // normal cases
 				Edge newEdge = new Edge(newLeftNode, newRightNode, oldLeftNode.getSharedSite(oldRightNode), site, voronoi.p);
+				assert(newEdge.getSite1() != null);
+				assert(newEdge.getSite2() != null);
 				newLeftNode.setEdge(newEdge);
 				newRightNode.setEdge(newEdge);
 				voronoi.edges.add(newEdge);				

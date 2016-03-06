@@ -20,6 +20,7 @@ public class Voronoi extends PApplet{
 	boolean drawCircle = true;
 	boolean drawCell = true;
 	boolean drawSite = true;
+	boolean drawEdge = true;
 	float initDictY;
 	public Voronoi(float dictY, PApplet p) {		
 		this.p = p;
@@ -52,9 +53,11 @@ public class Voronoi extends PApplet{
 //				circle.draw();
 //			}
 		}
-		for (Edge edge : edges) {
-			edge.draw();
-		}
+		if (drawEdge) {
+			for (Edge edge : edges) {
+				edge.draw();
+			}
+		}		
 //		for (BptNode vertex : vertices) {
 //			p.fill(255, 0, 0);
 //			p.stroke(255, 0, 0);
@@ -144,6 +147,12 @@ public class Voronoi extends PApplet{
 		else {
 			drawCell = true;
 		}
+	}
+	public void toggleEdge() {
+		if (drawEdge) {
+			drawEdge = false;
+		}
+		else drawEdge = true;
 	}
 	public void toggleSite() {
 		if (drawSite) {
