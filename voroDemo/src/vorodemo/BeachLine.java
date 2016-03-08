@@ -74,11 +74,11 @@ public class BeachLine {
 	public void removeArc(BptNode leftBptNode, BptNode rightBptNode, Circle circle) {		
 		// remove arcs
 		// TODO: need better way to remove bpts
-		System.out.println("x-pos of left/right bptNode to be removed: " + leftBptNode.x() + "," + rightBptNode.x());
-		System.out.println("left/right bptNode to be removed: " + leftBptNode + "," + rightBptNode);
-		System.out.println("the beach line before removal");
-		printBptNodeX();
-		printBptNode();		
+//		System.out.println("x-pos of left/right bptNode to be removed: " + leftBptNode.x() + "," + rightBptNode.x());
+//		System.out.println("left/right bptNode to be removed: " + leftBptNode + "," + rightBptNode);
+//		System.out.println("the beach line before removal");
+//		printBptNodeX();
+//		printBptNode();		
 		// remove bptNodes
 		Parabola arcRemoved1 = beachLineTree.remove(leftBptNode);		
 		Parabola arcRemoved2 = beachLineTree.remove(rightBptNode);
@@ -86,18 +86,18 @@ public class BeachLine {
 		
 		if (arcRemoved1 == null) {
 			leftBptNode.update();
-			arcRemoved1 = beachLineTree.remove(leftBptNode);
+			arcRemoved1 = beachLineTree.remove(beachLineTree.higherKey(beachLineTree.lowerKey(leftBptNode)));
 		}
 		if (arcRemoved2 == null) {
 			rightBptNode.update();
-			arcRemoved2 = beachLineTree.remove(rightBptNode);
+			arcRemoved2 = beachLineTree.remove(beachLineTree.lowerKey(beachLineTree.higherKey(leftBptNode)));
 		}
 		// to ensure the bptNodes are removed successfully
 		assert arcRemoved1 != null;
 		assert arcRemoved2 != null;
-		System.out.println("the beach line after removal");
-		printBptNodeX();
-		printBptNode();
+//		System.out.println("the beach line after removal");
+//		printBptNodeX();
+//		printBptNode();
 		// set both of bptNodes as processed (for circle event removal)
 		leftBptNode.setProcessed();
 		rightBptNode.setProcessed();

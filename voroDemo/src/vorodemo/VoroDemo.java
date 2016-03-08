@@ -152,8 +152,8 @@ public class VoroDemo extends PApplet {
 		if (key == 'f') {
 			final long startTime = System.currentTimeMillis();			
 			while (!voronoi.events.isEmpty()) {
-				System.out.print("-====Event #: " + eventInd + "=====");
-				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType() + " | " + voronoi.beachLine.beachLineTree.size());				
+//				System.out.print("-====Event #: " + eventInd + "=====");
+//				System.out.println(" y: " + voronoi.events.peek().y() + " | " + voronoi.events.peek().getType() + " | " + voronoi.beachLine.beachLineTree.size());				
 				voronoi.dictx.setY(voronoi.events.peek().y());
 				voronoi.events.poll().eventHandler();				
 				if (update) {
@@ -161,7 +161,7 @@ public class VoroDemo extends PApplet {
 				}
 //				voronoi.printEvents();
 //				voronoi.printEventsY();
-				System.out.println("=====Event #: " + eventInd + "=====");
+//				System.out.println("=====Event #: " + eventInd + "=====");
 				eventInd += 1;
 			}			
 			voronoi.update();
