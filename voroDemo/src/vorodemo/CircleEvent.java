@@ -74,6 +74,8 @@ public class CircleEvent extends Event{
 			rightEdge.getSite2().addEdge(rightEdge);
 		}
 		Edge newEdge = new Edge(newBptNode, vertex, newBptNodeSite1, newBptNodeSite2, voronoi.p);		
+		assert(newEdge.getSite1() != null);
+		assert(newEdge.getSite2() != null);
 		voronoi.edges.add(newEdge);
 		newBptNode.setEdge(newEdge);
 		

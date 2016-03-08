@@ -71,11 +71,11 @@ public class Voronoi extends PApplet{
 					voroCell.draw("idle");
 				}
 			}
-//			for (VoroCell voroCell : voroCells) {
-//				if (voroCell.isEnclosed() & voroCell.isSelected()) {
-//					voroCell.draw("selected");
-//				}
-//			}
+			for (VoroCell voroCell : voroCells) {
+				if (voroCell.isEnclosed() & voroCell.isSelected()) {
+					voroCell.draw("selected");
+				}
+			}
 		}
 		
 	}
