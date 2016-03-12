@@ -10,6 +10,7 @@ public class BptNode implements Comparable<BptNode>{
 	Edge edge;	
 	float x, y;
 	boolean processed = false;
+	boolean update = true;
 	public BptNode(String type, Site leftSite, Site rightSite, Site site, Directrix dictx) {		
 		this.leftSite = leftSite;
 		this.rightSite = rightSite;
@@ -144,7 +145,9 @@ public class BptNode implements Comparable<BptNode>{
 	}
 	public int compareTo(BptNode that) {		
 		//update();		
-		that.update();
+		if (this.isUpdate()) {
+			that.update();
+		}		
 		if (this.x < that.x) {
 //			System.out.println(this.x + ", " + that.x + " larger");
 			return -1;
@@ -240,6 +243,12 @@ public class BptNode implements Comparable<BptNode>{
 		else {
 			return edge.startBptNode;
 		}
+	}
+	public void setNotUpdate() {
+		update = false;
+	}
+	public boolean isUpdate() {
+		return update;
 	}
 //	public Point toPoint() {		
 //		return this.outPoint;

@@ -74,24 +74,28 @@ public class BeachLine {
 	public void removeArc(BptNode leftBptNode, BptNode rightBptNode, Circle circle) {		
 		// remove arcs
 		// TODO: need better way to remove bpts
-//		System.out.println("x-pos of left/right bptNode to be removed: " + leftBptNode.x() + "," + rightBptNode.x());
+		System.out.println("x-pos of left/right bptNode to be removed: " + leftBptNode.x() + "," + rightBptNode.x());
 //		System.out.println("left/right bptNode to be removed: " + leftBptNode + "," + rightBptNode);
-//		System.out.println("the beach line before removal");
-//		printBptNodeX();
+		System.out.println("the beach line before removal");
+		printBptNodeX();
 //		printBptNode();		
 		// remove bptNodes
+		leftBptNode.setNotUpdate();
+		rightBptNode.setNotUpdate();
 		Parabola arcRemoved1 = beachLineTree.remove(leftBptNode);		
+		printBptNodeX();
 		Parabola arcRemoved2 = beachLineTree.remove(rightBptNode);
+		printBptNodeX();
 		// remove leftBptNode again in case of the natural order of beachLineTree messing up by the modified compareTo method		
 		
-		if (arcRemoved1 == null) {
-			leftBptNode.update();
-			arcRemoved1 = beachLineTree.remove(beachLineTree.higherKey(beachLineTree.lowerKey(leftBptNode)));
-		}
-		if (arcRemoved2 == null) {
-			rightBptNode.update();
-			arcRemoved2 = beachLineTree.remove(beachLineTree.lowerKey(beachLineTree.higherKey(leftBptNode)));
-		}
+//		if (arcRemoved1 == null) {
+//			leftBptNode.update();
+//			arcRemoved1 = beachLineTree.remove(beachLineTree.higherKey(beachLineTree.lowerKey(leftBptNode)));
+//		}
+//		if (arcRemoved2 == null) {
+//			rightBptNode.update();
+//			arcRemoved2 = beachLineTree.remove(beachLineTree.lowerKey(beachLineTree.higherKey(leftBptNode)));
+//		}
 		// to ensure the bptNodes are removed successfully
 		assert arcRemoved1 != null;
 		assert arcRemoved2 != null;
